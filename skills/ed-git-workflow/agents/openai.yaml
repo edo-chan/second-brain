@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Git Workflow"
+  short_description: "Branch, PR, and release workflow rules"
+  default_prompt: "Use $ed-git-workflow to prepare a branch, commit, PR, or release in Ed's preferred workflow."
