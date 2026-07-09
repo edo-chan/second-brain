@@ -86,6 +86,20 @@ Solana k1/r1 authorities use a monotonic signature odometer and reject reused co
 
 For EVM, consume nonce/counter state before any external call or use `nonReentrant`. Direct-caller auth must be a distinct direct EOA path, not a signature-auth fallback that can be reused inside ERC-4337 validation.
 
+## Layout Parity Clarifier
+
+When checking an action against Solana, split the comparison into these separate fields:
+
+- stored action layout: bytes persisted in the Swig role
+- creation payload layout: bytes supplied when creating the action
+- runtime-populated fields: fields filled later by lifecycle instructions
+- marker permission behavior: whether presence alone grants a permission
+- repeatability: whether multiple instances of the action can exist on one role
+- match data: bytes used to select a repeatable action
+- review-approved divergence: accepted EVM-specific behavior with a ticket or design note
+
+Do not collapse these into a single "layout" claim. For example, a permission can be zero-data at creation in one design while still having runtime-populated fields elsewhere. If the files, review decision, or design doc disagree, record the target and ask before fixing.
+
 ## Known Parity Conflict Pattern
 
 Local Solana checkouts may not always match the latest product decision or review comment. If an action layout in Solana source conflicts with an accepted EVM review decision or design doc, stop and ask for the intended parity target. Do not silently copy the local file or silently follow the review comment.

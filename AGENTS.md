@@ -75,6 +75,8 @@ For every touched permission or authority, include a parity note in the PR body 
 
 If Solana source, existing EVM review comments, and the design doc disagree, stop and resolve the product decision before implementing. Do not silently choose one.
 
+When checking Solana parity, distinguish stored action layout, creation payload layout, runtime-populated fields, marker permission behavior, and review-approved intentional divergence. If these disagree, do not call it a bug or a fix. Stop and record the intended parity target.
+
 ### Blocking Contract Invariants
 
 A PR is not ready unless these invariants are encoded in tests:
@@ -93,6 +95,55 @@ A PR is not ready unless these invariants are encoded in tests:
 - Generic execution must not be able to call config, vault, or proxy upgrade selectors unless the role has explicit `Upgrade`.
 - Direct proxy/config initialization must not allow arbitrary nonzero vault addresses if factory-paired deployment is required.
 - Asset-moving paths must deny by default unless `All`, `AllButManageAuthority`, or a matching scoped permission is present and consumed.
+
+### Auth Path Matrix
+
+For each auth entrypoint, document and test:
+
+- authority type: k1, r1, ed25519, session, or program
+- auth mode: direct caller, signature, verifier, or precompile
+- empty auth behavior
+- nonce or counter source
+- exact point nonce/counter is consumed
+- external calls after auth
+- ERC-4337/UserOp safety
+- replay test name
+
+If `authorization.length == 0` is accepted anywhere, add a test proving it cannot be used through ERC-4337/UserOp validation or any contract-caller path unless explicitly intended.
+
+### Verifier Failure Matrix
+
+Verifier-backed auth must test:
+
+- missing verifier code
+- invalid verifier address
+- verifier revert
+- verifier false or zero return
+- malformed return length
+- wrong pubkey length
+- wrong signature length
+- wrong signer
+- bad digest or message
+
+r1 must test chain-configured verifier behavior. Hardcoded precompile paths are local-test only.
+
+### External Call And Reentrancy Gate
+
+Any authorized function that makes an external call must include:
+
+- nonce/counter consumption before the call, or `nonReentrant`
+- a reentrancy regression test
+- a test that replaying the same authorization fails even if the first call reenters
+
+### Generic Execution Upgrade Denylist
+
+Any generic execution feature must include negative tests showing it cannot call:
+
+- config upgrade selectors
+- vault upgrade selectors
+- proxy upgrade selectors
+- role-management selectors unless the role has explicit `ManageAuthority`
+- recovery or close selectors unless the role has the explicit permission
 
 ### SignV2 Requirements
 
@@ -133,6 +184,8 @@ Required categories when relevant:
 - direct proxy/factory bypass
 - `msg.value` mismatch
 - reentrancy around external calls
+- ERC-4337/UserOp empty-auth misuse
+- bad digest or message for verifier-backed auth
 
 Use real k1/r1/ed25519 verification in e2e claims. Mocks are allowed only for unit-level failure injection, and must not be used to claim real signer compatibility.
 
@@ -146,6 +199,20 @@ Do not open or re-request review on an EVM contract PR until:
 - the parity note exists
 - the negative tests cover the changed invariant
 - all TODOs around disabled enforcement include a ticket and a deny-by-default test
+
+Include this self-review table in the PR body before opening or re-requesting review:
+
+| Area | Checked | Test |
+| --- | --- | --- |
+| Permission layout parity | yes/no | test name |
+| Repeatability parity | yes/no | test name |
+| Direct auth safety | yes/no | test name |
+| Signature replay | yes/no | test name |
+| Verifier failures | yes/no | test name |
+| External-call reentrancy | yes/no | test name |
+| Generic exec upgrade blocking | yes/no | test name |
+| Value semantics | yes/no | test name |
+| Parity target conflicts resolved | yes/no | note/ticket |
 
 ## Schema / Database
 
