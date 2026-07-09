@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Service Boundaries"
+  short_description: "API, proto, webhook, and logging boundaries"
+  default_prompt: "Use $ed-service-boundaries to design API, proto, webhook, or logging changes safely."

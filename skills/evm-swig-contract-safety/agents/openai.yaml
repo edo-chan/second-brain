@@ -1,0 +1,4 @@
+interface:
+  display_name: "EVM Swig Contract Safety"
+  short_description: "Strict Solana parity and EVM contract gates"
+  default_prompt: "Use $evm-swig-contract-safety before changing EVM Swig contracts or opening review."
