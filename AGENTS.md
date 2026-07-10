@@ -2,6 +2,19 @@
 
 These are my baseline preferences across repos. Repo-level `AGENTS.md` files override this when they are more specific.
 
+## Second Brain
+
+- The canonical second-brain repository is `/Users/edchan/Documents/Playground/Dev/second-brain`.
+- Use its `README.md` as the current index of reusable agent skills.
+- Before non-trivial work in Ed's repositories, identify any relevant skill under `second-brain/skills/` and read its `SKILL.md` completely before acting. Load only the skills relevant to the task.
+- Use `ed-git-workflow` for branch, PR, merge, and release work.
+- Use `ed-rust-service-style` for Rust services, workflows, handlers, modules, and tests.
+- Use `ed-service-boundaries` for vendor clients, public APIs, proto/gRPC, webhooks, auth boundaries, response parsing, and sensitive logging.
+- Use `ed-schema-database` for schema design, migrations, database state, and persistence boundaries.
+- Use `ed-infrastructure-rollout` for secrets, Terraform, cloud configuration, drift, and rollout work.
+- Use `evm-swig-contract-safety` for EVM Swig contract changes and reviews.
+- Treat `second-brain/AGENTS.md` as the tracked snapshot of this global file. When changing global guidance, update that snapshot through the second-brain repository's branch, pull-request, and merge workflow.
+
 ## Git Workflow
 
 - Always make changes on a feature branch, open a pull request, and merge the pull request. Do not push commits directly to `main`.
