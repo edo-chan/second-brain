@@ -26,7 +26,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep types next to the consumer that exposes or uses them. Avoid giant shared type files, vendor type dumps, and moving types into separate files before there is a real reuse boundary.
 - Keep vendor property/lookup types with the feature or endpoint that exposes them; avoid giant shared vendor type files.
 - Treat each vendor endpoint as a distinct contract. Vendor libraries must expose explicit endpoint-specific methods that return clear concrete response structs.
-- Model contract-required vendor fields as required concrete fields. Do not use `Option` and `serde(default)` merely to accept malformed responses.
+- Use `Option` only for fields the vendor contract truly marks optional. Model required fields as required concrete fields; do not pass uncertainty through with `Option` or `serde(default)` merely to accept malformed responses.
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject missing identifiers instead of collapsing them to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic vendor request/response wrappers, generic JSON methods such as `get_json<T>`, `serde_json::Value`, or raw upstream response bodies to consuming services.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library. A raw body may exist only inside a private transport helper and must be parsed before the public endpoint method returns.
@@ -58,8 +58,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 
 - Keep functions concise and single-purpose.
 - Prefer small, explicit functions over broad abstractions. Match the surrounding module style before introducing new traits, builders, or helper layers.
-- Do not add simple wrapping helper functions that only rename or pass through another call.
-- Do not add one-use helpers that round-trip `Option<String>` through `Option<&str>` or hide a trivial conversion. Fix the source type or keep a genuinely necessary transformation visible at the mapping site.
+- Do not add wrapper helpers that only forward a call or rename, clone, trim, borrow, or convert a value. Keep trivial transformations inline, or fix the source type so the conversion disappears.
 - Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
 - Use typed errors and structured error responses where the service already has them. Avoid stringly typed error plumbing unless the existing code does it.
 - Keep async boundaries clear. Do not hide network, database, or signing work inside helpers that look pure.

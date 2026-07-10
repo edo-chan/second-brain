@@ -11,7 +11,7 @@ Treat service boundaries as the place where trust, authentication, and logging p
 
 - Treat each vendor endpoint as a distinct contract.
 - Expose an explicit endpoint-specific method that returns a clear concrete response struct.
-- Model fields that the vendor contract requires as required concrete fields. Do not add `Option` and `serde(default)` merely to make malformed responses deserialize.
+- Use `Option` only for fields the vendor contract truly marks optional. Model required fields as required concrete fields; do not pass uncertainty through with `Option` or `serde(default)` merely to make malformed responses deserialize.
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject a missing identifier instead of collapsing it to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic request/response wrappers or generic JSON methods such as `get_json<T>`.
 - Do not let `serde_json::Value` or raw upstream response bodies cross the vendor-library boundary.
@@ -47,6 +47,6 @@ Treat service boundaries as the place where trust, authentication, and logging p
 ## Handler Shape
 
 - Keep request validation, auth boundary, domain logic, and response mapping easy to audit.
-- Avoid one-use helpers that only round-trip `Option<String>` through `Option<&str>` or rename a trivial conversion. Fix the source type or keep a genuinely necessary transformation visible at the mapping site.
+- Do not add wrapper helpers that only forward a call or rename, clone, trim, borrow, or convert a value. Keep trivial transformations inline, or fix the source type so the conversion disappears.
 - Avoid moving concrete vendor request/response types into giant shared files before there is a real reuse boundary.
 - Keep vendor property and lookup types with the feature that consumes or exposes them.
