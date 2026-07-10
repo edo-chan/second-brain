@@ -21,8 +21,9 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
 - Reject responses that omit required upstream data with a structured boundary error instead of returning partial output. Use `FAILED_PRECONDITION` at a gRPC boundary when the missing field makes the requested result unusable.
 - Return authoritative vendor identifiers and let downstream presentation own display labels. Do not synthesize provider or product names from codes unless a distinct typed vendor metadata endpoint supplies the canonical name.
-- Use a maintained HTTP mocking library as a dev dependency to exercise the real public vendor-client method. Do not hand-roll a mock server or count direct calls to a raw-body deserialization helper as endpoint coverage.
-- Test documented success responses and contract failures such as missing required fields at the vendor endpoint boundary. Assert the typed vendor error there, then test downstream status mapping and the small vendor-to-domain mapping separately.
+- Test each endpoint's concrete response deserialization inside the vendor library, including documented success responses, missing required fields, and the resulting typed error.
+- For Rust consuming-service tests, use `mockall` to generate mocks from the concrete typed vendor client. Do not introduce a trait or hand-written mock solely for testing; return typed successes or errors from the generated mock and assert downstream status and domain mapping.
+- Do not use an HTTP mock server to claim consuming-service logic coverage. It primarily proves that the configured fixture returns what was configured rather than isolating application behavior.
 - Treat any new or extended violation of these rules as blocking for approval. Request changes even when functional behavior and tests otherwise pass.
 
 ## Proto And gRPC
