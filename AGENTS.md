@@ -29,6 +29,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Do not expose generic vendor request/response wrappers, generic JSON methods such as `get_json<T>`, `serde_json::Value`, or raw upstream response bodies to consuming services.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library. A raw body may exist only inside a private transport helper and must be parsed before the public endpoint method returns.
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
+- Treat any new or extended violation of these vendor-client boundary rules as blocking for approval. Request changes even when functional behavior and tests otherwise pass.
 
 ## Sensitive Logging
 

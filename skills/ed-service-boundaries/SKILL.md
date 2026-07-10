@@ -18,6 +18,7 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Keep response types beside the feature or endpoint implementation that exposes them; do not create a giant shared vendor types file.
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
 - Test documented response deserialization at the vendor endpoint boundary, then test the small vendor-to-domain mapping separately.
+- Treat any new or extended violation of these rules as blocking for approval. Request changes even when functional behavior and tests otherwise pass.
 
 ## Proto And gRPC
 
