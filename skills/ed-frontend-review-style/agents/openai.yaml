@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Frontend Review Style"
+  short_description: "Review React, Next.js, and TypeScript code"
+  default_prompt: "Use $ed-frontend-review-style to review this React, Next.js, or TypeScript change."
