@@ -12,7 +12,9 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Use `mod.rs` only for wiring and exports. Do not put business logic there.
 - Keep types next to the consumer that exposes or uses them.
 - Avoid giant shared type files, vendor type dumps, and premature type extraction.
-- Avoid generic request/response wrappers for vendor or domain APIs unless the repo already uses them.
+- Do not extend generic vendor request/response wrappers or generic JSON deserialization APIs just because existing code uses them.
+- Prefer explicit endpoint-specific methods that return concrete response structs.
+- Do not let `serde_json::Value` or raw vendor response bodies cross the vendor-library boundary.
 - Do not add pass-through helpers that only rename or forward another call.
 
 ## Workflow Layout

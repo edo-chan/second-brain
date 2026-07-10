@@ -1,11 +1,23 @@
 ---
 name: ed-service-boundaries
-description: API boundary, proto/gRPC service organization, webhook verification, and sensitive logging rules for Ed's repos. Use when changing public APIs, gRPC services, webhooks, proto files, auth interceptors, or logging around vendor/user payloads.
+description: API and vendor-client boundaries, proto/gRPC service organization, webhook verification, and sensitive logging rules for Ed's repos. Use when changing public APIs, vendor integrations, HTTP clients, response parsing, gRPC services, webhooks, proto files, auth interceptors, or logging around vendor/user payloads.
 ---
 
 # Ed Service Boundaries
 
 Treat service boundaries as the place where trust, authentication, and logging policy must be explicit.
+
+## Vendor Clients
+
+- Treat each vendor endpoint as a distinct contract.
+- Expose an explicit endpoint-specific method that returns a clear concrete response struct.
+- Do not expose generic request/response wrappers or generic JSON methods such as `get_json<T>`.
+- Do not let `serde_json::Value` or raw upstream response bodies cross the vendor-library boundary.
+- Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library.
+- Allow a raw body only inside a private transport helper, and deserialize it before the public endpoint method returns.
+- Keep response types beside the feature or endpoint implementation that exposes them; do not create a giant shared vendor types file.
+- Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
+- Test documented response deserialization at the vendor endpoint boundary, then test the small vendor-to-domain mapping separately.
 
 ## Proto And gRPC
 
