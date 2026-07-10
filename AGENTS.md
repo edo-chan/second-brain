@@ -33,6 +33,8 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
 - Reject responses that omit required upstream data with a structured boundary error instead of returning partial output. Use `FAILED_PRECONDITION` at a gRPC boundary when the missing field makes the requested result unusable.
 - Return authoritative vendor identifiers and let downstream presentation own display labels. Do not synthesize provider or product names from codes unless a distinct typed vendor metadata endpoint supplies the canonical name.
+- Use a maintained HTTP mocking library as a vendor-client dev dependency to exercise the real public endpoint method. Do not hand-roll mock servers or count direct raw-body deserialization tests as endpoint coverage.
+- Cover documented success responses and contract failures such as missing required fields at the vendor boundary, then test downstream structured status mapping separately.
 - Treat any new or extended violation of these vendor-client boundary rules as blocking for approval. Request changes even when functional behavior and tests otherwise pass.
 
 ## Sensitive Logging
