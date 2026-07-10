@@ -11,8 +11,11 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 
 - Do not put business logic in `mod.rs`; use `mod.rs` only for module wiring and exports.
 - Keep types next to the consumer that exposes or uses them. Avoid giant shared type files, vendor type dumps, and moving types into separate files before there is a real reuse boundary.
-- Keep vendor property/lookup types with the feature that exposes or consumes them; avoid giant shared vendor type files.
-- Avoid generic request/response wrapper types for vendor or domain APIs; they are hard to maintain as the concrete consumers evolve.
+- Keep vendor property/lookup types with the feature or endpoint that exposes them; avoid giant shared vendor type files.
+- Treat each vendor endpoint as a distinct contract. Vendor libraries must expose explicit endpoint-specific methods that return clear concrete response structs.
+- Do not expose generic vendor request/response wrappers, generic JSON methods such as `get_json<T>`, `serde_json::Value`, or raw upstream response bodies to consuming services.
+- Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library. A raw body may exist only inside a private transport helper and must be parsed before the public endpoint method returns.
+- Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
 
 ## Sensitive Logging
 
