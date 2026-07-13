@@ -34,6 +34,12 @@ Favor small, explicit, local changes that match the surrounding module style.
 - For API handlers, keep validation, domain logic, and response mapping easy to follow. Extract helpers only when readability actually improves.
 - Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
 
+## Redis
+
+- Use `deadpool_redis` for Redis access in Rust services. Do not introduce unmanaged raw Redis connections.
+- Acquire connections from the pool at the visible async boundary and keep Redis commands explicit.
+- When `rediss://` support is required, enable the underlying `redis` crate's Tokio/Rustls transport feature, but continue to manage connections and issue commands through `deadpool_redis`.
+
 ## Validation
 
 - Use `cargo +nightly fmt` when the repo expects nightly rustfmt; otherwise use the repo's standard formatter.
