@@ -1,6 +1,6 @@
 ---
 name: ed-document-review
-description: Evidence-backed review workflow for PRDs, RFCs, architecture proposals, Notion design docs, and technical specifications in Ed's repositories. Use when asked to review a design document, proposal, implementation plan, mini-PRD, or spec for correctness, scope, trust boundaries, implementation readiness, risks, and actionable blocking findings. Pair it with the relevant domain skill; use ed-docs-style instead for prose- and presentation-focused documentation review.
+description: Collaborative, evidence-backed review workflow for PRDs, RFCs, architecture proposals, Notion design docs, and technical specifications in Ed's repositories. Use when asked to review a design document, proposal, implementation plan, mini-PRD, or spec. Begin with a concise summary only, then review user-selected blocks one at a time with the relevant coding or domain skills before drafting comments. Use ed-docs-style instead for prose- and presentation-focused documentation review.
 ---
 
 # Ed Document Review
@@ -8,6 +8,20 @@ description: Evidence-backed review workflow for PRDs, RFCs, architecture propos
 Review the proposal as a contract for a future implementation. Verify that the
 described behavior can be built safely on the actual system rather than judging
 the document only by internal coherence.
+
+## First Pass: Summarize Only
+
+Read the complete document and perform enough internal orientation to understand
+the proposed change. Return only a concise summary of:
+
+1. the outcome or decision the document proposes;
+2. the main implementation or system flow;
+3. the important scope boundaries, non-goals, or unresolved decisions.
+
+Do not lead with a verdict, enumerate findings, assign priorities, or draft a
+batch of comments during the first pass. Do not turn introductory or contextual
+sections into review targets unless they materially change the proposed
+contract. Stop after the summary and wait for the user to choose a block.
 
 ## Establish The Review Baseline
 
@@ -46,6 +60,28 @@ for the proposal:
 
 Do not duplicate domain rules inside the review. Apply them to the proposal and
 cite the exact section or implementation surface that conflicts.
+
+## Review One Block At A Time
+
+After the first-pass summary, work through one user-selected section or logical
+block at a time. If the user does not select the next block, suggest one
+implementation-bearing block without presenting a prioritized review queue.
+Skim introductions and background by default; focus on decisions, data flows,
+contracts, trust boundaries, persistence, failure behavior, rollout, and
+acceptance criteria.
+
+For each block:
+
+1. Load only the coding or domain skills relevant to that block.
+2. Inspect the current code, schema, primary documentation, or other evidence
+   needed to verify the block's claims.
+3. Briefly restate what the block proposes.
+4. Give a compact take: what works, what is unclear, and any material gap.
+5. Propose a narrowly anchored comment only when a comment is warranted.
+6. Discuss and revise the take or comment with the user before writing it.
+
+Do not add a document comment until the user explicitly agrees to it. After the
+block is resolved, move to the next selected block.
 
 ## Trace The Proposed Flow
 
@@ -94,9 +130,12 @@ materially different security, data, API, or user behavior. Do not silently
 choose one implementation and review the document as though that choice were
 approved.
 
-## Write Findings That Can Be Acted On
+## Synthesize Findings Only When Asked
 
-Lead with the verdict, then list findings in priority order.
+Only produce a full verdict or prioritized findings when the user explicitly
+asks for a final synthesis, approval recommendation, or findings report. At
+that point, lead with the verdict and list only the material unresolved
+findings in priority order.
 
 Use these severities:
 
@@ -121,12 +160,15 @@ when the document explicitly and safely places them outside the approved scope.
 
 ## Finish The Review
 
-- State whether the document is ready, ready with follow-ups, or needs changes.
+- During block review, keep the response focused on the selected block rather
+  than repeating an overall verdict.
+- When explicitly asked for the final synthesis, state whether the document is
+  ready, ready with follow-ups, or needs changes.
 - Call out the strongest parts briefly after the findings when useful.
 - Cite the exact document sections, repository files and lines, commits, and
   primary external sources used for material claims.
 - State what was not verified and why.
 - Keep the review read-only unless the user explicitly asks to edit the document
   or add comments.
-- When asked to add comments, attach each finding to the narrowest relevant
-  section and avoid duplicating the same issue across multiple comments.
+- When the user approves a comment, attach it to the narrowest relevant section,
+  keep it to one issue, and avoid duplicating it across multiple comments.
