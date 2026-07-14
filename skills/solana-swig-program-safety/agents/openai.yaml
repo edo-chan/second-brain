@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solana Swig Program Safety"
+  short_description: "Review Solana Swig program changes safely"
+  default_prompt: "Use $solana-swig-program-safety to implement or review a Solana Swig program change with strict account, authorization, layout, and test gates."

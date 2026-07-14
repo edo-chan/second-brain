@@ -13,6 +13,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Use `ed-service-boundaries` for vendor clients, public APIs, proto/gRPC, webhooks, auth boundaries, response parsing, and sensitive logging.
 - Use `ed-schema-database` for schema design, migrations, database state, and persistence boundaries.
 - Use `ed-infrastructure-rollout` for secrets, Terraform, cloud configuration, drift, and rollout work.
+- Use `solana-swig-program-safety` for Solana Swig state, program, authority, permission, parser, SignV2, recovery, SDK, and pull-request work.
 - Use `evm-swig-contract-safety` for EVM Swig contract changes and reviews.
 - Treat `second-brain/AGENTS.md` as the tracked snapshot of this global file. When changing global guidance, update that snapshot through the second-brain repository's branch, pull-request, and merge workflow.
 
