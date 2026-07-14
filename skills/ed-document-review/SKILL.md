@@ -1,6 +1,6 @@
 ---
 name: ed-document-review
-description: Collaborative, evidence-backed review workflow for PRDs, RFCs, architecture proposals, Notion design docs, and technical specifications in Ed's repositories. Use when asked to review a design document, proposal, implementation plan, mini-PRD, or spec. Begin with a concise summary only, then review user-selected blocks one at a time with the relevant coding or domain skills before drafting comments. Use ed-docs-style instead for prose- and presentation-focused documentation review.
+description: Collaborative, evidence-backed review workflow for PRDs, RFCs, architecture proposals, Notion design docs, and technical specifications in Ed's repositories. Use when asked to review a design document, proposal, implementation plan, mini-PRD, or spec. Begin with a concise summary, then review user-selected blocks one at a time, maintain the agreed target model as decisions evolve, and place comments only after approval. Use ed-docs-style instead for prose- and presentation-focused documentation review.
 ---
 
 # Ed Document Review
@@ -70,6 +70,11 @@ Skim introductions and background by default; focus on decisions, data flows,
 contracts, trust boundaries, persistence, failure behavior, rollout, and
 acceptance criteria.
 
+Treat a short instruction such as "next" as selection of the next logical
+block. Continue directly without re-summarizing resolved sections. Match the
+user's desired depth: accept intentionally loose background when it does not
+change the implementation contract, and spend detail on the blocks that do.
+
 For each block:
 
 1. Load only the coding or domain skills relevant to that block.
@@ -82,6 +87,49 @@ For each block:
 
 Do not add a document comment until the user explicitly agrees to it. After the
 block is resolved, move to the next selected block.
+
+## Maintain The Agreed Model
+
+Keep a compact working distinction among:
+
+- current-system behavior verified from code or primary sources;
+- the document's original proposal;
+- the target model agreed with the user during review;
+- choices that remain unresolved.
+
+When the user changes a cross-cutting concept, restate the exact resulting
+structure before commenting. Translate shorthand into the precise contract: for
+example, distinguish deleting a role from removing one permission on that role.
+Carry the accepted decision into later blocks instead of continuing to review
+against superseded terminology or data shapes.
+
+If a later decision makes an earlier document comment stale, correct that
+comment immediately. Prefer editing it or replying in the same discussion over
+adding a disconnected correction elsewhere. Preserve the decision history only
+when it helps the author understand why the target changed.
+
+## Use Contract Tables For Cross-Cutting Behavior
+
+When behavior depends on several dimensions such as permission, operation,
+scope, state, override, or authority type, ask for a normative table instead of
+leaving the contract distributed across prose. Define the relevant rows and
+columns explicitly, include broad-permission and recovery exceptions, and map
+the implementation tests one-to-one to the table.
+
+Use the table to expose hierarchy boundaries. Do not assume that a broad
+permission at one layer inherits a scoped permission at another layer unless
+the document states that relationship explicitly.
+
+## Run A Decision Fallout Pass
+
+After accepting a cross-cutting change, scan the rest of the document for stale
+consequences. Check the summary, diagram, data layouts, instructions, runtime
+flow, authorization, limits, indexing, alternatives, comparison tables,
+compatibility, open questions, and verification plan as applicable.
+
+Separate new design questions from mechanical cleanup. Call out calculations,
+cost comparisons, instruction numbers, action counts, and compatibility claims
+that must be recomputed rather than merely renamed.
 
 ## Trace The Proposed Flow
 
