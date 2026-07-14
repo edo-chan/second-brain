@@ -21,6 +21,9 @@ Inspect drift and scope before applying infrastructure changes.
 - Inspect plan and drift before applying Terraform unless the user explicitly asks for direct apply.
 - Keep infrastructure changes scoped by environment.
 - If a resource is per-environment, name and store it per-environment.
+- Provision every new environment-scoped SSM parameter with Terraform before attempting to persist its real value.
+- After Terraform creates the parameter, persist the real value in SSM and verify that every target environment can resolve it before deploying code that requires it.
+- Treat missing, placeholder, sentinel, or unreadable SSM values as rollout blockers. Never deploy consuming code before the required value is persisted and verified.
 - Prefer deleting deprecated resources after traffic and dependencies are confirmed gone.
 - Be especially willing to delete old EKS, ClickHouse, indexer, and unused Helm resources once confirmed unused.
 
