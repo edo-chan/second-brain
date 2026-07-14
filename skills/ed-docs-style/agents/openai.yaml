@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Docs Style"
+  short_description: "Write affirmative, task-oriented documentation"
+  default_prompt: "Apply Ed’s affirmative documentation style to this writing or review."

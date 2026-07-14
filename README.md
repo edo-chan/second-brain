@@ -11,4 +11,5 @@ Personal agent guidance and reusable Codex skills.
 - `skills/ed-service-boundaries` - proto, API, webhook, and logging boundaries.
 - `skills/ed-schema-database` - migration-first schema and database rules.
 - `skills/ed-infrastructure-rollout` - secrets, Terraform, and rollout guardrails.
+- `skills/ed-docs-style` - affirmative, task-oriented product and API documentation standards.
 - `skills/evm-swig-contract-safety` - strict EVM Swig contract safety and Solana parity gates.
