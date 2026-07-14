@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed PR Review Workflow"
+  short_description: "Review stacked PRs collaboratively, layer by layer"
+  default_prompt: "Use $ed-pr-review-workflow to map my review queue, understand the selected stack, and review it with me PR by PR."
