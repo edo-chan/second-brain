@@ -264,6 +264,9 @@ Include this self-review table in the PR body before opening or re-requesting re
 - Do not persist private keys or secrets in source. Store public keys and non-secret service runtime configuration in SSM.
 - For Terraform, inspect plan/drift before applying unless I explicitly ask for a direct apply.
 - Keep infrastructure changes scoped by environment. If a resource is per-env, name and store it per-env.
+- Provision every new environment-scoped SSM parameter with Terraform before attempting to persist its real value.
+- After Terraform creates the parameter, persist the real value in SSM and verify that every target environment can resolve it before deploying code that requires it.
+- Treat missing, placeholder, sentinel, or unreadable SSM values as rollout blockers. Never deploy consuming code before the required value is persisted and verified.
 - Use AWS SSM Parameter Store as the sole source for service runtime configuration in every environment, including local development.
 - Treat declared SSM parameters as required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
 - Configure local development to authenticate to AWS and read its environment-scoped configuration directly from SSM.
