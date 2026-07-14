@@ -12,5 +12,6 @@ Personal agent guidance and reusable Codex skills.
 - `skills/ed-schema-database` - migration-first schema and database rules.
 - `skills/ed-infrastructure-rollout` - secrets, Terraform, and rollout guardrails.
 - `skills/ed-docs-style` - affirmative, task-oriented product and API documentation standards.
+- `skills/ed-document-review` - evidence-backed PRD, RFC, architecture, and design-document review workflow.
 - `skills/solana-swig-program-safety` - strict Solana Swig program safety, compatibility, and review gates.
 - `skills/evm-swig-contract-safety` - strict EVM Swig contract safety and Solana parity gates.
