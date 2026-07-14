@@ -261,10 +261,12 @@ Include this self-review table in the PR body before opening or re-requesting re
 ## Infrastructure
 
 - Treat pasted credentials, API keys, private keys, and session tokens as sensitive unless explicitly marked throwaway.
-- Do not persist private keys or secrets in source. Public keys and non-secret config can live in parameter/config stores when appropriate.
+- Do not persist private keys or secrets in source. Store public keys and non-secret service runtime configuration in SSM.
 - For Terraform, inspect plan/drift before applying unless I explicitly ask for a direct apply.
 - Keep infrastructure changes scoped by environment. If a resource is per-env, name and store it per-env.
-- Prefer AWS SSM Parameter Store for deployed configuration. Do not add local environment-variable overrides when the expected source is Param Store.
+- Use AWS SSM Parameter Store as the sole source for service runtime configuration in every environment, including local development.
+- Treat declared SSM parameters as required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
+- Configure local development to authenticate to AWS and read its environment-scoped configuration directly from SSM.
 - Prefer deleting deprecated resources once traffic and dependencies are confirmed gone, especially old EKS, ClickHouse, indexer, and unused Helm resources.
 - For AWS signing/enclave work, keep private material owned by KMS/enclave flows where possible; store only public keys or ciphertext blobs outside the signer boundary.
 - When CI, branch protection, credentials, or cloud state blocks a rollout, state the exact blocker and the next action.
