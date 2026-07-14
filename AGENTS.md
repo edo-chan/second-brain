@@ -8,6 +8,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Use its `README.md` as the current index of reusable agent skills.
 - Before non-trivial work in Ed's repositories, identify any relevant skill under `second-brain/skills/` and read its `SKILL.md` completely before acting. Load only the skills relevant to the task.
 - Use `ed-git-workflow` for branch, PR, merge, and release work.
+- Use `ed-pr-review-workflow` for PR review queues, stack selection, whole-stack context passes, and collaborative block-by-block reviews.
 - Use `ed-rust-service-style` for Rust services, workflows, handlers, modules, and tests.
 - Use `ed-frontend-review-style` for React, Next.js App Router, and TypeScript implementation and pull-request reviews.
 - Use `ed-service-boundaries` for vendor clients, public APIs, proto/gRPC, webhooks, auth boundaries, response parsing, and sensitive logging.

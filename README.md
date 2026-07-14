@@ -6,6 +6,7 @@ Personal agent guidance and reusable Codex skills.
 
 - `AGENTS.md` - full global agent guidance snapshot.
 - `skills/ed-git-workflow` - branch, PR, merge, and release workflow.
+- `skills/ed-pr-review-workflow` - collaborative stacked-PR selection, context, and block-by-block review workflow.
 - `skills/ed-rust-service-style` - Rust code organization and service style.
 - `skills/ed-frontend-review-style` - React, Next.js App Router, and TypeScript implementation and review standards.
 - `skills/ed-service-boundaries` - proto, API, webhook, and logging boundaries.
