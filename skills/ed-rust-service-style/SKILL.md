@@ -27,7 +27,7 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 ## Rust Style
 
-- Keep functions concise and single-purpose.
+- Keep every function concise, focused, and single-purpose. When a function becomes difficult to scan or mixes phases, split it into concrete focused functions before adding more logic.
 - Prefer typed errors and structured responses where the service already has them.
 - Avoid stringly typed error plumbing unless existing code does it.
 - Do not introduce generics or explicit lifetime parameters unless Ed explicitly specifies them. Prefer concrete types and elided lifetimes.
