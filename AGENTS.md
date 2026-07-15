@@ -65,6 +65,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep functions concise and single-purpose.
 - Prefer small, explicit functions over broad abstractions. Match the surrounding module style before introducing new traits, builders, or helper layers.
 - Do not add wrapper helpers that only forward a call or rename, clone, trim, borrow, or convert a value. Keep trivial transformations inline, or fix the source type so the conversion disappears.
+- Do not introduce generics or explicit lifetime parameters unless I explicitly specify them. Prefer concrete types and elided lifetimes.
 - Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
 - Use typed errors and structured error responses where the service already has them. Avoid stringly typed error plumbing unless the existing code does it.
 - Keep async boundaries clear. Do not hide network, database, or signing work inside helpers that look pure.

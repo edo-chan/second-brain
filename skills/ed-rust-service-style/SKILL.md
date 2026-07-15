@@ -30,6 +30,7 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Keep functions concise and single-purpose.
 - Prefer typed errors and structured responses where the service already has them.
 - Avoid stringly typed error plumbing unless existing code does it.
+- Do not introduce generics or explicit lifetime parameters unless Ed explicitly specifies them. Prefer concrete types and elided lifetimes.
 - Keep async boundaries visible. Do not hide network, database, or signing work inside helpers that look pure.
 - For API handlers, keep validation, domain logic, and response mapping easy to follow. Extract helpers only when readability actually improves.
 - Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
