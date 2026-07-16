@@ -59,6 +59,25 @@ A PR is not ready unless touched invariants are encoded in tests:
 - Direct proxy/config initialization must not allow arbitrary nonzero vault addresses if factory-paired deployment is required.
 - Asset-moving paths must deny by default unless `All`, `AllButManageAuthority`, or a matching scoped permission is present and consumed.
 
+## Solidity Numeric Conversion Style
+
+- Avoid dense nested cast-and-shift expressions. Convert raw bytes into a named value at the destination width, then perform the shift.
+- Keep both shift operands at compatible widths when Solidity warns about mixed-width behavior. Do not reintroduce opaque casts merely to silence the compiler.
+- Name endian-specific helpers explicitly and test byte order with representative values.
+
+Prefer:
+
+```solidity
+uint64 byteValue = uint64(uint8(data[offset + i]));
+value |= byteValue << uint64(i * 8);
+```
+
+over:
+
+```solidity
+value |= uint64(uint256(uint8(data[offset + i])) << (i * 8));
+```
+
 ## Auth Path Matrix
 
 For each auth entrypoint, document and test:
