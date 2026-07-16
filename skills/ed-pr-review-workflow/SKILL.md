@@ -77,6 +77,22 @@ selected stack:
 Apply the domain skills to the concrete code. Do not duplicate their rules in
 this coordinator skill.
 
+## Calibrate WebIDP Findings To Trust Context
+
+Treat One Wallet, One Business, and local development as trusted, lower-risk
+WebIDP integration contexts. Default findings limited to origin breadth,
+frame/CSP permissiveness, local bootstrap scope, or missing browser hardening in
+those contexts to non-blocking unless there is concrete evidence that the
+behavior escapes the trusted surface or exposes tokens, authorization, or user
+assets.
+
+Do not use this calibration to waive public or external WebIDP contract
+correctness, server-side authorization and token boundaries, authoritative
+consent data, or required lint, formatting, typecheck, and test gates. If it is
+unclear whether a behavior is limited to these trusted contexts, state the
+assumption and confirm the intended exposure before assigning blocking
+severity.
+
 ## Review Each PR Bottom-Up
 
 Review the root PR first and continue toward the stack tip. For each PR, compare
