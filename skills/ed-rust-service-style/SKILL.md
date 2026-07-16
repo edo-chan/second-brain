@@ -42,9 +42,21 @@ Favor small, explicit, local changes that match the surrounding module style.
   persistence, and response mapping.
 - Make the irreversible boundary explicit. A later nested error must not reset
   state in a way that permits the same external effect to run again.
-- Do not add production traits, forwarding layers, or configuration wrappers
-  solely to make tests easier. Mock the concrete boundary or test the focused
-  unit directly.
+- Do not add a production trait merely because a test framework exists. A trait
+  is justified when production code owns a replaceable dependency boundary,
+  such as `Arc<dyn VendorClient>`, even when a Mockall mock is currently the
+  only alternate implementation.
+- Mockall concrete-struct mocks have a different type from the real struct.
+  Replacing a concrete dependency therefore requires `mockall_double`,
+  test-only import rewriting, or generic code. Do not require concrete-struct
+  mocking when trait injection is the simpler production shape.
+- Keep dependency traits focused on the methods their consumers need. Treat the
+  thin trait implementation that delegates to the concrete client as boundary
+  wiring, not as a prohibited pass-through helper.
+- When a consuming crate mocks a trait from another crate, a local `mock!`
+  declaration may need to repeat the trait methods. Accept that when it is the
+  simplest local test boundary; add an exported or feature-gated shared mock
+  only when multiple consumers justify the extra test-support surface.
 - Derive billing and spend from authoritative confirmed pre/post state. Treat
   predicted fees and locally reconstructed arithmetic as estimates, not final
   accounting.

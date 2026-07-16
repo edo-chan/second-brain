@@ -42,7 +42,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Model only upstream fields that consumers use or the boundary must validate. Validate response cardinality and correlate returned identifiers to requested identifiers before accepting a response.
 - Return authoritative vendor identifiers and let downstream presentation own display labels. Do not synthesize provider or product names from codes unless a distinct typed vendor metadata endpoint supplies the canonical name.
 - Test each endpoint's concrete response deserialization inside the vendor library, including documented successes, missing required fields, and typed errors.
-- For Rust consuming-service tests, use `mockall` to generate mocks from the concrete typed vendor client. Do not introduce a trait or hand-written mock solely for testing; return typed successes or errors from the generated mock and assert downstream status and domain mapping.
+- For Rust consuming-service tests, use `mockall` at a focused typed vendor boundary. A production trait is justified when the consumer needs a replaceable dependency such as `Arc<dyn VendorClient>`; concrete-struct mocks are different types and otherwise require `mockall_double`, test-only import rewriting, or generics. Do not reject the trait merely because its main alternate implementation is a test mock. Keep the trait consumer-focused, accept local `mock!` signature repetition for an external trait when it is the simplest option, and return typed successes or errors from the mock while asserting downstream status and domain mapping.
 - Do not use an HTTP mock server to claim consuming-service logic coverage. It primarily proves that the configured fixture returns what was configured rather than isolating application behavior.
 - Treat any new or extended violation of these vendor-client boundary rules as blocking for approval. Request changes even when functional behavior and tests otherwise pass.
 
@@ -78,7 +78,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep lifecycle phases and irreversible external-call boundaries visible. After external acceptance, persist accepted state or its identifier before later work, and never release idempotency in a way that permits the effect to repeat.
 - Decide whether the caller, vendor client, workflow, or platform owns retries. Do not add implicit retries at a layer that cannot reason about idempotency.
 - Record exactly one API-request event per invocation, including errors and replays. Emit domain or billing events only for newly completed work.
-- Do not introduce production traits, forwarding layers, or configuration wrappers solely for tests.
+- Do not introduce production traits merely because a test framework exists. A trait used by production code as a replaceable dependency boundary, such as `Arc<dyn Client>`, is legitimate even when Mockall supplies the only current alternate implementation; thin delegation to the concrete client is boundary wiring.
 - Derive billing and spend from authoritative confirmed pre/post state, not predicted fee arithmetic.
 - For batch or bundle behavior, include a multi-item success test that proves order, cardinality, and per-item mapping.
 - Use `cargo +nightly fmt` when the repo expects nightly rustfmt; otherwise use the repo’s standard formatter.
