@@ -36,7 +36,23 @@ Treat service boundaries as the place where trust, authentication, and logging p
   requested identifiers before accepting a response. Do not assume the first
   entry belongs to the request.
 - Test each endpoint's concrete response deserialization inside the vendor library, including documented success responses, missing required fields, and the resulting typed error.
-- For Rust consuming-service tests, use `mockall` to generate mocks from the concrete typed vendor client. Do not introduce a trait or hand-written mock solely for testing; return typed successes or errors from the generated mock and assert downstream status and domain mapping.
+- For Rust consuming-service tests, use `mockall` at a focused typed vendor
+  boundary. A production trait is justified when the consumer needs a
+  replaceable dependency such as `Arc<dyn VendorClient>`; do not reject that
+  interface merely because its main alternate implementation is a test mock.
+- Mockall mocks of inherent methods are separate concrete types. Substituting
+  them for a field typed as the real client requires `mockall_double`,
+  test-only import rewriting, or generic code, so prefer trait injection when
+  it matches the service's normal dependency shape.
+- Keep the trait limited to the endpoint methods its consumers use. A thin
+  implementation that delegates those methods to the concrete client is
+  legitimate boundary wiring, not an unnecessary forwarding abstraction.
+- When the trait belongs to another crate, a consuming crate's `mock!`
+  declaration may repeat the method signatures. Prefer a shared,
+  feature-gated generated mock only when reuse across consumers justifies the
+  added test-support API.
+- Return typed successes or errors from the mock and assert downstream status
+  and domain mapping.
 - Do not use an HTTP mock server to claim consuming-service logic coverage. It primarily proves that the configured fixture returns what was configured rather than isolating application behavior.
 - Treat any new or extended violation of these rules as blocking for approval. Request changes even when functional behavior and tests otherwise pass.
 - Keep HTTP client types and raw RPC messages private. Public errors should
