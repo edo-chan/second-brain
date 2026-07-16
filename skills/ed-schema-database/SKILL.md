@@ -26,6 +26,15 @@ Use migrations as the source of truth and preserve production data by default.
 - Use Prost well-known types where applicable.
 - Avoid duplicating data that can be reliably derived.
 - When adding request or table fields, identify whether the value is user input, derived state, cached state, or source-of-truth state.
+- Identify each row's granularity: API request, domain item, billable item,
+  confirmation, or transport-level group.
+- Do not persist a transport-level group when request and per-item records
+  already satisfy the consumers. Persist it only when it has its own lifecycle,
+  source-of-truth role, or concrete query consumer.
+- Keep request telemetry separate from domain and billing records so failures
+  and replays do not create duplicate billable work.
+- Store authoritative accounting derived from confirmed pre/post metadata, not
+  predicted fee arithmetic.
 
 ## Change Safety
 

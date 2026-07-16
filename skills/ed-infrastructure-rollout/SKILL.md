@@ -11,8 +11,18 @@ Inspect drift and scope before applying infrastructure changes.
 
 - Treat pasted credentials, API keys, private keys, and session tokens as sensitive unless explicitly marked throwaway.
 - Do not persist private keys or secrets in source.
-- Store public keys and non-secret service runtime configuration in SSM.
-- Use AWS SSM Parameter Store as the sole source for service runtime configuration in every environment, including local development.
+- Classify each value as a credential, environment-specific configuration,
+  customer-specific configuration, or stable public protocol constant.
+- Store public keys and environment- or customer-specific service runtime
+  configuration in SSM.
+- Stable canonical public endpoints and paths may live in code when they are not
+  credential-bearing, region-selected, customer-specific, or environment-
+  varying.
+- Before adding a new endpoint parameter, check whether an existing
+  credentialed provider endpoint supports the required capability and verify it
+  against the live provider contract.
+- Use AWS SSM Parameter Store as the sole source for environment- and
+  customer-specific service runtime configuration, including local development.
 - Treat declared SSM parameters as required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
 - Configure local development to authenticate to AWS and read its environment-scoped configuration directly from SSM.
 

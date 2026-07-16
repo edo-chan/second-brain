@@ -113,6 +113,30 @@ Before examining individual code blocks, present:
 Keep preliminary conclusions open to revision as the walkthrough uncovers more
 evidence.
 
+### Run A Cross-Cutting Review Matrix
+
+Before the block walkthrough, trace these concerns across the PR and stack:
+
+- lifecycle phases, external calls, irreversible side effects, error
+  propagation, and idempotency before and after the irreversible boundary;
+- required-nullable vendor fields, response cardinality, and correlation of
+  returned identifiers to requested identifiers;
+- request and response contracts, including who constructs, funds, and signs a
+  signed payload and whether any server-side mutation requires re-signing;
+- source of truth and record granularity for API requests, domain items,
+  billable items, confirmations, and transport-level groups;
+- authoritative accounting from confirmed pre/post state instead of predicted
+  fee arithmetic;
+- configuration classification as a credential, environment-specific value,
+  customer-specific value, or stable public protocol constant;
+- true multi-item success coverage for batch or bundle behavior, including
+  order, cardinality, and per-item mapping.
+
+Record the exact files, lines, and test names that prove each applicable check,
+whether the evidence is PR-local or cross-stack, and any proof deferred to a
+later PR. Treat a missing test for a claimed behavior or failure mode as an
+explicit test-note gap.
+
 ### Walk Through Logical Blocks Together
 
 Divide the PR into coherent implementation blocks such as a migration, proto

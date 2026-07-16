@@ -29,12 +29,16 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep types next to the consumer that exposes or uses them. Avoid giant shared type files, vendor type dumps, and moving types into separate files before there is a real reuse boundary.
 - Keep vendor property/lookup types with the feature or endpoint that exposes them; avoid giant shared vendor type files.
 - Treat each vendor endpoint as a distinct contract. Vendor libraries must expose explicit endpoint-specific methods that return clear concrete response structs.
+- Review request contracts as strictly as response contracts. Identify caller-supplied, server-derived, and vendor-derived fields. For signed payloads, distinguish who constructs, funds, and signs; do not mutate a signed message unless every affected signer can sign the result.
 - Use `Option` only for fields the vendor contract truly marks optional. Model required fields as required concrete fields; do not pass uncertainty through with `Option` or `serde(default)` merely to accept malformed responses.
+- For required-but-nullable vendor fields, accept explicit `null` and reject omission. A plain `Option<T>` does not preserve that distinction.
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject missing identifiers instead of collapsing them to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic vendor request/response wrappers, generic JSON methods such as `get_json<T>`, `serde_json::Value`, or raw upstream response bodies to consuming services.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library. A raw body may exist only inside a private transport helper and must be parsed before the public endpoint method returns.
+- Keep HTTP client types and raw RPC messages private. Public errors should expose stable error classes and safe context such as status or request ids, not transport implementation types or response bodies.
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
 - Reject responses that omit required upstream data with a structured boundary error instead of returning partial output. Use `FAILED_PRECONDITION` at a gRPC boundary when the missing field makes the requested result unusable.
+- Model only upstream fields that consumers use or the boundary must validate. Validate response cardinality and correlate returned identifiers to requested identifiers before accepting a response.
 - Return authoritative vendor identifiers and let downstream presentation own display labels. Do not synthesize provider or product names from codes unless a distinct typed vendor metadata endpoint supplies the canonical name.
 - Test each endpoint's concrete response deserialization inside the vendor library, including documented successes, missing required fields, and typed errors.
 - For Rust consuming-service tests, use `mockall` to generate mocks from the concrete typed vendor client. Do not introduce a trait or hand-written mock solely for testing; return typed successes or errors from the generated mock and assert downstream status and domain mapping.
@@ -70,6 +74,12 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Use typed errors and structured error responses where the service already has them. Avoid stringly typed error plumbing unless the existing code does it.
 - Keep async boundaries clear. Do not hide network, database, or signing work inside helpers that look pure.
 - For API handlers, keep validation, domain logic, and response mapping easy to follow. Extract helpers when the handler stops being readable.
+- Keep lifecycle phases and irreversible external-call boundaries visible. After external acceptance, persist accepted state or its identifier before later work, and never release idempotency in a way that permits the effect to repeat.
+- Decide whether the caller, vendor client, workflow, or platform owns retries. Do not add implicit retries at a layer that cannot reason about idempotency.
+- Record exactly one API-request event per invocation, including errors and replays. Emit domain or billing events only for newly completed work.
+- Do not introduce production traits, forwarding layers, or configuration wrappers solely for tests.
+- Derive billing and spend from authoritative confirmed pre/post state, not predicted fee arithmetic.
+- For batch or bundle behavior, include a multi-item success test that proves order, cardinality, and per-item mapping.
 - Use `cargo +nightly fmt` when the repo expects nightly rustfmt; otherwise use the repo’s standard formatter.
 - Run the narrow relevant checks before committing: usually `cargo test` for touched behavior and `cargo clippy --all-targets` for service changes.
 
@@ -257,18 +267,23 @@ Include this self-review table in the PR body before opening or re-requesting re
 - Preserve existing data when changing columns, enum values, constraints, or indexes. If a migration is destructive, call that out before applying it.
 - Avoid duplicating data that can be derived reliably, especially request fields like token accounts, token programs, or wallet-derived addresses.
 - When adding request or table fields, verify whether the value is user input, derived state, cached state, or source-of-truth state.
+- Identify each row's granularity: API request, domain item, billable item, confirmation, or transport-level group. Persist a transport group only when it has its own lifecycle, source-of-truth role, or concrete query consumer.
+- Keep API-request telemetry separate from domain and billing records so failures and replays do not create duplicate billable work.
 - For production or staging data changes, check current state and drift first, then apply the smallest clear migration.
 
 ## Infrastructure
 
 - Treat pasted credentials, API keys, private keys, and session tokens as sensitive unless explicitly marked throwaway.
-- Do not persist private keys or secrets in source. Store public keys and non-secret service runtime configuration in SSM.
+- Do not persist private keys or secrets in source.
+- Classify configuration as a credential, environment-specific value, customer-specific value, or stable public protocol constant. Store public keys and environment- or customer-specific runtime configuration in SSM.
+- Stable canonical public endpoints and paths may live in code when they are not credential-bearing, region-selected, customer-specific, or environment-varying.
+- Before adding a new endpoint parameter, check whether an existing credentialed provider endpoint supports the capability and verify it against the live provider contract.
 - For Terraform, inspect plan/drift before applying unless I explicitly ask for a direct apply.
 - Keep infrastructure changes scoped by environment. If a resource is per-env, name and store it per-env.
 - Provision every new environment-scoped SSM parameter with Terraform before attempting to persist its real value.
 - After Terraform creates the parameter, persist the real value in SSM and verify that every target environment can resolve it before deploying code that requires it.
 - Treat missing, placeholder, sentinel, or unreadable SSM values as rollout blockers. Never deploy consuming code before the required value is persisted and verified.
-- Use AWS SSM Parameter Store as the sole source for service runtime configuration in every environment, including local development.
+- Use AWS SSM Parameter Store as the sole source for environment- and customer-specific service runtime configuration in every environment, including local development.
 - Treat declared SSM parameters as required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
 - Configure local development to authenticate to AWS and read its environment-scoped configuration directly from SSM.
 - Prefer deleting deprecated resources once traffic and dependencies are confirmed gone, especially old EKS, ClickHouse, indexer, and unused Helm resources.

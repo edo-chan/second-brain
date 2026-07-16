@@ -35,6 +35,22 @@ Favor small, explicit, local changes that match the surrounding module style.
 - For API handlers, keep validation, domain logic, and response mapping easy to follow. Extract helpers only when readability actually improves.
 - Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
 
+## Lifecycle And Accounting
+
+- Keep top-level phases visible: validation, idempotency, preparation,
+  irreversible external call, accepted state, confirmation, accounting,
+  persistence, and response mapping.
+- Make the irreversible boundary explicit. A later nested error must not reset
+  state in a way that permits the same external effect to run again.
+- Do not add production traits, forwarding layers, or configuration wrappers
+  solely to make tests easier. Mock the concrete boundary or test the focused
+  unit directly.
+- Derive billing and spend from authoritative confirmed pre/post state. Treat
+  predicted fees and locally reconstructed arithmetic as estimates, not final
+  accounting.
+- For batch or bundle behavior, include a success test with multiple items that
+  proves order, cardinality, and per-item result mapping.
+
 ## Redis
 
 - Use `deadpool_redis` for Redis access in Rust services. Do not introduce unmanaged raw Redis connections.
