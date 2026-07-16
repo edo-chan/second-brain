@@ -11,20 +11,49 @@ Treat service boundaries as the place where trust, authentication, and logging p
 
 - Treat each vendor endpoint as a distinct contract.
 - Expose an explicit endpoint-specific method that returns a clear concrete response struct.
+- Review the request contract as strictly as the response contract. Identify
+  caller-supplied, server-derived, and vendor-derived fields instead of showing
+  or validating only the response shape.
+- For signed payloads, distinguish who constructs instructions, who funds fees
+  or tips, and who signs. Do not mutate an already signed message unless every
+  affected signer can sign the resulting message.
 - Use `Option` only for fields the vendor contract truly marks optional. Model required fields as required concrete fields; do not pass uncertainty through with `Option` or `serde(default)` merely to make malformed responses deserialize.
+- For a required-but-nullable field, accept explicit `null` and reject omission.
+  A plain `Option<T>` does not preserve that presence distinction.
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject a missing identifier instead of collapsing it to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic request/response wrappers or generic JSON methods such as `get_json<T>`.
 - Do not let `serde_json::Value` or raw upstream response bodies cross the vendor-library boundary.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library.
 - Allow a raw body only inside a private transport helper, and deserialize it before the public endpoint method returns.
 - Keep response types beside the feature or endpoint implementation that exposes them; do not create a giant shared vendor types file.
+- Model only the upstream fields that consumers use or the boundary must
+  validate. Do not import a large optional vendor response dump or dependency
+  when a focused endpoint type is sufficient.
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
 - Reject responses that omit required upstream data with a structured boundary error instead of returning partial output. Use `FAILED_PRECONDITION` at a gRPC boundary when the missing field makes the requested result unusable.
 - Return authoritative vendor identifiers and let downstream presentation own display labels. Do not synthesize provider or product names from codes unless a distinct typed vendor metadata endpoint supplies the canonical name.
+- Validate response cardinality and correlate returned identifiers to the
+  requested identifiers before accepting a response. Do not assume the first
+  entry belongs to the request.
 - Test each endpoint's concrete response deserialization inside the vendor library, including documented success responses, missing required fields, and the resulting typed error.
 - For Rust consuming-service tests, use `mockall` to generate mocks from the concrete typed vendor client. Do not introduce a trait or hand-written mock solely for testing; return typed successes or errors from the generated mock and assert downstream status and domain mapping.
 - Do not use an HTTP mock server to claim consuming-service logic coverage. It primarily proves that the configured fixture returns what was configured rather than isolating application behavior.
 - Treat any new or extended violation of these rules as blocking for approval. Request changes even when functional behavior and tests otherwise pass.
+- Keep HTTP client types and raw RPC messages private. Public errors should
+  expose stable error classes and safe context such as status or request ids,
+  not transport implementation types or response bodies.
+
+## External Effects And Retry Ownership
+
+- Decide whether the caller, vendor client, workflow, or platform owns retries.
+  Do not add implicit retries at a layer that cannot reason about idempotency.
+- Mark irreversible vendor acceptance explicitly and persist its identifier or
+  accepted state before later confirmation, accounting, or response work.
+- Never release idempotency after acceptance in a way that lets a retry repeat
+  the external effect.
+- Record exactly one API-request event per invocation, including errors and
+  replays. Emit domain or billing events only for newly completed work so API
+  telemetry cannot double bill a failed or repeated request.
 
 ## Proto And gRPC
 
