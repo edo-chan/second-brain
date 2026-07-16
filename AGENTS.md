@@ -7,6 +7,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - The canonical second-brain repository is `/Users/edchan/Documents/Playground/Dev/second-brain`.
 - Use its `README.md` as the current index of reusable agent skills.
 - Before non-trivial work in Ed's repositories, identify any relevant skill under `second-brain/skills/` and read its `SKILL.md` completely before acting. Load only the skills relevant to the task.
+- Use `ed-general-coding-practices` for language-agnostic implementation, refactoring, debugging, testing, and code-review defaults.
 - Use `ed-git-workflow` for branch, PR, merge, and release work.
 - Use `ed-pr-review-workflow` for PR review queues, stack selection, whole-stack context passes, and collaborative block-by-block reviews.
 - Use `ed-rust-service-style` for Rust services, workflows, handlers, modules, and tests.
