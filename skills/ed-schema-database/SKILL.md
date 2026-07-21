@@ -43,3 +43,9 @@ Use migrations as the source of truth and preserve production data by default.
 - Call out destructive migrations before applying them.
 - Include application code, migration file, and focused tests in the same PR when practical.
 - For production or staging data changes, check current state and drift first, then apply the smallest clear migration.
+
+## SQLx Queries
+
+- Use SQLx's compile-time checked `query!`, `query_as!`, and `query_scalar!` macros for static SQL in Rust application code and tests.
+- Use runtime `query`, `query_as`, or `query_scalar` only when the SQL is genuinely dynamic and cannot be expressed as a static checked query.
+- Run checked-query builds with the repository's real migrated schema or its committed SQLx offline metadata; do not weaken a checked query merely to bypass local database setup.
