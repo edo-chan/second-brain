@@ -37,6 +37,21 @@ Inspect drift and scope before applying infrastructure changes.
 - Prefer deleting deprecated resources after traffic and dependencies are confirmed gone.
 - Be especially willing to delete old EKS, ClickHouse, indexer, and unused Helm resources once confirmed unused.
 
+## Jobs And Service Shape
+
+- Run durable background jobs as Temporal workflows/workers instead of
+  long-running web handlers.
+- Keep service code, proto, migrations, Terraform, and worker changes visible
+  in the same repository and PR when they form one behavior.
+- Use boring defaults: Postgres for durable state, Redis for cache, and SSM for
+  deployed configuration. Add deployed parameters through Terraform so config
+  cannot drift from infrastructure.
+- Choose the smallest durable job shape: a one-off workflow for historical
+  backfills, a Temporal schedule for periodic reconciliation, or a heartbeat
+  loop for frequent polling.
+- Do not start workflows and activities every few seconds when one
+  long-running, heartbeating activity owns the loop more clearly and cheaply.
+
 ## Signing And Enclaves
 
 - For AWS signing and enclave work, keep private material owned by KMS/enclave flows where possible.

@@ -11,6 +11,8 @@ skills when they impose stronger requirements.
 
 ## Design And Scope
 
+- Keep code lean, readable, and boring. Add complexity only after the concrete
+  system has earned it.
 - Solve the concrete problem that exists now. Avoid speculative abstractions,
   unused extension points, and genericity introduced for hypothetical needs.
 - Keep each change self-contained and reviewable. Include the production
@@ -100,9 +102,15 @@ skills when they impose stronger requirements.
 - Keep generated artifacts reproducible and tool-owned. Do not maintain them
   manually when generation can be automated and verified.
 - Keep changes easy to understand, revert, and diagnose in production.
+- When a coding-style review introduces a durable expectation that these
+  skills do not cover, add the rule and a useful example before the PR is ready
+  to merge. Delete rules that no longer match how the team works.
 
 ## Sources
 
+- [Swig Coding Standard / Style Guide](https://app.notion.com/p/3597eb3c766d81f8a9effc85781e8341)
+  for the team's current Rust, API, infrastructure, database, and maintenance
+  defaults.
 - [Google Engineering Practices](https://google.github.io/eng-practices/review/)
   for code health, simplicity, review scope, tests, comments, and severity.
 - [NIST Secure Software Development Framework](https://csrc.nist.gov/projects/ssdf)

@@ -17,6 +17,9 @@ Use migrations as the source of truth and preserve production data by default.
 - Do not add indexes unless explicitly requested.
 - Do not add schema or migration comments.
 - Default schema DDL to primary keys and required uniqueness constraints. Do not add `CHECK`, `FOREIGN KEY`, `EXCLUDE`, or similar constraints unless explicitly requested; preserve required-field `NOT NULL` semantics separately.
+- This explicit constraint rule supersedes the Notion guide's broader foreign-key
+  recommendation: add a foreign key only when the task or repository contract
+  specifically requires that invariant.
 
 ## Data Modeling
 
@@ -24,6 +27,10 @@ Use migrations as the source of truth and preserve production data by default.
 - Store enum values in the database as `SMALLINT`.
 - Use `i16` at Rust persistence boundaries and validate/convert from proto enums before storing.
 - Store addresses as text.
+- Prefer readable storage types such as UUID or text identifiers, `TEXT`
+  addresses, and integer amounts over opaque byte encodings.
+- Prefer soft deletion for durable business records. Hard-delete only truly
+  transient queue, cache, or disposable data.
 - Use Prost well-known types where applicable.
 - Avoid duplicating data that can be reliably derived.
 - When adding request or table fields, identify whether the value is user input, derived state, cached state, or source-of-truth state.
@@ -36,6 +43,9 @@ Use migrations as the source of truth and preserve production data by default.
   and replays do not create duplicate billable work.
 - Store authoritative accounting derived from confirmed pre/post metadata, not
   predicted fee arithmetic.
+- Keep business logic in service code. Avoid database functions, triggers, and
+  materialized views unless a demonstrated database-level need outweighs the
+  hidden behavior.
 
 ## Change Safety
 
