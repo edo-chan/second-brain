@@ -73,11 +73,19 @@ Treat service boundaries as the place where trust, authentication, and logging p
 
 ## Proto And gRPC
 
+- Model variant payloads with `oneof` instead of an enum plus unrelated
+  variant-specific optional fields.
+- Use unsigned proto integers for values that cannot be negative, including
+  amounts and observed slots.
+- Add `google.api.http` annotations to public endpoints.
 - Keep proto files to one service each.
 - If a new independently routed service is needed, create a separate proto file.
 - Wire descriptor generation, Rust codegen, gateway routing, and client type generation for new proto files.
 - Services named with the `Api` prefix are public API-key authenticated services.
 - Register `Api` services with the repo's API-key auth interceptor at the tonic service boundary, or use the existing centralized API-key auth pattern before handler logic runs.
+- Keep service names aligned with their authentication boundary: public/no-auth,
+  developer/API-key, admin, or internal. Do not mix differently authenticated
+  endpoints behind an ambiguously named service.
 
 ## Webhooks
 

@@ -27,6 +27,9 @@ Use a feature branch for repository changes. Do not commit or push directly to `
 - Open a PR for completed repository changes unless the user explicitly says not to.
 - Use the correct stacked base branch when the work is part of a PR stack.
 - Include validation commands and results in the PR body.
+- Before marking a PR ready, apply every relevant second-brain coding skill and
+  resolve violations of the Swig Coding Standard. Treat new durable style
+  guidance from review as a required second-brain update before merge.
 - Re-request review only after the requested fixes are implemented and the relevant checks pass.
 
 ## Merge And Release

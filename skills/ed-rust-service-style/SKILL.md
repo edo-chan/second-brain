@@ -27,13 +27,35 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 ## Rust Style
 
+- Avoid `unwrap()`, `expect()`, and panic-based control flow in production
+  paths. Propagate or handle errors explicitly; panic only when terminating the
+  process is the intended behavior.
+- Prefer expression-style error propagation with `?` and `map_err` when a
+  branch would only wrap and return an error.
+- Keep control flow flat. Prefer early returns or one clear `match` over nested
+  condition towers.
 - Keep every function concise, focused, and single-purpose. When a function becomes difficult to scan or mixes phases, split it into concrete focused functions before adding more logic.
 - Prefer typed errors and structured responses where the service already has them.
 - Avoid stringly typed error plumbing unless existing code does it.
 - Do not introduce generics or explicit lifetime parameters unless Ed explicitly specifies them. Prefer concrete types and elided lifetimes.
+- Prefer owned data and simple concrete types when borrowing would add lifetime
+  plumbing without a demonstrated need.
 - Keep async boundaries visible. Do not hide network, database, or signing work inside helpers that look pure.
 - For API handlers, keep validation, domain logic, and response mapping easy to follow. Extract helpers only when readability actually improves.
 - Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
+- Keep dynamic log values in structured fields and log messages
+  low-cardinality. Use `info` for normal lifecycle events, `warn` for degraded
+  but recoverable behavior, and `error` for failed operations.
+- Do not extract helpers that only rename, clone, trim, borrow, convert, or map
+  a small enum to a string. Keep the operation inline at its consumer. Add a
+  helper or inherent method only when reuse is real or the mapping is domain
+  behavior that deserves one authoritative boundary.
+- Prefer descriptive names over dense acronyms.
+
+## Tests
+
+- Keep service tests in separate test files most of the time. Inline tests are
+  appropriate for small local helpers, especially in `common/` crates.
 
 ## Lifecycle And Accounting
 
