@@ -16,6 +16,7 @@ Use migrations as the source of truth and preserve production data by default.
 - If a migration file was already applied locally and is modified, undo it first, then rerun the migration script.
 - Do not add indexes unless explicitly requested.
 - Do not add schema or migration comments.
+- Default schema DDL to primary keys and required uniqueness constraints. Do not add `CHECK`, `FOREIGN KEY`, `EXCLUDE`, or similar constraints unless explicitly requested; preserve required-field `NOT NULL` semantics separately.
 
 ## Data Modeling
 
