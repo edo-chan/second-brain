@@ -35,6 +35,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - For required-but-nullable vendor fields, accept explicit `null` and reject omission. A plain `Option<T>` does not preserve that distinction.
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject missing identifiers instead of collapsing them to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic vendor request/response wrappers, generic JSON methods such as `get_json<T>`, `serde_json::Value`, or raw upstream response bodies to consuming services.
+- Do not create a new vendor client, endpoint-method layer, trait, or other abstraction solely to eliminate generic JSON. When the current code does not otherwise warrant that layer, deserialize into concrete local structs at the existing ownership boundary.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library. A raw body may exist only inside a private transport helper and must be parsed before the public endpoint method returns.
 - Keep HTTP client types and raw RPC messages private. Public errors should expose stable error classes and safe context such as status or request ids, not transport implementation types or response bodies.
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.

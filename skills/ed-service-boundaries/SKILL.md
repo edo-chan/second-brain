@@ -10,7 +10,8 @@ Treat service boundaries as the place where trust, authentication, and logging p
 ## Vendor Clients
 
 - Treat each vendor endpoint as a distinct contract.
-- Expose an explicit endpoint-specific method that returns a clear concrete response struct.
+- When a vendor-client boundary exists, expose an explicit endpoint-specific
+  method that returns a clear concrete response struct.
 - Review the request contract as strictly as the response contract. Identify
   caller-supplied, server-derived, and vendor-derived fields instead of showing
   or validating only the response shape.
@@ -23,6 +24,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject a missing identifier instead of collapsing it to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic request/response wrappers or generic JSON methods such as `get_json<T>`.
 - Do not let `serde_json::Value` or raw upstream response bodies cross the vendor-library boundary.
+- Do not create a new vendor client, endpoint-method layer, trait, or other
+  abstraction solely to eliminate generic JSON. When the current code does not
+  otherwise warrant that layer, deserialize into concrete local structs at the
+  existing ownership boundary.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library.
 - Allow a raw body only inside a private transport helper, and deserialize it before the public endpoint method returns.
 - Keep response types beside the feature or endpoint implementation that exposes them; do not create a giant shared vendor types file.
