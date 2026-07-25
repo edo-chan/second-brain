@@ -7,16 +7,12 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - The canonical second-brain repository is `/Users/edchan/Documents/Playground/Dev/second-brain`.
 - Use its `README.md` as the current index of reusable agent skills.
 - Before non-trivial work in Ed's repositories, identify any relevant skill under `second-brain/skills/` and read its `SKILL.md` completely before acting. Load only the skills relevant to the task.
-- Use `ed-general-coding-practices` for language-agnostic implementation, refactoring, debugging, testing, and code-review defaults.
-- Use `ed-git-workflow` for branch, PR, merge, and release work.
-- Use `ed-pr-review-workflow` for PR review queues, stack selection, whole-stack context passes, and collaborative block-by-block reviews.
-- Use `ed-rust-service-style` for Rust services, workflows, handlers, modules, and tests.
-- Use `ed-frontend-review-style` for React, Next.js App Router, and TypeScript implementation and pull-request reviews.
-- Use `ed-service-boundaries` for vendor clients, public APIs, proto/gRPC, webhooks, auth boundaries, response parsing, and sensitive logging.
-- Use `ed-schema-database` for schema design, migrations, database state, and persistence boundaries.
-- Use `ed-infrastructure-rollout` for secrets, Terraform, cloud configuration, drift, and rollout work.
-- Use `solana-swig-program-safety` for Solana Swig state, program, authority, permission, parser, SignV2, recovery, SDK, and pull-request work.
-- Use `evm-swig-contract-safety` for EVM Swig contract changes and reviews.
+- Use `ed-general-coding` for general implementation, refactoring, debugging, testing, frontend work, service boundaries, schemas, databases, and code review.
+- Use `ed-documentation` for product and API documentation, guides, PRDs, RFCs, architecture proposals, and design-document reviews.
+- Use `ed-rust-coding` for Rust crates, services, workflows, handlers, modules, and tests.
+- Use `ed-solidity-coding` for Solidity and EVM contract implementation and review, including EVM Swig safety and parity.
+- Use `ed-solana-coding` for Solana programs, Swig state, authorities, permissions, parsers, SignV2, recovery, SDKs, and pull-request work.
+- Use `ed-ci-infrastructure` for branches, commits, pull requests, merges, releases, CI, secrets, Terraform, cloud configuration, deployment, drift, and rollout work.
 - Treat `second-brain/AGENTS.md` as the tracked snapshot of this global file. When changing global guidance, update that snapshot through the second-brain repository's branch, pull-request, and merge workflow.
 
 ## Git Workflow

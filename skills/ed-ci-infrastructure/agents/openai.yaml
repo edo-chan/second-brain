@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed CI And Infrastructure"
+  short_description: "CI, Git, infrastructure, and rollout rules"
+  default_prompt: "Use $ed-ci-infrastructure to publish repository changes or inspect, plan, and apply CI and infrastructure changes safely."

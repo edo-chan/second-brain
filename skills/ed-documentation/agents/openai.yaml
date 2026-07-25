@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Documentation"
+  short_description: "Write and review technical documentation"
+  default_prompt: "Use $ed-documentation to write or review this documentation with Ed's task-oriented style and evidence-backed review workflow."

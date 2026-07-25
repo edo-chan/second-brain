@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ed Rust Service Style"
-  short_description: "Rust organization and service coding rules"
-  default_prompt: "Use $ed-rust-service-style to make Rust service changes following Ed's code organization rules."
