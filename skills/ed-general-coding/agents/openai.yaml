@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed General Coding"
+  short_description: "Practical defaults for clear, maintainable code"
+  default_prompt: "Use $ed-general-coding to implement or review this change with clear, maintainable, risk-calibrated engineering defaults."

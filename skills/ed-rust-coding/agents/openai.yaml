@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Rust Coding"
+  short_description: "Rust implementation and review rules"
+  default_prompt: "Use $ed-rust-coding to implement or review this Rust change following Ed's code organization and service rules."

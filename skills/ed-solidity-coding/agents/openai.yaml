@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Solidity Coding"
+  short_description: "Solidity and EVM contract safety rules"
+  default_prompt: "Use $ed-solidity-coding to implement or review Solidity and EVM contract changes with Ed's security and parity gates."

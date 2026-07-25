@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ed Document Review"
-  short_description: "Review PRDs, RFCs, and design documents"
-  default_prompt: "Use $ed-document-review to take a first look at this design document, return only a concise summary, and wait for me to choose a block to review."

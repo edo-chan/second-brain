@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ed Infrastructure Rollout"
-  short_description: "Secrets, Terraform, and rollout guardrails"
-  default_prompt: "Use $ed-infrastructure-rollout to inspect, plan, or apply infrastructure changes safely."

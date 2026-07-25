@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ed Schema Database"
-  short_description: "Migration-first database change rules"
-  default_prompt: "Use $ed-schema-database to plan or implement schema and migration changes safely."

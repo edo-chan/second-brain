@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ed Service Boundaries"
-  short_description: "Vendor APIs, proto, webhooks, and logging"
-  default_prompt: "Use $ed-service-boundaries to design vendor clients, APIs, proto services, webhooks, or logging boundaries safely."

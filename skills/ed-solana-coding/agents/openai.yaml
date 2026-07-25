@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Solana Coding"
+  short_description: "Solana program safety and compatibility"
+  default_prompt: "Use $ed-solana-coding to implement or review Solana changes with Ed's strict account, authorization, layout, compatibility, and test gates."
