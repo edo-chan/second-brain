@@ -1,6 +1,6 @@
 ---
 name: ed-general-coding
-description: General implementation and code-review standards for Ed's repositories across languages and frontend work. Use when building, modifying, refactoring, debugging, testing, or reviewing production code, APIs, schemas, service boundaries, React, Next.js, or TypeScript. Use the Rust, Solidity, Solana, documentation, or CI/infrastructure skill instead when that domain is primary.
+description: General implementation, code-review, and simplicity-audit standards for Ed's repositories across languages and frontend work. Use when building, modifying, refactoring, debugging, testing, reviewing production code, or auditing over-engineering in code, APIs, schemas, service boundaries, React, Next.js, or TypeScript. Use the Rust, Solidity, Solana, documentation, or CI/infrastructure skill instead when that domain is primary.
 ---
 
 # Ed General Coding
@@ -45,6 +45,9 @@ Read only the references needed for the task:
 - [pr-review-workflow.md](references/pr-review-workflow.md) for PR queues,
   stacked changes, whole-stack context, and collaborative block-by-block
   reviews.
+- [simplicity-review.md](references/simplicity-review.md) when the user asks
+  what can be deleted, simplified, replaced with native behavior, or audited
+  for over-engineering.
 
 ## Design And Scope
 
@@ -79,6 +82,10 @@ Read only the references needed for the task:
   trim, borrow, convert, or hide a single call.
 - Write comments to explain rationale, invariants, non-obvious constraints, and
   tradeoffs. Simplify code that needs a comment merely to explain what it does.
+- When deliberately accepting a simpler implementation with a known ceiling,
+  record the ceiling, the observable upgrade trigger, and the likely upgrade
+  path. Use the repository's ticket convention when available; otherwise use a
+  concise `simplification-debt:` comment that can be searched later.
 - Document purpose, usage, and failure behavior. Update documentation when a
   change affects how users or developers build, test, deploy, release, or use a
   system.
