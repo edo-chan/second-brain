@@ -37,7 +37,9 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Keep every function concise, focused, and single-purpose. When a function becomes difficult to scan or mixes phases, split it into concrete focused functions before adding more logic.
 - Prefer typed errors and structured responses where the service already has them.
 - Avoid stringly typed error plumbing unless existing code does it.
-- Do not introduce generics or explicit lifetime parameters unless Ed explicitly specifies them. Prefer concrete types and elided lifetimes.
+- Do not write generic Rust code unless Ed explicitly approves it. This includes
+  generic functions, structs, enums, type aliases, traits, and explicit lifetime
+  parameters. Prefer concrete types and elided lifetimes.
 - Prefer owned data and simple concrete types when borrowing would add lifetime
   plumbing without a demonstrated need.
 - Keep async boundaries visible. Do not hide network, database, or signing work inside helpers that look pure.
