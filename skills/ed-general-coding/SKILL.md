@@ -9,6 +9,28 @@ Favor the simplest complete change that improves code health without speculative
 machinery. Apply repository conventions and more specific language or domain
 skills when they impose stronger requirements.
 
+## Choose The Smallest Sufficient Solution
+
+Understand the task and trace the affected flow before choosing an
+implementation. Then stop at the first option that fully satisfies the
+contract:
+
+1. Confirm the behavior needs to exist.
+2. Reuse an established helper, component, or pattern in the repository.
+3. Use the standard library.
+4. Use a native platform or framework capability.
+5. Use an already-installed dependency.
+6. Express the behavior directly when it remains clear.
+7. Only then add the minimum new code required.
+
+Prefer deletion over addition and native behavior over custom machinery. The
+shortest correct diff wins only after the real flow is understood; a small
+change at the wrong ownership boundary creates more work later.
+
+Minimalism never removes trust-boundary validation, data-loss prevention,
+security, accessibility, required operational calibration, or proof for
+non-trivial behavior.
+
 ## Load Focused References
 
 Read only the references needed for the task:
@@ -30,6 +52,9 @@ Read only the references needed for the task:
   system has earned it.
 - Solve the concrete problem that exists now. Avoid speculative abstractions,
   unused extension points, and genericity introduced for hypothetical needs.
+- For bug fixes, identify the root cause and search every caller or consumer of
+  the touched behavior. Prefer one correction at the shared ownership boundary
+  over symptom patches in individual call paths.
 - Keep each change self-contained and reviewable. Include the production
   behavior, tests, documentation, and configuration needed for its contract.
 - Keep every PR buildable and semantically honest at its own head. A later
@@ -133,3 +158,6 @@ Read only the references needed for the task:
 - [OWASP Secure Coding Practices](https://owasp.org/www-project-secure-coding-practices-quick-reference-guide/stable-en/02-checklist/05-checklist)
   for trust boundaries, validation, fail-closed behavior, sensitive data, and
   safe use of platform APIs.
+- [Ponytail](https://github.com/DietrichGebert/ponytail/blob/main/AGENTS.md)
+  for its smallest-sufficient-solution ladder, root-cause tracing, and
+  safety-preserving approach to minimal code.
