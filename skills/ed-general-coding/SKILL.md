@@ -15,13 +15,15 @@ Understand the task and trace the affected flow before choosing an
 implementation. Then stop at the first option that fully satisfies the
 contract:
 
-1. Confirm the behavior needs to exist.
-2. Reuse an established helper, component, or pattern in the repository.
-3. Use the standard library.
-4. Use a native platform or framework capability.
-5. Use an already-installed dependency.
-6. Express the behavior directly when it remains clear.
-7. Only then add the minimum new code required.
+| Order | Decision | Preferred action | Stop condition and guardrail |
+| --- | --- | --- | --- |
+| 1 | Does this behavior need to exist? | Skip it when the need is speculative or already satisfied. | Stop when no new behavior is required; do not discard an explicit requirement without saying so. |
+| 2 | Does the repository already implement it? | Reuse the established helper, component, type, or pattern. | Stop when reuse preserves the real contract; do not force reuse across the wrong ownership boundary. |
+| 3 | Does the standard library implement it? | Use the standard-library API. | Stop when it handles the required inputs and edge cases. |
+| 4 | Does the platform or framework provide it natively? | Use the native capability. | Stop when it preserves accessibility, compatibility, security, and required behavior. |
+| 5 | Does an already-installed dependency implement it? | Use its existing supported API. | Stop when doing so avoids custom ownership without expanding dependency surface. |
+| 6 | Can this be a clear, edge-case-correct one-line change? | Make the one-line change. | Stop when one line remains readable and owns the behavior correctly; never compress code merely to reduce line count. |
+| 7 | Is new code still necessary? | Add the minimum explicit implementation that satisfies the contract. | Stop at the smallest complete change with the required tests and operational support. |
 
 Prefer deletion over addition and native behavior over custom machinery. The
 shortest correct diff wins only after the real flow is understood; a small
