@@ -121,11 +121,25 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Keep proto files to one service each.
 - If a new independently routed service is needed, create a separate proto file.
 - Wire descriptor generation, Rust codegen, gateway routing, and client type generation for new proto files.
-- Services named with the `Api` prefix are public API-key authenticated services.
-- Register `Api` services with the repo's API-key auth interceptor at the tonic service boundary, or use the existing centralized API-key auth pattern before handler logic runs.
-- Keep service names aligned with their authentication boundary: public/no-auth,
-  developer/API-key, admin, or internal. Do not mix differently authenticated
-  endpoints behind an ambiguously named service.
+- Treat the service prefix as an authentication contract:
+  - `Admin` means Swig operations/admin access. It does not mean an
+    organization administrator in a developer application.
+  - `Developer` means the developer portal UI backend acting with developer
+    service authentication and an organization context.
+  - `Api` means a developer-facing product API authenticated with that
+    developer's API key.
+  - `Public` means no authentication.
+  - `Internal` means authenticated service-to-service traffic.
+- Register every `Api` service with the repo's API-key auth interceptor at the
+  tonic service boundary, or use the existing centralized API-key auth pattern
+  before handler logic runs.
+- Align route prefixes with the same contract: `/admin` belongs only to Swig
+  operations, `/developer` to the developer portal backend, `/api` to
+  developer API-key traffic, and `/public` to unauthenticated traffic.
+- Do not infer an authentication boundary from an end-user role label such as
+  "tenant admin." Name the actual caller and credential boundary.
+- Do not mix differently authenticated endpoints behind an ambiguously named
+  service or route prefix.
 - Put closed public values such as network, flow kind, credential kind, provider
   variant, and lifecycle status in proto enums or `oneof` payloads. Validate and
   convert them once at the boundary; do not pass raw integers or strings through
