@@ -27,6 +27,11 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep vendor property/lookup types with the feature or endpoint that exposes them; avoid giant shared vendor type files.
 - Treat each vendor endpoint as a distinct contract. Vendor libraries must expose explicit endpoint-specific methods that return clear concrete response structs.
 - Review request contracts as strictly as response contracts. Identify caller-supplied, server-derived, and vendor-derived fields. For signed payloads, distinguish who constructs, funds, and signs; do not mutate a signed message unless every affected signer can sign the result.
+- Treat proof-bound transactions as an end-to-end invariant: the proof commits
+  to a client-owned key, that key signs the complete canonical message, the
+  sponsor validates exact shape before adding only its signature, generated
+  artifacts share one source, and replay state rejects changed or reused
+  authorization.
 - Use `Option` only for fields the vendor contract truly marks optional. Model required fields as required concrete fields; do not pass uncertainty through with `Option` or `serde(default)` merely to accept malformed responses.
 - For required-but-nullable vendor fields, accept explicit `null` and reject omission. A plain `Option<T>` does not preserve that distinction.
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject missing identifiers instead of collapsing them to `UNKNOWN` or `UNSPECIFIED`.
@@ -46,6 +51,10 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 ## Sensitive Logging
 
 - Do not log sensitive vendor payloads, launch URLs, KYC/PII fields, upstream response bodies, API keys, signatures, or tokens.
+- Sanitize gateway access paths that can contain query credentials, and treat
+  browser, prover, and circuit debug output as logs. Never emit private
+  witnesses, salts, stable identity claims, authorization codes, or proof
+  inputs.
 - Prefer logging stable non-sensitive fields such as status code, error class, request id, organization id, and internal ids over relying on broad redaction helpers.
 
 ## Proto / gRPC Service Organization
@@ -53,6 +62,9 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep proto files to one service each. If a new independently routed service is needed, create a separate proto file and wire descriptor generation, Rust codegen, gateway routing, and client type generation for that file.
 - gRPC services with names prefixed by `Api` are public API-key authenticated services. Register them with the repo's API-key auth interceptor at the service boundary, or use the existing centralized API-key auth pattern before handler logic runs.
 - Webhook gRPC services must have an explicit verification boundary, such as a webhook signature interceptor or gateway verifier, before trusted handler logic runs.
+- Each authenticated caller uses only its own service secret and surface.
+  Admin applications do not possess Developer or Api credentials or forge
+  their headers; shared behavior belongs below distinct authenticated handlers.
 
 ## Workflow Code Organization
 
@@ -75,6 +87,10 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep async boundaries clear. Do not hide network, database, or signing work inside helpers that look pure.
 - For API handlers, keep validation, domain logic, and response mapping easy to follow. Extract helpers when the handler stops being readable.
 - Keep lifecycle phases and irreversible external-call boundaries visible. After external acceptance, persist accepted state or its identifier before later work, and never release idempotency in a way that permits the effect to repeat.
+- Enforce consent and proof deadlines at the server transition, reserve
+  one-time verification atomically for one immutable attempt, and make
+  completion idempotent for that attempt without reopening it for another
+  identity, redirect, proof key, or message.
 - Decide whether the caller, vendor client, workflow, or platform owns retries. Do not add implicit retries at a layer that cannot reason about idempotency.
 - Record exactly one API-request event per invocation, including errors and replays. Emit domain or billing events only for newly completed work.
 - Do not introduce production traits merely because a test framework exists. A trait used by production code as a replaceable dependency boundary, such as `Arc<dyn Client>`, is legitimate even when Mockall supplies the only current alternate implementation; thin delegation to the concrete client is boundary wiring.
@@ -269,12 +285,19 @@ Include this self-review table in the PR body before opening or re-requesting re
 - When adding request or table fields, verify whether the value is user input, derived state, cached state, or source-of-truth state.
 - Identify each row's granularity: API request, domain item, billable item, confirmation, or transport-level group. Persist a transport group only when it has its own lifecycle, source-of-truth role, or concrete query consumer.
 - Keep API-request telemetry separate from domain and billing records so failures and replays do not create duplicate billable work.
+- Make authentication attempt limits atomic and security-configuration
+  cardinality explicit. Do not split comparison from failure charging or use
+  unordered `LIMIT 1` to choose among multiple active credentials.
 - For production or staging data changes, check current state and drift first, then apply the smallest clear migration.
 
 ## Infrastructure
 
 - Treat pasted credentials, API keys, private keys, and session tokens as sensitive unless explicitly marked throwaway.
 - Do not persist private keys or secrets in source.
+- Give each deployed caller only the credential for its own authenticated
+  service surface. Removing a Vercel environment variable affects future
+  deployments; replace the existing deployment, and rotate the credential when
+  immediate revocation from prior immutable deployment snapshots is required.
 - Classify configuration as a credential, environment-specific value, customer-specific value, or stable public protocol constant. Store public keys and environment- or customer-specific runtime configuration in SSM.
 - Stable canonical public endpoints and paths may live in code when they are not credential-bearing, region-selected, customer-specific, or environment-varying.
 - Before adding a new endpoint parameter, check whether an existing credentialed provider endpoint supports the capability and verify it against the live provider contract.

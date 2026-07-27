@@ -14,6 +14,14 @@ Inspect drift and scope before applying infrastructure changes.
 
 - Treat pasted credentials, API keys, private keys, and session tokens as sensitive unless explicitly marked throwaway.
 - Do not persist private keys or secrets in source.
+- Give each deployed caller only the secret for its own authenticated service
+  surface. Admin, Developer, Api, Public, and Internal callers must not share
+  credentials or impersonate one another by constructing another surface's
+  headers.
+- Removing a Vercel environment variable changes future deployments, not the
+  immutable environment snapshot of an existing deployment. Remove the code
+  dependency and replace the deployment; rotate the credential when immediate
+  revocation from prior deployments is required.
 - Classify each value as a credential, environment-specific configuration,
   customer-specific configuration, or stable public protocol constant.
 - Store public keys and environment- or customer-specific service runtime

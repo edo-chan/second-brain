@@ -115,6 +115,17 @@ Favor small, explicit, local changes that match the surrounding module style.
   persistence, and response mapping.
 - Make the irreversible boundary explicit. A later nested error must not reset
   state in a way that permits the same external effect to run again.
+- Represent security workflows with concrete state variants. Keep immutable
+  authorization context separate from the smallest stage payload, give each
+  transition a typed outcome, and preserve the exact response needed for
+  same-request idempotency.
+- Atomically reserve or compare-and-swap one-time authorization before an
+  irreversible effect. The same immutable attempt may resume after a transient
+  failure; a different message, proof key, redirect, identity, or security
+  configuration must be rejected.
+- Enforce authorization and consent deadlines in the transition itself using
+  server-owned time. Do not rely on a frontend timer or extend an earlier
+  authorization window by moving data into a later cache stage.
 - Do not add a production trait merely because a test framework exists. A trait
   is justified when production code owns a replaceable dependency boundary,
   such as `Arc<dyn VendorClient>`, even when a Mockall mock is currently the
@@ -144,6 +155,11 @@ Favor small, explicit, local changes that match the surrounding module style.
   when it owns domain persistence semantics; otherwise use the pool directly at
   the explicit state-transition boundary.
 - When `rediss://` support is required, enable the underlying `redis` crate's Tokio/Rustls transport feature, but continue to manage connections and issue commands through `deadpool_redis`.
+- Use an atomic Redis script or transaction for security-sensitive state
+  transitions and deadlines. Compare the complete expected typed state,
+  advance once, and return a distinct conflict/retry outcome; do not split
+  authorization comparison, reservation, and failure charging across
+  independently racing commands.
 
 ## Validation
 
