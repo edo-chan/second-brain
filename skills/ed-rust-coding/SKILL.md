@@ -85,6 +85,10 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Keep dynamic log values in structured fields and log messages
   low-cardinality. Use `info` for normal lifecycle events, `warn` for degraded
   but recoverable behavior, and `error` for failed operations.
+- Log a failed operation at the boundary that owns it, usually inline in
+  `map_err` when the closure only records context and returns the same error.
+  Do not create generic `log_*_failure(status)` helpers that merely rename one
+  logging call.
 - Do not extract helpers that only rename, clone, trim, borrow, convert, or map
   a small enum to a string. Keep the operation inline at its consumer. Add a
   helper or inherent method only when reuse is real or the mapping is domain

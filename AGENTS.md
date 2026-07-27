@@ -79,6 +79,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep every function concise, focused, and single-purpose. When a function becomes difficult to scan or mixes phases, split it into concrete focused functions before adding more logic.
 - Prefer small, explicit functions over broad abstractions. Match the surrounding module style before introducing new traits, builders, or helper layers.
 - Do not add wrapper helpers that only forward a call or rename, clone, trim, borrow, or convert a value. Keep trivial transformations inline, or fix the source type so the conversion disappears.
+- Log a failed operation at the boundary that owns it, usually inline in `map_err` when the closure only records context and returns the same error. Do not create generic `log_*_failure(status)` helpers that merely rename one logging call.
 - Do not write generic Rust code unless I explicitly approve it. This includes
   generic functions, structs, enums, type aliases, traits, and explicit lifetime
   parameters. Prefer concrete types and elided lifetimes.
