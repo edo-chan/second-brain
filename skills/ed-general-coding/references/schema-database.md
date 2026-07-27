@@ -50,6 +50,24 @@ Use migrations as the source of truth and preserve production data by default.
 - Nullable columns and `Option` fields must represent real persisted absence.
   Do not keep obsolete columns, always-null fields, or nullable joins merely
   because an earlier flow once used them.
+- Make security configuration cardinality a persistence invariant. When a
+  domain requires exactly one selected credential or key, update selection in
+  one transaction and prevent or explicitly repair ambiguous active rows; do
+  not make an unordered query choose whichever row happens to appear first.
+- Store only the minimum state required to verify and advance a workflow.
+  Separate immutable authorization context from stage-specific state, preserve
+  the exact response data required for idempotency, and remove fields after
+  their owning stage no longer needs them.
+- Give transient authentication rows and encrypted PII an explicit retention
+  deadline and cleanup owner. Consumption or expiry must not leave plaintext,
+  stale signing material, or obsolete challenge state indefinitely.
+- Low-entropy codes and enumerable identity values require a server-held keyed
+  verifier with domain separation. Do not store an ordinary digest that a
+  database reader can brute-force or enumerate offline.
+- Encrypt retained secrets and authentication PII with separately owned,
+  versioned keys, unique nonces, and record-and-field-bound authenticated data.
+  Persist ciphertext format and key version explicitly, and remove plaintext
+  through a verified migration rather than keeping a fallback column.
 
 ## Change Safety
 
@@ -72,6 +90,13 @@ Use migrations as the source of truth and preserve production data by default.
   conditional mutations. Do not make callers infer mutation state from a
   leaked row, nullable field cluster, or affected-row count without domain
   meaning.
+- Make comparison and failure charging one atomic transition for authentication
+  attempts and other security budgets. Concurrent invalid guesses must not all
+  compare against the same stale attempt count before increments are recorded.
+- Reserve one-time proofs atomically for one immutable attempt and store a
+  typed completion outcome. A retry of the same attempt may resume or return
+  the same result; another identity, redirect, proof key, or message must not
+  reuse the reservation.
 - Coalesce required aggregates in SQL and return concrete numeric values. Do
   not expose `Option` for counts, sums, or maxima when the domain defines a
   concrete empty-set result.

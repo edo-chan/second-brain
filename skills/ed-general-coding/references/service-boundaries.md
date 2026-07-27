@@ -83,6 +83,11 @@ Treat service boundaries as the place where trust, authentication, and logging p
   configuration and credential identity selected at initiation. Callback and
   completion code must not silently reselect whichever configuration or
   credential is current after rotation.
+- Give every authentication attempt one immutable binding that includes every
+  value affecting identity, redirect, proof, configuration, and later
+  authorization. Reuse or cooldown is valid only for an exact match; never
+  return an older challenge for a new proof key, redirect, origin, network, or
+  client state.
 - Derive stable user identity from authoritative verified issuer and subject
   values. Never substitute a mutable provider key, display label, route
   segment, or logging name for a signed identity namespace.
@@ -95,9 +100,45 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Complete browser-mediated authentication through its correlated return
   channel on both success and failure. Do not strand a popup or expose a raw
   transport response for provider denial.
+- Enforce consent and proof deadlines at the server mutation boundary. A UI
+  countdown is presentation, not authorization policy; advancing to a later
+  retry stage must not silently extend the original consent window.
+- Model one-time verification as an explicit `active -> reserved/verifying ->
+  completed` lifecycle. Reserve a verified identity proof for one immutable
+  attempt, make completion idempotent for that attempt, and allow a retry to
+  resume after downstream failure without reopening the proof for another
+  identity, redirect, or authorization.
+- Treat proof-bound transaction authorization as one cross-layer invariant.
+  The proof commits to the client-owned key, the runtime requires that key to
+  sign the complete canonical message, the sponsor validates the exact allowed
+  shape before adding only its own signature, generated artifacts share one
+  source, and replay state rejects a changed or reused authorization.
+- Give ephemeral browser signing keys a local expiry aligned with the
+  corresponding server attempt. Delete them on success, rejection, correlated
+  failure, and expiry; prune abandoned records instead of retaining signing
+  handles indefinitely.
 - Treat browser-console logging as external disclosure. Never log launch URLs,
   authorization state, PKCE verifier or challenge material, token claims,
   proof inputs, signatures, or raw authentication errors.
+
+## Credentials And Security Configuration
+
+- Secret write payloads and readable metadata are different contracts. Never
+  echo a newly written secret, put a masked placeholder in a read model, derive
+  `Debug` for secret-bearing data, or keep plaintext as an undocumented
+  fallback.
+- Protect provider credentials and retained authentication PII at rest under
+  separately owned, versioned encryption keys with unique nonces and
+  record-and-field-bound authenticated data. A rollout includes an explicit
+  backfill and removal of plaintext before readiness.
+- Protect low-entropy authenticators and enumerable identity lookup values
+  with a server-held keyed verifier such as domain-separated HMAC. A public
+  row identifier or ordinary hash does not prevent offline enumeration.
+- Make selection cardinality explicit for security configuration. If a flow
+  requires exactly one active credential or key, activate it atomically,
+  enforce or validate the invariant in persistence, and load the explicit
+  selection deterministically. Never use unordered `LIMIT 1` over multiple
+  active rows.
 
 ## External Effects And Retry Ownership
 
@@ -146,6 +187,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
   comparing ownership afterward.
 - Do not infer an authentication boundary from an end-user role label such as
   "tenant admin." Name the actual caller and credential boundary.
+- A privileged application must use its own authenticated service surface. It
+  must not possess another caller class's secret, forge that caller's headers,
+  or route an Admin operation through a Developer or Api service. Share domain
+  operations below distinct handlers instead of sharing transport identity.
 - Do not mix differently authenticated endpoints behind an ambiguously named
   service or route prefix.
 - Put closed public values such as network, flow kind, credential kind, provider
@@ -162,8 +207,24 @@ Treat service boundaries as the place where trust, authentication, and logging p
 ## Sensitive Logging
 
 - Do not log sensitive vendor payloads, launch URLs, KYC/PII fields, upstream response bodies, API keys, signatures, or tokens.
+- Treat gateway paths as sensitive when they can contain query credentials.
+  Record a sanitized path or route template without query parameters for OAuth
+  callbacks and similar endpoints.
+- Treat prover and circuit debug output as logs. Never emit private witnesses,
+  salts, stable identity claims, signing material, or proof inputs during
+  witness generation.
 - Prefer stable non-sensitive fields: status code, error class, request id, organization id, internal ids, and upstream request ids.
 - Do not rely on broad redaction helpers as the primary safety mechanism.
+
+## Gateway Metadata
+
+- Give trust-sensitive metadata one direction and one owner. A request header
+  supplied by a client cannot become trusted response control metadata merely
+  because a gateway copied it into dynamic state.
+- Redirect, authentication, routing, and policy metadata used on the response
+  path must come from the authenticated upstream contract. Strip or reject
+  conflicting client headers and test that request metadata cannot create or
+  replace an upstream decision.
 
 ## Handler Shape
 
