@@ -76,10 +76,20 @@ Read only the references needed for the task:
 
 - Prefer direct control flow, explicit state transitions, and names that reveal
   purpose without requiring a comment.
+- Organize services around stable business domains and capabilities, not the
+  chronological steps or implementation functions used by one current flow.
+  Names such as `start`, `setup`, `helper`, `store`, and `impl` do not establish
+  ownership by themselves.
 - Keep functions, modules, and components focused on one responsibility. Split
   code when it mixes phases, trust boundaries, or unrelated side effects.
 - Keep data and types near the code that owns their meaning. Introduce shared
   abstractions only after a real reuse or policy boundary exists.
+- Create identifiers, reserve state, and perform other commitment-like work as
+  late as possible—after validation and immediately before the owning
+  persistence or external-effect boundary.
+- Distill transport requests at the handler boundary. Domain code should accept
+  the concrete validated values it needs, not an entire API, proto, framework,
+  or service implementation object.
 - Avoid pass-through wrappers and helpers that only rename, forward, clone,
   trim, borrow, convert, or hide a single call.
 - Write comments to explain rationale, invariants, non-obvious constraints, and
@@ -96,9 +106,21 @@ Read only the references needed for the task:
 
 - Identify trusted and untrusted inputs. Validate and canonicalize untrusted
   data at the trusted boundary before domain code consumes it.
+- Model required state as required. Use optional types only for a real domain
+  absence, not to postpone validation, tolerate malformed data, support dead
+  configurations, or make construction convenient.
+- Represent closed sets and state transitions with enums or other constrained
+  types. Do not use loose strings, unrelated booleans, or clusters of optional
+  fields when the valid variants are known.
+- Decode and validate security or workflow state into a typed result. Never
+  convert malformed required state into `None`, an empty value, a default
+  object, or a weaker branch.
 - Fail closed for authentication, authorization, token, asset, and other
   security decisions. Do not silently weaken a requirement when configuration
   or dependency state is missing.
+- Do not discard dependency, serialization, lookup, or validation errors with
+  `.ok()`, catch-all defaults, empty payloads, or fallback success responses.
+  Map them to an explicit safe error at the owning boundary.
 - Return errors that preserve actionable context without exposing secrets,
   sensitive payloads, or unnecessary internal details.
 - Keep network, database, storage, signing, process, and other side effects
@@ -115,6 +137,10 @@ Read only the references needed for the task:
 - Choose the test layer that proves the behavior: unit tests for focused logic,
   integration tests for boundaries and public contracts, and end-to-end tests
   for critical user flows.
+- Keep unit and service-local tests hermetic. Put tests that require databases,
+  Redis, RPC nodes, live providers, local listeners, or other processes in an
+  explicitly owned integration or end-to-end suite outside the production
+  service crate.
 - Test observable outcomes and side effects. Avoid source-string assertions,
   over-mocked internals, and fixtures that only prove they return configured
   values.

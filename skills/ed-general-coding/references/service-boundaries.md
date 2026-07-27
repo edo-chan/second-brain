@@ -25,6 +25,8 @@ Treat service boundaries as the place where trust, authentication, and logging p
   existing ownership boundary.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library.
 - Allow a raw body only inside a private transport helper, and deserialize it before the public endpoint method returns.
+- Never include an upstream response body in a public error or log message.
+  Preserve a safe status, error class, and upstream request id instead.
 - Keep response types beside the feature or endpoint implementation that exposes them; do not create a giant shared vendor types file.
 - Model only the upstream fields that consumers use or the boundary must
   validate. Do not import a large optional vendor response dump or dependency
@@ -58,6 +60,15 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Keep HTTP client types and raw RPC messages private. Public errors should
   expose stable error classes and safe context such as status or request ids,
   not transport implementation types or response bodies.
+- Keep provider-specific protocol differences in provider-specific operations.
+  Do not thread `is_provider_x` flags through generic authorization, token, or
+  verification code when the provider has a materially different contract.
+- Use established libraries or platform caches for protocol metadata such as
+  JWKS. Do not build a process-global cache, refresh-lock registry, generation
+  counter, or stale-data policy inside an endpoint module.
+- A provider token decoder is a trust boundary, not a generic convenience
+  helper. Verify the exact signature algorithm, key, issuer, audience, expiry,
+  nonce, and any required front-channel binding for the concrete flow.
 
 ## External Effects And Retry Ownership
 
@@ -86,6 +97,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Keep service names aligned with their authentication boundary: public/no-auth,
   developer/API-key, admin, or internal. Do not mix differently authenticated
   endpoints behind an ambiguously named service.
+- Put closed public values such as network, flow kind, credential kind, provider
+  variant, and lifecycle status in proto enums or `oneof` payloads. Validate and
+  convert them once at the boundary; do not pass raw integers or strings through
+  the service.
 
 ## Webhooks
 
@@ -102,6 +117,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
 ## Handler Shape
 
 - Keep request validation, auth boundary, domain logic, and response mapping easy to audit.
+- Destructure transport requests in the handler and convert them into concrete
+  typed domain inputs. Do not pass proto request messages into domain modules.
+- Authenticate once at the service boundary or handler entry. Do not repeatedly
+  extract claims only to bind them to an unused variable.
 - Do not add wrapper helpers that only forward a call or rename, clone, trim, borrow, or convert a value. Keep trivial transformations inline, or fix the source type so the conversion disappears.
 - Avoid moving concrete vendor request/response types into giant shared files before there is a real reuse boundary.
 - Keep vendor property and lookup types with the feature that consumes or exposes them.

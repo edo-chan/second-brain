@@ -25,6 +25,8 @@ correctness and security review; it does not replace them.
 Look for:
 
 - dead code, unused flexibility, speculative features, flags, and configuration;
+- endpoints, schema fields, state variants, compatibility paths, and tests
+  belonging only to a superseded product flow;
 - standard-library behavior implemented locally;
 - dependencies or custom UI that duplicate native platform capabilities;
 - interfaces with one implementation, factories with one product, and layers
@@ -33,6 +35,10 @@ Look for:
   borrow, or convert;
 - duplicated behavior that belongs at one shared ownership boundary;
 - several files or abstractions representing one concrete operation;
+- one-purpose discriminator strings, booleans, or optional fields whose only
+  valid value or branch can be removed;
+- duplicate implementations of one protocol flow where provider-specific code
+  or one current product path can replace the generic-plus-patches design;
 - knowingly simplified implementations whose ceiling or upgrade trigger is not
   recorded.
 
@@ -63,6 +69,12 @@ Each finding must state:
 2. the concrete maintenance surface being removed;
 3. what replaces it, including "nothing";
 4. why the replacement preserves behavior and required boundaries.
+
+Before deleting legacy flow code, record the current intended data flow and
+enumerate every endpoint, persistence field, state variant, configuration key,
+test, and caller that exists only for the old flow. Delete the whole ownership
+slice together when compatibility is not required; do not leave dormant
+branches and nullable schema behind.
 
 Do not use line count alone as proof. Prefer reductions in dependencies,
 configuration, exported surface, indirection, duplicated ownership, files, and

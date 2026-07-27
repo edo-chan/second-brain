@@ -17,6 +17,15 @@ Favor small, explicit, local changes that match the surrounding module style.
   look like additional API handlers.
 - Keep types next to the consumer that exposes or uses them.
 - Avoid giant shared type files, vendor type dumps, and premature type extraction.
+- Organize service modules around stable domains or capabilities. Avoid broad
+  function-stage buckets such as `start_*`, `setup_*`, `helpers`, or `store`
+  when the code actually belongs to authentication, credentials, developer
+  access, client applications, or another named domain.
+- Keep top-level service structs flat. Do not retain a clone of a previous or
+  superseded service implementation, pass a whole service implementation into
+  a child function, or introduce a child service merely to reach a few
+  dependencies. Pass the concrete repository, client, signer, configuration,
+  or value the operation needs.
 - Do not extend generic vendor request/response wrappers or generic JSON deserialization APIs just because existing code uses them.
 - Prefer explicit endpoint-specific methods that return concrete response structs.
 - Do not let `serde_json::Value` or raw vendor response bodies cross the vendor-library boundary.
@@ -52,7 +61,26 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Prefer owned data and simple concrete types when borrowing would add lifetime
   plumbing without a demonstrated need.
 - Keep async boundaries visible. Do not hide network, database, or signing work inside helpers that look pure.
-- For API handlers, keep validation, domain logic, and response mapping easy to follow. Extract helpers only when readability actually improves.
+- For API handlers, extract claims and other boundary context once, destructure
+  proto requests immediately, convert primitive proto values into typed domain
+  values, and pass only those values onward. Keep validation, domain logic, and
+  response mapping easy to follow. Extract helpers only when readability
+  actually improves.
+- Construct required dependencies as concrete fields during startup. Do not
+  store a client, repository, key set, parameter store, or Redis pool in
+  `Option` when the served endpoint cannot operate safely without it.
+- Use `Option` only for genuine domain absence. Do not use it to represent
+  invalid input, failed decoding, a required joined relation, a disabled
+  lifecycle record, or one variant of an enum-shaped payload.
+- Use Rust or proto enums for closed sets such as flow, status, credential
+  kind, provider kind, network, and subscription tier. Keep strings only for
+  intentionally extensible identifiers.
+- Define repeated protocol paths, claim names, environment keys, namespaces,
+  algorithms, and fixed TTLs as constants at their owning boundary. Do not turn
+  typed struct fields into string constants; eliminate string-key access by
+  deserializing into the struct instead.
+- Keep adjacent one-line validation calls in the main control flow. Do not add a
+  helper used once merely to hide a comparison or forward its result.
 - Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
 - Keep dynamic log values in structured fields and log messages
   low-cardinality. Use `info` for normal lifecycle events, `warn` for degraded
@@ -62,11 +90,23 @@ Favor small, explicit, local changes that match the surrounding module style.
   helper or inherent method only when reuse is real or the mapping is domain
   behavior that deserves one authoritative boundary.
 - Prefer descriptive names over dense acronyms.
+- Fix Clippy findings at their source. Add a narrowly scoped `allow` only when
+  the lint is demonstrably inapplicable and record the reason; do not normalize
+  crate-wide or handler-wide suppression of `result_large_err`,
+  `too_many_arguments`, `large_enum_variant`, or similar design signals.
 
 ## Tests
 
-- Keep service tests in separate test files most of the time. Inline tests are
-  appropriate for small local helpers, especially in `common/` crates.
+- Keep production service files free of test modules. Put unit tests in the
+  owning domain's `tests/` module or directory.
+- Service-local unit tests must not require a real database, Redis, RPC node,
+  provider, Tilt stack, local TCP listener, or another service. Put replaceable
+  side effects behind focused consumer-owned traits and use `mockall` to test
+  the service behavior.
+- Move tests that intentionally exercise real infrastructure, generated gRPC
+  clients, or complete multi-service flows to a workspace-level integration or
+  end-to-end test area outside `services/`. Do not label those tests unit tests
+  or make a service crate's normal test command depend on them.
 
 ## Lifecycle And Accounting
 
@@ -100,6 +140,9 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 - Use `deadpool_redis` for Redis access in Rust services. Do not introduce unmanaged raw Redis connections.
 - Acquire connections from the pool at the visible async boundary and keep Redis commands explicit.
+- Do not wrap Redis in a vague `Store` type. A focused repository is justified
+  when it owns domain persistence semantics; otherwise use the pool directly at
+  the explicit state-transition boundary.
 - When `rediss://` support is required, enable the underlying `redis` crate's Tokio/Rustls transport feature, but continue to manage connections and issue commands through `deadpool_redis`.
 
 ## Validation
