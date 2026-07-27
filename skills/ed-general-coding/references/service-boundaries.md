@@ -136,6 +136,14 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Align route prefixes with the same contract: `/admin` belongs only to Swig
   operations, `/developer` to the developer portal backend, `/api` to
   developer API-key traffic, and `/public` to unauthenticated traffic.
+- On an explicitly organization-scoped `Developer` request, keep
+  `organization_id` required and require an exact match with the trusted
+  developer-auth claim. Reject a missing or mismatched value; do not silently
+  populate the request from claims.
+- After that boundary check, include the trusted organization in the
+  repository read or mutation predicate. For resource-ID-only routes, query by
+  resource ID plus trusted organization instead of loading globally and
+  comparing ownership afterward.
 - Do not infer an authentication boundary from an end-user role label such as
   "tenant admin." Name the actual caller and credential boundary.
 - Do not mix differently authenticated endpoints behind an ambiguously named
