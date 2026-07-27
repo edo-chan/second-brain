@@ -70,6 +70,35 @@ Treat service boundaries as the place where trust, authentication, and logging p
   helper. Verify the exact signature algorithm, key, issuer, audience, expiry,
   nonce, and any required front-channel binding for the concrete flow.
 
+## Authentication Flows
+
+- Derive authorization context from a trusted boundary. Do not compare a
+  caller-supplied `origin`, tenant, organization, issuer, or other claimed
+  context with an allowlist and call the result authenticated.
+- For browser redirects, derive a web origin from an exact registered redirect
+  URI or establish it through a platform-authenticated channel. A query
+  parameter copied through an isolated host does not prove the developer
+  frontend's origin.
+- Bind a multi-step authentication attempt to the exact provider
+  configuration and credential identity selected at initiation. Callback and
+  completion code must not silently reselect whichever configuration or
+  credential is current after rotation.
+- Derive stable user identity from authoritative verified issuer and subject
+  values. Never substitute a mutable provider key, display label, route
+  segment, or logging name for a signed identity namespace.
+- When a component privately derives an identifier, another component cannot
+  assert that identifier without a verifiable binding. Fail closed instead of
+  relabeling an unbound canonical or default identifier.
+- Prefer the smallest provider flow that supplies the required identity. Do not
+  opt into hybrid or multi-token variants when a code exchange provides the
+  required verified token.
+- Complete browser-mediated authentication through its correlated return
+  channel on both success and failure. Do not strand a popup or expose a raw
+  transport response for provider denial.
+- Treat browser-console logging as external disclosure. Never log launch URLs,
+  authorization state, PKCE verifier or challenge material, token claims,
+  proof inputs, signatures, or raw authentication errors.
+
 ## External Effects And Retry Ownership
 
 - Decide whether the caller, vendor client, workflow, or platform owns retries.
