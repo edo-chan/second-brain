@@ -41,6 +41,15 @@ Use migrations as the source of truth and preserve production data by default.
 - Keep business logic in service code. Avoid database functions, triggers, and
   materialized views unless a demonstrated database-level need outweighs the
   hidden behavior.
+- Keep SQL row structs private to the persistence module. Repositories should
+  own the mapping and return domain models or explicit mutation outcomes, not
+  leak `*Row` types into handlers and services.
+- Split broad repositories by domain ownership. Do not expose a god repository
+  that gives unrelated features access to every query or the raw connection
+  pool.
+- Nullable columns and `Option` fields must represent real persisted absence.
+  Do not keep obsolete columns, always-null fields, or nullable joins merely
+  because an earlier flow once used them.
 
 ## Change Safety
 
@@ -54,3 +63,15 @@ Use migrations as the source of truth and preserve production data by default.
 - Use SQLx's compile-time checked `query!`, `query_as!`, and `query_scalar!` macros for static SQL in Rust application code and tests.
 - Use runtime `query`, `query_as`, or `query_scalar` only when the SQL is genuinely dynamic and cannot be expressed as a static checked query.
 - Run checked-query builds with the repository's real migrated schema or its committed SQLx offline metadata; do not weaken a checked query merely to bypass local database setup.
+- Make query cardinality explicit in repository names and implementations.
+  Use `find_*` with `fetch_optional` for expected absence, `get_*` with
+  `fetch_one` for required records, and explicit outcomes for conditional
+  updates or deletes. Do not fetch an invariant relation optionally and defer
+  the missing-record failure to a distant caller.
+- Return a typed applied, not-found, conflict, or already-final outcome from
+  conditional mutations. Do not make callers infer mutation state from a
+  leaked row, nullable field cluster, or affected-row count without domain
+  meaning.
+- Coalesce required aggregates in SQL and return concrete numeric values. Do
+  not expose `Option` for counts, sums, or maxima when the domain defines a
+  concrete empty-set result.
