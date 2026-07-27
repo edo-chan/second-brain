@@ -40,6 +40,11 @@ Inspect drift and scope before applying infrastructure changes.
 ## Terraform And Environments
 
 - Inspect plan and drift before applying Terraform unless the user explicitly asks for direct apply.
+- Confirm each repository's environment semantics before changing infrastructure
+  or SSM values. In `swig-dev-portal`, `dev` means the local
+  Docker/Surfpool environment, not a shared cloud staging environment; its
+  service URLs must resolve from local containers and must not point at
+  cloud-only resources such as ElastiCache.
 - Keep infrastructure changes scoped by environment.
 - If a resource is per-environment, name and store it per-environment.
 - Provision every new environment-scoped SSM parameter with Terraform before attempting to persist its real value.

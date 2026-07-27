@@ -302,6 +302,7 @@ Include this self-review table in the PR body before opening or re-requesting re
 - Stable canonical public endpoints and paths may live in code when they are not credential-bearing, region-selected, customer-specific, or environment-varying.
 - Before adding a new endpoint parameter, check whether an existing credentialed provider endpoint supports the capability and verify it against the live provider contract.
 - For Terraform, inspect plan/drift before applying unless I explicitly ask for a direct apply.
+- Confirm each repository's environment semantics before changing infrastructure or SSM values. In `swig-dev-portal`, `dev` means the local Docker/Surfpool environment, not a shared cloud staging environment; its service URLs must resolve from local containers and must not point at cloud-only resources such as ElastiCache.
 - Keep infrastructure changes scoped by environment. If a resource is per-env, name and store it per-env.
 - Provision every new environment-scoped SSM parameter with Terraform before attempting to persist its real value.
 - After Terraform creates the parameter, persist the real value in SSM and verify that every target environment can resolve it before deploying code that requires it.
