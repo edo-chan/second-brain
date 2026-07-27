@@ -10,6 +10,11 @@ Favor small, explicit, local changes that match the surrounding module style.
 ## Code Organization
 
 - Use `mod.rs` only for wiring and exports. Do not put business logic there.
+- Keep top-level files under `handler/api/` limited to endpoint handler
+  implementations. Put handler-specific validation, orchestration, parsing,
+  state-machine, and other supporting code under
+  `handler/api/<handler_name>/`; do not add sibling top-level helper files that
+  look like additional API handlers.
 - Keep types next to the consumer that exposes or uses them.
 - Avoid giant shared type files, vendor type dumps, and premature type extraction.
 - Do not extend generic vendor request/response wrappers or generic JSON deserialization APIs just because existing code uses them.
@@ -27,9 +32,13 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 ## Rust Style
 
-- Avoid `unwrap()`, `expect()`, and panic-based control flow in production
-  paths. Propagate or handle errors explicitly; panic only when terminating the
-  process is the intended behavior.
+- Do not add `unwrap()`, `expect()`, `panic!`, `unreachable!`, unchecked
+  indexing, unchecked conversions, or other potentially panicking operations
+  to request, transaction, proof, persistence, network, or external-state
+  paths. Return a typed error or handle the missing/invalid state explicitly.
+  Prefer assertions over panic-based extraction in tests. Process startup
+  should also return an actionable error instead of panicking unless Ed
+  explicitly approves an intentional abort.
 - Prefer expression-style error propagation with `?` and `map_err` when a
   branch would only wrap and return an error.
 - Keep control flow flat. Prefer early returns or one clear `match` over nested
