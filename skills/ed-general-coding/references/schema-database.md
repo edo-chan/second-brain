@@ -31,6 +31,10 @@ Use migrations as the source of truth and preserve production data by default.
 - When adding request or table fields, identify whether the value is user input, derived state, cached state, or source-of-truth state.
 - Identify each row's granularity: API request, domain item, billable item,
   confirmation, or transport-level group.
+- When one configuration owns exactly one environment, store that environment
+  on the configuration row. Add an environment child table only when one
+  configuration must own simultaneous environment records with independent
+  lifecycle or cardinality.
 - Do not persist a transport-level group when request and per-item records
   already satisfy the consumers. Persist it only when it has its own lifecycle,
   source-of-truth role, or concrete query consumer.
@@ -68,6 +72,11 @@ Use migrations as the source of truth and preserve production data by default.
   versioned keys, unique nonces, and record-and-field-bound authenticated data.
   Persist ciphertext format and key version explicitly, and remove plaintext
   through a verified migration rather than keeping a fallback column.
+- For application-owned envelope encryption, generate one random data key per
+  configuration, encrypt that key with the deployed master secret, and persist
+  only the encrypted data key. Encrypt each secret field with its own nonce and
+  authenticated data bound to the configuration, organization, environment,
+  and field kind.
 
 ## Change Safety
 

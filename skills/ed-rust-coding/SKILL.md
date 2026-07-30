@@ -30,6 +30,9 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Prefer explicit endpoint-specific methods that return concrete response structs.
 - Do not let `serde_json::Value` or raw vendor response bodies cross the vendor-library boundary.
 - Do not add pass-through helpers that only rename or forward another call.
+- Construct a concrete client directly when the only variable is its validated
+  configuration. Do not add a factory trait whose implementation only calls
+  that client's constructor.
 
 ## Workflow Layout
 
@@ -75,6 +78,9 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Use Rust or proto enums for closed sets such as flow, status, credential
   kind, provider kind, network, and subscription tier. Keep strings only for
   intentionally extensible identifiers.
+- When a proto enum already owns a shared protocol concept, use that generated
+  enum directly across participating Rust crates instead of defining parallel
+  enums and conversion helpers.
 - Define repeated protocol paths, claim names, environment keys, namespaces,
   algorithms, and fixed TTLs as constants at their owning boundary. Do not turn
   typed struct fields into string constants; eliminate string-key access by

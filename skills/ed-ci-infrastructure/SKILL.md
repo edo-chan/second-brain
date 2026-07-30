@@ -40,6 +40,10 @@ Inspect drift and scope before applying infrastructure changes.
   against the live provider contract.
 - Use AWS SSM Parameter Store as the sole source for environment- and
   customer-specific service runtime configuration, including local development.
+- When an application encryption design uses an SSM-backed master secret, keep
+  that master in SSM and let the application wrap per-record data keys. Do not
+  introduce KMS resources, ARNs, or aliases unless the design explicitly
+  assigns key custody or cryptographic operations to KMS.
 - Treat declared SSM parameters as required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
 - Configure local development to authenticate to AWS and read its environment-scoped configuration directly from SSM.
 
