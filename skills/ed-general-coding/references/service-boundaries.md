@@ -23,6 +23,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
   abstraction solely to eliminate generic JSON. When the current code does not
   otherwise warrant that layer, deserialize into concrete local structs at the
   existing ownership boundary.
+- Do not add a client factory whose only policy is calling one concrete
+  client's constructor. Construct that client at the consumer or startup
+  boundary until selection, lifecycle, or replacement behavior earns a
+  factory.
 - Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library.
 - Allow a raw body only inside a private transport helper, and deserialize it before the public endpoint method returns.
 - Never include an upstream response body in a public error or log message.
@@ -156,6 +160,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
 
 - Model variant payloads with `oneof` instead of an enum plus unrelated
   variant-specific optional fields.
+- Give each RPC its own response message, even when it currently contains only
+  one shared resource. Keep the operation's top-level contract independently
+  evolvable instead of returning the resource message directly from unrelated
+  mutations.
 - Use unsigned proto integers for values that cannot be negative, including
   amounts and observed slots.
 - Add `google.api.http` annotations to public endpoints.
@@ -197,6 +205,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
   variant, and lifecycle status in proto enums or `oneof` payloads. Validate and
   convert them once at the boundary; do not pass raw integers or strings through
   the service.
+- Reuse the owning proto enum across generated clients, vendor libraries, and
+  service code when it represents the same contract. Do not create parallel
+  enums and conversion wrappers unless a distinct domain meaning requires
+  them.
 
 ## Webhooks
 
