@@ -8,6 +8,10 @@ description: CI, Git publication, infrastructure, deployment, and rollout standa
 For branch, commit, pull-request, merge, and release actions, read
 [git-workflow.md](references/git-workflow.md).
 
+Keep multi-part repository work in a linear stack of focused pull requests.
+Never merge without explicit merge authorization from the user in the current
+session.
+
 Inspect drift and scope before applying infrastructure changes.
 
 ## Secrets And Config

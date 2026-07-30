@@ -17,7 +17,17 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 
 ## Git Workflow
 
-- Always make changes on a feature branch, open a pull request, and merge the pull request. Do not push commits directly to `main`.
+- Always make changes on feature branches and open pull requests. Do not push commits directly to `main`.
+- For multi-part work, default to a linear stack of small, focused PRs. Base
+  each dependent PR on its immediate predecessor and keep every PR readable,
+  buildable, and semantically honest.
+- Do not merge any PR unless I explicitly authorize merges in the current
+  session. An implementation request, green checks, merge readiness, or
+  approval from a prior session is not merge authorization.
+- Treat merge authorization as scoped to the named PR, stack, or session-wide
+  permission. Without it, leave the PR or stack open and report status.
+- When I authorize merging a stack, merge base-to-tip and restack or retarget
+  the remaining PRs as needed.
 - When making or cutting a release, also publish the release on GitHub.
 
 ## Code Organization
