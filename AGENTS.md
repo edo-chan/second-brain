@@ -24,6 +24,9 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Do not merge any PR unless I explicitly authorize merges in the current
   session. An implementation request, green checks, merge readiness, or
   approval from a prior session is not merge authorization.
+- PRs in the canonical second-brain repository are the exception: they may be
+  merged without separate user approval once validation and repository gates
+  pass. Do not bypass branch protection.
 - Treat merge authorization as scoped to the named PR, stack, or session-wide
   permission. Without it, leave the PR or stack open and report status.
 - When I authorize merging a stack, merge base-to-tip and restack or retarget

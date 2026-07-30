@@ -39,6 +39,10 @@ Use a feature branch for repository changes. Do not commit or push directly to `
 - Do not merge any PR unless the user explicitly authorizes merges in the
   current session. An implementation request, green checks, merge readiness, or
   approval from a prior session is not merge authorization.
+- PRs in the canonical second-brain repository are the exception: they may be
+  merged without separate user approval once validation and repository gates
+  pass. Verify the repository before applying this exception, and do not bypass
+  branch protection.
 - Treat merge authorization as scoped. It may name one PR, a specific stack, or
   grant session-wide permission; merge only the scope the user approved.
 - Without current-session merge authorization, leave the PR or stack open and
