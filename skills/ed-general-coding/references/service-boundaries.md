@@ -169,6 +169,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Add `google.api.http` annotations to public endpoints.
 - Keep proto files to one service each.
 - If a new independently routed service is needed, create a separate proto file.
+- Name services and generated modules after the product domain and caller
+  boundary, not the current vendor. Keep provider-specific operations under
+  that domain service when they share routing and authentication; create a
+  provider-named service only when it is independently routed or authenticated.
 - Wire descriptor generation, Rust codegen, gateway routing, and client type generation for new proto files.
 - Treat the service prefix as an authentication contract:
   - `Admin` means Swig operations/admin access. It does not mean an

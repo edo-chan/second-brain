@@ -21,6 +21,10 @@ Favor small, explicit, local changes that match the surrounding module style.
   function-stage buckets such as `start_*`, `setup_*`, `helpers`, or `store`
   when the code actually belongs to authentication, credentials, developer
   access, client applications, or another named domain.
+- Keep transport modules and service implementations named for the stable
+  product domain and caller boundary. A provider-specific operation can live
+  under that domain module without turning the whole service into a
+  provider-named surface.
 - Keep top-level service structs flat. Do not retain a clone of a previous or
   superseded service implementation, pass a whole service implementation into
   a child function, or introduce a child service merely to reach a few
