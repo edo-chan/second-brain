@@ -10,7 +10,9 @@ For branch, commit, pull-request, merge, and release actions, read
 
 Keep multi-part repository work in a linear stack of focused pull requests.
 Never merge without explicit merge authorization from the user in the current
-session.
+session, except in the canonical second-brain repository. Second-brain PRs may
+be merged without separate user approval once validation and repository gates
+pass.
 
 Inspect drift and scope before applying infrastructure changes.
 
