@@ -137,10 +137,13 @@ Read only the references needed for the task:
 - Choose the test layer that proves the behavior: unit tests for focused logic,
   integration tests for boundaries and public contracts, and end-to-end tests
   for critical user flows.
-- Keep unit and service-local tests hermetic. Put tests that require databases,
-  Redis, RPC nodes, live providers, local listeners, or other processes in an
-  explicitly owned integration or end-to-end suite outside the production
-  service crate.
+- Keep unit and service-local tests hermetic. A test may start an isolated
+  in-memory or protocol-compatible mock, including a mock Redis server, when
+  the test owns its complete lifecycle and requires no shared or pre-running
+  infrastructure. Fail the test if the mock cannot start; do not silently skip.
+- Put tests that require a real or externally managed database, Redis, RPC
+  node, live provider, listener, or other process in an explicitly owned
+  integration or end-to-end suite outside the production service crate.
 - Test observable outcomes and side effects. Avoid source-string assertions,
   over-mocked internals, and fixtures that only prove they return configured
   values.
