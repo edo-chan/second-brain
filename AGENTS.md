@@ -39,6 +39,9 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep types next to the consumer that exposes or uses them. Avoid giant shared type files, vendor type dumps, and moving types into separate files before there is a real reuse boundary.
 - Keep vendor property/lookup types with the feature or endpoint that exposes them; avoid giant shared vendor type files.
 - Treat each vendor endpoint as a distinct contract. Vendor libraries must expose explicit endpoint-specific methods that return clear concrete response structs.
+- Name each concrete third-party adapter `{Vendor}Connector`, such as
+  `MeldConnector`. Do not use a generic `Client`, `Service`, or `Manager` name
+  for a vendor integration.
 - Review request contracts as strictly as response contracts. Identify caller-supplied, server-derived, and vendor-derived fields. For signed payloads, distinguish who constructs, funds, and signs; do not mutate a signed message unless every affected signer can sign the result.
 - Treat proof-bound transactions as an end-to-end invariant: the proof commits
   to a client-owned key, that key signs the complete canonical message, the
@@ -50,7 +53,23 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject missing identifiers instead of collapsing them to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic vendor request/response wrappers, generic JSON methods such as `get_json<T>`, `serde_json::Value`, or raw upstream response bodies to consuming services.
 - Do not create a new vendor client, endpoint-method layer, trait, or other abstraction solely to eliminate generic JSON. When the current code does not otherwise warrant that layer, deserialize into concrete local structs at the existing ownership boundary.
-- Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library. A raw body may exist only inside a private transport helper and must be parsed before the public endpoint method returns.
+- When a request selects a vendor environment or credential, keep both out of
+  service initialization and long-lived client state. Validate the environment
+  in the RPC, load and decrypt the scoped credential there, and pass the
+  borrowed `SecretBox` to each typed endpoint call.
+- Do not hide repository lookup, lifecycle checks, secret decryption, client
+  construction, and one vendor call behind a resolver, runtime context,
+  factory, or forwarding helper. Prefer visible local duplication.
+- Do not add a client-config object when construction only selects one
+  validated environment plus fixed library defaults.
+- Do not hide typed endpoint requests behind `get_body`, `post_body`, a string
+  HTTP method, an optional body, or a generic request function. Each endpoint
+  must visibly build and send its concrete request, check status, read the
+  body, and parse its concrete response.
+- Keep HTTP, authentication, response-body handling, and deserialization inside the vendor library. A raw body may exist only inside the concrete typed endpoint method and must be parsed before that method returns.
+- Do not retry at a generic HTTP transport layer. Retry only in the owning
+  endpoint or workflow after proving idempotency and replay behavior. POST
+  requests are not retryable by default.
 - Keep HTTP client types and raw RPC messages private. Public errors should expose stable error classes and safe context such as status or request ids, not transport implementation types or response bodies.
 - Let consuming services perform only the explicit mapping from typed vendor structs into domain or proto types.
 - Reject responses that omit required upstream data with a structured boundary error instead of returning partial output. Use `FAILED_PRECONDITION` at a gRPC boundary when the missing field makes the requested result unusable.
@@ -92,6 +111,9 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Keep every function concise, focused, and single-purpose. When a function becomes difficult to scan or mixes phases, split it into concrete focused functions before adding more logic.
 - Prefer small, explicit functions over broad abstractions. Match the surrounding module style before introducing new traits, builders, or helper layers.
 - Do not add wrapper helpers that only forward a call or rename, clone, trim, borrow, or convert a value. Keep trivial transformations inline, or fix the source type so the conversion disappears.
+- Prefer short local duplication over a resolver, runtime context, factory,
+  store, or helper whose only value is concealing repository access, secret
+  decryption, client construction, or an external call.
 - Log a failed operation at the boundary that owns it, usually inline in `map_err` when the closure only records context and returns the same error. Do not create generic `log_*_failure(status)` helpers that merely rename one logging call.
 - Do not write generic Rust code unless I explicitly approve it. This includes
   generic functions, structs, enums, type aliases, traits, and explicit lifetime
@@ -108,10 +130,25 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Decide whether the caller, vendor client, workflow, or platform owns retries. Do not add implicit retries at a layer that cannot reason about idempotency.
 - Record exactly one API-request event per invocation, including errors and replays. Emit domain or billing events only for newly completed work.
 - Do not introduce production traits merely because a test framework exists. A trait used by production code as a replaceable dependency boundary, such as `Arc<dyn Client>`, is legitimate even when Mockall supplies the only current alternate implementation; thin delegation to the concrete client is boundary wiring.
+- When an API layer needs unit-test substitution, define a focused
+  consumer-owned trait around only the connector's typed operations and inject
+  it into the API service. Do not expose HTTP verbs, raw bodies, generic
+  requests, or connector construction through that trait.
+- Keep production Rust files free of inline `#[cfg(test)] mod tests` blocks.
+  Put crate tests under the crate's `tests/` directory.
 - Derive billing and spend from authoritative confirmed pre/post state, not predicted fee arithmetic.
 - For batch or bundle behavior, include a multi-item success test that proves order, cardinality, and per-item mapping.
 - Use `cargo +nightly fmt` when the repo expects nightly rustfmt; otherwise use the repo’s standard formatter.
 - Run the narrow relevant checks before committing: usually `cargo test` for touched behavior and `cargo clippy --all-targets` for service changes.
+
+## Redis Boundaries
+
+- Use the concrete `deadpool_redis` pool and keep connection acquisition and
+  commands visible at the feature boundary.
+- Do not put Redis behind a model, `Store`, `Repository`, resolver, or
+  persistence trait. Durable Postgres state owns the model/repository layer.
+  Keep Redis access in a small number of feature-local functions such as
+  `cache_quote` and `get_quote`.
 
 ## EVM Swig Contract Requirements
 
@@ -294,6 +331,9 @@ Include this self-review table in the PR body before opening or re-requesting re
 - Store addresses as text.
 - Use Prost well-known types where applicable.
 - Schema changes should include the application code, migration file, and focused tests in the same PR when practical.
+- Name repository writes for the persistence operation, such as `create`,
+  `update_*`, or `set_*`, not for one initial lifecycle value. Pass lifecycle
+  status as data; do not encode it in a name such as `create_pending`.
 - Preserve existing data when changing columns, enum values, constraints, or indexes. If a migration is destructive, call that out before applying it.
 - Avoid duplicating data that can be derived reliably, especially request fields like token accounts, token programs, or wallet-derived addresses.
 - When adding request or table fields, verify whether the value is user input, derived state, cached state, or source-of-truth state.
