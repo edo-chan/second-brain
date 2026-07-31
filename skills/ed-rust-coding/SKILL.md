@@ -113,10 +113,13 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 - Keep production service files free of test modules. Put unit tests in the
   owning domain's `tests/` module or directory.
-- Service-local unit tests must not require a real database, Redis, RPC node,
-  provider, Tilt stack, local TCP listener, or another service. Put replaceable
-  side effects behind focused consumer-owned traits and use `mockall` to test
-  the service behavior.
+- Service-local unit tests must not require a real database, Redis instance,
+  RPC node, provider, Tilt stack, pre-running TCP listener, or another service.
+  An isolated Redis-compatible mock is allowed when the test starts it on an
+  ephemeral address, owns teardown, requires no shared infrastructure, and
+  fails instead of skipping when setup fails. Put other replaceable side
+  effects behind focused consumer-owned traits and use `mockall` to test the
+  service behavior.
 - Move tests that intentionally exercise real infrastructure, generated gRPC
   clients, or complete multi-service flows to a workspace-level integration or
   end-to-end test area outside `services/`. Do not label those tests unit tests
