@@ -35,7 +35,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 
 ## Code Organization
 
-- Do not put business logic in `mod.rs`; use `mod.rs` only for module wiring and exports.
+- Do not put business logic in `lib.rs` or `mod.rs`; use both files only for module wiring and exports.
 - Keep types next to the consumer that exposes or uses them. Avoid giant shared type files, vendor type dumps, and moving types into separate files before there is a real reuse boundary.
 - Keep vendor property/lookup types with the feature or endpoint that exposes them; avoid giant shared vendor type files.
 - Treat each vendor endpoint as a distinct contract. Vendor libraries must expose explicit endpoint-specific methods that return clear concrete response structs.

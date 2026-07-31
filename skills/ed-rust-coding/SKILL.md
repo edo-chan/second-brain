@@ -9,7 +9,8 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 ## Code Organization
 
-- Use `mod.rs` only for wiring and exports. Do not put business logic there.
+- Use `lib.rs` and `mod.rs` only for module wiring and exports. Do not put
+  business logic in either file.
 - Keep top-level files under `handler/api/` limited to endpoint handler
   implementations. Put handler-specific validation, orchestration, parsing,
   state-machine, and other supporting code under
