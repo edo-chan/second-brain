@@ -92,6 +92,10 @@ Read only the references needed for the task:
   or service implementation object.
 - Avoid pass-through wrappers and helpers that only rename, forward, clone,
   trim, borrow, convert, or hide a single call.
+- Prefer a few repeated, explicit request steps over a resolver, runtime
+  context, factory, store, or helper whose only value is concealing those
+  steps. Extract shared code only when it owns a real policy, invariant, or
+  independently reusable operation.
 - Write comments to explain rationale, invariants, non-obvious constraints, and
   tradeoffs. Simplify code that needs a comment merely to explain what it does.
 - When deliberately accepting a simpler implementation with a known ceiling,

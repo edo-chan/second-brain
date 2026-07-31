@@ -7,6 +7,9 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Treat each vendor endpoint as a distinct contract.
 - When a vendor-client boundary exists, expose an explicit endpoint-specific
   method that returns a clear concrete response struct.
+- Name the concrete third-party adapter `{Vendor}Connector`, such as
+  `MeldConnector`. The vendor name and `Connector` suffix make ownership clear;
+  do not use generic `Client`, `Service`, or `Manager` names for it.
 - Review the request contract as strictly as the response contract. Identify
   caller-supplied, server-derived, and vendor-derived fields instead of showing
   or validating only the response shape.
@@ -27,8 +30,23 @@ Treat service boundaries as the place where trust, authentication, and logging p
   client's constructor. Construct that client at the consumer or startup
   boundary until selection, lifecycle, or replacement behavior earns a
   factory.
-- Keep HTTP, authentication, retries, response-body handling, and deserialization inside the vendor library.
-- Allow a raw body only inside a private transport helper, and deserialize it before the public endpoint method returns.
+- If environment or credentials vary per request, do not retain them on the
+  service implementation or vendor client. Validate the request environment,
+  fetch and decrypt the scoped credential in the RPC, and pass a borrowed
+  `SecretBox` into each explicit endpoint method.
+- Do not add a public client-config object when construction only selects one
+  validated environment and all other values are fixed protocol defaults.
+- Do not hide typed endpoint requests behind `get_body`, `post_body`,
+  `send(method: &str, body: Option<_>)`, or another generic request function.
+  Each typed endpoint must visibly construct and send its concrete request,
+  check status, read the body, and deserialize its concrete response.
+- Keep HTTP, authentication, response-body handling, and deserialization inside the vendor library.
+- Do not retry at a generic HTTP transport layer. Retry only in the owning
+  endpoint or workflow after proving idempotency, replay behavior, and the
+  exact retryable failure classes. Never make a POST retryable merely because
+  the transport returned a retryable status.
+- A raw body may exist only inside the concrete typed endpoint method and must
+  be deserialized before that public method returns.
 - Never include an upstream response body in a public error or log message.
   Preserve a safe status, error class, and upstream request id instead.
 - Keep response types beside the feature or endpoint implementation that exposes them; do not create a giant shared vendor types file.
@@ -53,6 +71,10 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Keep the trait limited to the endpoint methods its consumers use. A thin
   implementation that delegates those methods to the concrete client is
   legitimate boundary wiring, not an unnecessary forwarding abstraction.
+- When the API layer needs unit-test substitution, keep a focused trait at the
+  consumer boundary around only the connector's typed operations and inject
+  it into the API service. Do not expose HTTP verbs, raw bodies, generic
+  requests, or connector construction through that trait.
 - When the trait belongs to another crate, a consuming crate's `mock!`
   declaration may repeat the method signatures. Prefer a shared,
   feature-gated generated mock only when reuse across consumers justifies the

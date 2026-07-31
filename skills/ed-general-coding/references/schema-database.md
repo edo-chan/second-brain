@@ -95,6 +95,10 @@ Use migrations as the source of truth and preserve production data by default.
   `fetch_one` for required records, and explicit outcomes for conditional
   updates or deletes. Do not fetch an invariant relation optionally and defer
   the missing-record failure to a distant caller.
+- Name repository writes for the persistence operation, such as `create`,
+  `update_*`, or `set_*`, not for one initial lifecycle value. Pass `pending`,
+  `approved`, or another status as data; do not encode it in a name such as
+  `create_pending`.
 - Return a typed applied, not-found, conflict, or already-final outcome from
   conditional mutations. Do not make callers infer mutation state from a
   leaked row, nullable field cluster, or affected-row count without domain

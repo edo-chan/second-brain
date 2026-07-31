@@ -32,11 +32,39 @@ Favor small, explicit, local changes that match the surrounding module style.
   or value the operation needs.
 - Do not extend generic vendor request/response wrappers or generic JSON deserialization APIs just because existing code uses them.
 - Prefer explicit endpoint-specific methods that return concrete response structs.
+- Name the concrete third-party adapter after the vendor with a `Connector`
+  suffix, such as `MeldConnector`. Do not call a third-party integration a
+  generic `Client`, `Service`, or `Manager`.
+- When an API layer needs unit-test substitution, define a focused
+  consumer-owned trait around the vendor connector's typed endpoint methods
+  and inject that trait into the API service. The concrete connector
+  implementation may delegate those typed calls; do not add a connector
+  factory or expose transport-generic methods through the trait.
 - Do not let `serde_json::Value` or raw vendor response bodies cross the vendor-library boundary.
 - Do not add pass-through helpers that only rename or forward another call.
 - Construct a concrete client directly when the only variable is its validated
   configuration. Do not add a factory trait whose implementation only calls
   that client's constructor.
+- When a request selects the vendor environment or credential, keep both out
+  of the service implementation and long-lived client state. Validate the
+  environment in the request, load the environment-scoped encrypted
+  credential in that RPC, decrypt it to `SecretBox`, construct the concrete
+  client, and pass the borrowed secret to each typed endpoint call.
+- Do not hide repository lookup, lifecycle checks, secret decryption, client
+  construction, and one vendor call behind a `Resolver`, `Runtime`,
+  `Context`, factory, or forwarding helper. Keep that sequence visible in each
+  RPC. Prefer short local duplication when extraction would only rename those
+  steps.
+- Do not add a client configuration struct when the constructor only needs one
+  validated enum plus fixed library defaults. Pass the enum directly and keep
+  fixed protocol values at the vendor boundary.
+- Do not hide vendor requests behind `get_body`, `post_body`, a string HTTP
+  method, an optional body, or a generic request function. Each typed endpoint
+  must visibly build and send its concrete HTTP request, check status, read the
+  body, and parse its concrete response.
+- Do not retry in a generic HTTP transport loop. Add an endpoint-specific
+  retry only after its idempotency and replay contract is proven. POST requests
+  are not retryable by default.
 
 ## Workflow Layout
 
@@ -111,8 +139,9 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 ## Tests
 
-- Keep production service files free of test modules. Put unit tests in the
-  owning domain's `tests/` module or directory.
+- Keep production Rust files free of inline `#[cfg(test)] mod tests` blocks.
+  Put crate tests under that crate's `tests/` directory and group them by the
+  concrete feature or endpoint they exercise.
 - Service-local unit tests must not require a real database, Redis instance,
   RPC node, provider, Tilt stack, pre-running TCP listener, or another service.
   An isolated Redis-compatible mock is allowed when the test starts it on an
@@ -168,9 +197,11 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 - Use `deadpool_redis` for Redis access in Rust services. Do not introduce unmanaged raw Redis connections.
 - Acquire connections from the pool at the visible async boundary and keep Redis commands explicit.
-- Do not wrap Redis in a vague `Store` type. A focused repository is justified
-  when it owns domain persistence semantics; otherwise use the pool directly at
-  the explicit state-transition boundary.
+- Do not put Redis behind a model, `Store`, `Repository`, resolver, or
+  persistence trait. The model/repository abstraction is for durable Postgres
+  state. Keep Redis operations as a small number of feature-local functions
+  such as `cache_quote` and `get_quote`; pass the concrete pool, acquire the
+  connection there, and issue the commands visibly.
 - When `rediss://` support is required, enable the underlying `redis` crate's Tokio/Rustls transport feature, but continue to manage connections and issue commands through `deadpool_redis`.
 - Use an atomic Redis script or transaction for security-sensitive state
   transitions and deadlines. Compare the complete expected typed state,
