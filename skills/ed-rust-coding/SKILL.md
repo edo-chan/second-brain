@@ -58,6 +58,15 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Do not add a client configuration struct when the constructor only needs one
   validated enum plus fixed library defaults. Pass the enum directly and keep
   fixed protocol values at the vendor boundary.
+- Do not create a domain-named cipher type whose only state is a master key and
+  whose methods forward to encryption primitives. Put concrete envelope
+  encryption functions in the shared cipher crate, keep key inputs in
+  `SecretBox`, and call those functions at the visible encrypt/decrypt
+  boundary.
+- Do not inject or store a cipher helper object on an API service
+  implementation. Retain only the required secret key material, if the
+  endpoint owns it, and pass that secret explicitly to the shared cipher
+  function in the RPC.
 - Do not hide vendor requests behind `get_body`, `post_body`, a string HTTP
   method, an optional body, or a generic request function. Each typed endpoint
   must visibly build and send its concrete HTTP request, check status, read the

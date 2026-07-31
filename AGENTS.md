@@ -62,6 +62,12 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
   factory, or forwarding helper. Prefer visible local duplication.
 - Do not add a client-config object when construction only selects one
   validated environment plus fixed library defaults.
+- Do not create a domain-named cipher type whose only state is a master key.
+  Put concrete envelope-encryption functions in the shared cipher crate, keep
+  key inputs in `SecretBox`, and call them at the visible crypto boundary.
+- Do not inject or store a cipher helper object on an API service
+  implementation. Retain only required secret key material and pass it
+  explicitly to the shared cipher function.
 - Do not hide typed endpoint requests behind `get_body`, `post_body`, a string
   HTTP method, an optional body, or a generic request function. Each endpoint
   must visibly build and send its concrete request, check status, read the
