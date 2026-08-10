@@ -44,7 +44,7 @@ Inspect drift and scope before applying infrastructure changes.
   that master in SSM and let the application wrap per-record data keys. Do not
   introduce KMS resources, ARNs, or aliases unless the design explicitly
   assigns key custody or cryptographic operations to KMS.
-- Treat declared SSM parameters as required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
+- All declared SSM parameters are required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
 - Configure local development to authenticate to AWS and read its environment-scoped configuration directly from SSM.
 
 ## Terraform And Environments

@@ -368,7 +368,7 @@ Include this self-review table in the PR body before opening or re-requesting re
 - After Terraform creates the parameter, persist the real value in SSM and verify that every target environment can resolve it before deploying code that requires it.
 - Treat missing, placeholder, sentinel, or unreadable SSM values as rollout blockers. Never deploy consuming code before the required value is persisted and verified.
 - Use AWS SSM Parameter Store as the sole source for environment- and customer-specific service runtime configuration in every environment, including local development.
-- Treat declared SSM parameters as required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
+- All declared SSM parameters are required. Do not make them optional or add environment-variable, hardcoded, default-value, or local fallback paths when a parameter is missing.
 - Configure local development to authenticate to AWS and read its environment-scoped configuration directly from SSM.
 - Prefer deleting deprecated resources once traffic and dependencies are confirmed gone, especially old EKS, ClickHouse, indexer, and unused Helm resources.
 - For AWS signing/enclave work, keep private material owned by KMS/enclave flows where possible; store only public keys or ciphertext blobs outside the signer boundary.
