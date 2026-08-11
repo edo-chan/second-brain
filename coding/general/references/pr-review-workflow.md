@@ -57,9 +57,9 @@ selected stack:
 
 - `ed-rust-coding` for Rust services, workflows, handlers, modules, and
   tests.
-- the parent `ed-general-coding` guidance for React, Next.js, TypeScript, browser
-  flows, vendor clients, public APIs, proto/gRPC, webhooks,
-  auth boundaries, response parsing, and sensitive logging.
+- `ed-typescript-coding` for React, Next.js, TypeScript, and browser flows.
+- the parent `ed-general-coding` guidance for vendor clients, public APIs,
+  proto/gRPC, webhooks, auth boundaries, response parsing, and sensitive logging.
 - the parent `ed-general-coding` guidance for schemas, migrations, persistence, and source-of-truth
   decisions.
 - `ed-ci-infrastructure` for secrets, Terraform, cloud configuration,

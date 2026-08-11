@@ -6,13 +6,15 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 
 - The canonical second-brain repository is `/Users/edchan/Documents/Playground/Dev/second-brain`.
 - Use its `README.md` as the current index of reusable agent skills.
-- Before non-trivial work in Ed's repositories, identify any relevant skill under `second-brain/skills/` and read its `SKILL.md` completely before acting. Load only the skills relevant to the task.
-- Use `ed-general-coding` for general implementation, refactoring, debugging, testing, frontend work, service boundaries, schemas, databases, and code review.
+- Before non-trivial work in Ed's repositories, identify any relevant skill under `second-brain/coding/` or `second-brain/games/` and read its `SKILL.md` completely before acting. Load only the skills relevant to the task.
+- Use `ed-general-coding` for general implementation, refactoring, debugging, testing, service boundaries, schemas, databases, and code review.
+- Use `ed-typescript-coding` for TypeScript, React, Next.js App Router, browser interactions, and frontend review.
 - Use `ed-documentation` for product and API documentation, guides, PRDs, RFCs, architecture proposals, and design-document reviews.
 - Use `ed-rust-coding` for Rust crates, services, workflows, handlers, modules, and tests.
 - Use `ed-solidity-coding` for Solidity and EVM contract implementation and review, including EVM Swig safety and parity.
 - Use `ed-solana-coding` for Solana programs, Swig state, authorities, permissions, parsers, SignV2, recovery, SDKs, and pull-request work.
 - Use `ed-ci-infrastructure` for branches, commits, pull requests, merges, releases, CI, secrets, Terraform, cloud configuration, deployment, drift, and rollout work.
+- Use `ed-poe-build-advisor` for Path of Exile 1 PoB review, gear upgrades, item crafting, affix availability, and crafting probabilities.
 - Treat `second-brain/AGENTS.md` as the tracked snapshot of this global file. When changing global guidance, update that snapshot through the second-brain repository's branch, pull-request, and merge workflow.
 
 ## Git Workflow

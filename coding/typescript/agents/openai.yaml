@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed TypeScript Coding"
+  short_description: "Build and review TypeScript and frontend code"
+  default_prompt: "Use $ed-typescript-coding to implement or review this TypeScript, React, or Next.js change using Ed's frontend standards."
