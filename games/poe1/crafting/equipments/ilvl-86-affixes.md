@@ -1,4 +1,4 @@
-# PoE 1 ilvl 86 Affix Reference
+# PoE 1 ilvl 86 Equipment Affix Reference
 
 Snapshot: Path of Exile 1, patch 3.29, verified 2026-08-10.
 

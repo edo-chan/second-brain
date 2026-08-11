@@ -14,7 +14,7 @@ Personal agent guidance and reusable Codex skills.
 
 ## Games
 
-- `games/poe1` - Path of Exile 1 PoB review, gear evaluation, affix references, crafting methods, and outcome probabilities.
+- `games/poe1` - Path of Exile 1 PoB review, gear evaluation, and a structured crafting library with general rules, method references, equipment-specific targets, and outcome probabilities.
 
 ## Repository Guidance
 

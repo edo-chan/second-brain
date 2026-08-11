@@ -1,7 +1,8 @@
-# PoE Item Crafting
+# General PoE Item Crafting
 
-Use this reference for Path of Exile 1 rare-item crafting and purchase
-decisions. Verify patch-specific values and currency behavior live.
+Use this reference for shared Path of Exile 1 rare-item crafting and purchase
+decisions. Use an item guide under `equipments/` when one exists, and verify
+patch-specific values and currency behavior live.
 
 ## Read The Item State
 
