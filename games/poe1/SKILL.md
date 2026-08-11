@@ -41,9 +41,10 @@ State when a conclusion is an inference. Do not carry affix values, league
 mechanics, prices, or crafting odds forward from memory when they are cheap to
 verify.
 
-Use [ilvl-86-affixes.md](references/ilvl-86-affixes.md) as a patch-stamped
-starting point for common item-level 86 bases. Recheck PoEDB when the current
-patch differs from the reference snapshot or the target modifier is not listed.
+Use [ilvl-86-affixes.md](crafting/equipments/ilvl-86-affixes.md) as a
+patch-stamped starting point for common item-level 86 bases. Recheck PoEDB when
+the current patch differs from the reference snapshot or the target modifier
+is not listed.
 
 ## Evaluate An Upgrade
 
@@ -64,13 +65,16 @@ without matching it to the current item class, modifier family, and patch.
 
 ## Guide A Craft
 
-Read [item-crafting.md](references/item-crafting.md) before advising on a rare
-item craft, Eldritch manipulation, influence, annulment, or market valuation.
-Read [crafting-methods.md](references/crafting-methods.md) before choosing a
-crafting currency or claiming that an operation is deterministic. Read
-[ilvl-86-affixes.md](references/ilvl-86-affixes.md) when the advice depends on
-modifier tiers, item level, modifier weight, or the ordinary versus special
-modifier pool.
+Read [general.md](crafting/general.md) before advising on a rare item craft,
+Eldritch manipulation, influence, annulment, or market valuation. Read
+[methods.md](crafting/methods.md) before choosing a crafting currency or
+claiming that an operation is deterministic. Read
+[ilvl-86-affixes.md](crafting/equipments/ilvl-86-affixes.md) when the advice
+depends on modifier tiers, item level, modifier weight, or the ordinary versus
+special modifier pool. When the requested target has a guide under
+`crafting/equipments/`, read it completely before giving a recipe; for example,
+use [endgame-chaos-dot-staff.md](crafting/equipments/endgame-chaos-dot-staff.md)
+for the ED/Contagion staff target.
 
 For each stage:
 
@@ -87,6 +91,9 @@ Never recommend a regular Annulment, Exalted, Chaos, fossil, essence, or
 Eldritch currency without first checking which modifiers it can affect.
 
 ## Calculate Crafting Odds
+
+Read [probability.md](crafting/probability.md) before calculating or reporting
+crafting odds.
 
 Define success before calculating it: exact modifier family, minimum tier,
 number of acceptable outcomes, and whether other affixes must also survive.
