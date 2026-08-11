@@ -14,7 +14,10 @@ Personal agent guidance and reusable Codex skills.
 
 ## Games
 
-- `games/poe1` - Path of Exile 1 PoB review, gear evaluation, and a structured crafting library with general rules, method references, equipment-specific targets, and outcome probabilities.
+- `games/poe1` - Path of Exile 1 guidance that requires fresh PoB content for personalized advice.
+  - `build` - intake, defense, damage, attributes and resistances, gems and reservation, passive trees and clusters, upgrade prioritization, flasks, and CI Chaos DoT guidance.
+  - `crafting` - general safety, method behavior, probability, and equipment-specific crafting targets.
+  - `maintenance.md` - patch refresh and periodic restructuring rules.
 
 ## Repository Guidance
 

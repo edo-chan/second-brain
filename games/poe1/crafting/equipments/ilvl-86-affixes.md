@@ -17,6 +17,17 @@ single-draw chance = successful eligible weight / total eligible weight
 Mod groups, occupied affixes, item tags, metamods, fossils, and other crafting
 rules can change the eligible pool.
 
+## Contents
+
+- [What ilvl 86 unlocks](#what-ilvl-86-actually-unlocks)
+- [Pure-ES body armour](#pure-energy-shield-body-armour)
+- [Armour/ES gloves and helmets](#armourenergy-shield-gloves-and-helmets)
+- [Armour/ES boots](#armourenergy-shield-boots)
+- [Crystal belts](#crystal-belt)
+- [Rings](#rings)
+- [Chaos DoT caster staves](#caster-staves-for-chaos-dot)
+- [Special modifier pools](#special-pools-to-keep-separate)
+
 ## What ilvl 86 Actually Unlocks
 
 - Pure-ES body armour and hybrid Armour/ES body armour can roll the natural
