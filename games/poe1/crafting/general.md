@@ -4,6 +4,14 @@ Use this reference for shared Path of Exile 1 rare-item crafting and purchase
 decisions. Use an item guide under `equipments/` when one exists, and verify
 patch-specific values and currency behavior live.
 
+## Contents
+
+- [Read the item state](#read-the-item-state)
+- [Rank modifiers and keep thresholds](#rank-modifiers-by-function)
+- [Protect the correct side](#protect-the-correct-side)
+- [Choose and evaluate a method](#choose-the-crafting-method)
+- [Evaluate against the build and market](#evaluate-against-the-build)
+
 ## Read The Item State
 
 Before recommending a click, record:
@@ -93,30 +101,11 @@ For every annulment, exalt, reforge, or conflict operation, state:
 
 Pause after a valuable hit. Recount the item before another click.
 
-## Common Build Checks
+## Evaluate Against The Build
 
-### CI
-
-- Remove life from the value calculation.
-- Verify attribute requirements after unequipping the old item.
-- Treat Intelligence as global increased ES, not local item ES.
-- Ignore chaos resistance unless another mechanic changes CI's immunity.
-- Verify whether life regeneration is converted to ES before valuing it.
-
-### Block And Suppression
-
-- Report attack block and spell block separately.
-- Verify maximum block caps and conditional uptime.
-- Treat suppression as a separate chance to reduce spell damage, not as block.
-- Avoid presenting a small isolated suppression roll as reliable suppression
-  cap.
-
-### Damage Over Time
-
-- Distinguish increased damage from damage-over-time multiplier.
-- Verify whether spell-damage modifiers apply to the skill's damage over time.
-- Do not credit flat added spell damage to a damage-over-time component without
-  a verified skill mechanic.
+Use the current PoB and the focused references under `build/` to calculate lost
+attributes, resistances, defenses, recovery, damage, sockets, and reservation.
+Item quality alone does not establish that the item improves the character.
 
 ## Market Decisions
 

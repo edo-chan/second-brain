@@ -1,4 +1,4 @@
 interface:
   display_name: "PoE Build Advisor"
-  short_description: "Review PoB builds and guide safer PoE crafts"
-  default_prompt: "Use $ed-poe-build-advisor to review my PoB and guide my next gear upgrade."
+  short_description: "Analyze PoB builds and guide safer PoE upgrades"
+  default_prompt: "Use $ed-poe-build-advisor to analyze my pasted PoB and prioritize build and crafting upgrades."

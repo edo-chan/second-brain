@@ -14,7 +14,7 @@ These are my baseline preferences across repos. Repo-level `AGENTS.md` files ove
 - Use `ed-solidity-coding` for Solidity and EVM contract implementation and review, including EVM Swig safety and parity.
 - Use `ed-solana-coding` for Solana programs, Swig state, authorities, permissions, parsers, SignV2, recovery, SDKs, and pull-request work.
 - Use `ed-ci-infrastructure` for branches, commits, pull requests, merges, releases, CI, secrets, Terraform, cloud configuration, deployment, drift, and rollout work.
-- Use `ed-poe-build-advisor` for Path of Exile 1 PoB review, gear upgrades, item crafting, affix availability, and crafting probabilities.
+- Use `ed-poe-build-advisor` for Path of Exile 1 PoB review, tankiness, damage, attributes, gear upgrades, item crafting, affix availability, and crafting probabilities. Require the latest raw PoB export content before personalized build advice.
 - Treat `second-brain/AGENTS.md` as the tracked snapshot of this global file. When changing global guidance, update that snapshot through the second-brain repository's branch, pull-request, and merge workflow.
 
 ## Git Workflow

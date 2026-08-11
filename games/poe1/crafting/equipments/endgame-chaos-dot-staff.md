@@ -7,18 +7,21 @@ staff. Recheck the current modifier table, bench crafts, build calculation, and
 trade prices before spending. Do not apply these priorities to attack-based
 poison or ailment builds without recalculating their scaling.
 
+## Contents
+
+- [Target item](#target-item)
+- [Value tiers](#value-tiers)
+- [Completion routes](#completion-routes)
+- [Probability boundary](#probability-boundary)
+- [Stop and reassess](#stop-and-reassess)
+
 ## Target Item
 
 The aspirational five-mod rare has three damage prefixes and two damage
-suffixes:
-
-| Modifier | Side | Top ordinary value | Min ilvl | Base weight |
-| --- | --- | ---: | ---: | ---: |
-| all Spell Skill Gems | prefix | +2 | 55 | 250 |
-| all Chaos Spell Skill Gems | prefix | +4 | 77 | 100 |
-| spell damage | prefix | 150-174% | 79 | verify live |
-| Chaos DoT multiplier | suffix | +66-75% | 78 | 50 |
-| cast speed | suffix | 44-49% | 83 | 1000 |
+suffixes: +levels to all Spell Skill Gems, +levels to all Chaos Spell Skill
+Gems, spell damage, Chaos DoT multiplier, and cast speed. Use the current ranges,
+item levels, and weights in
+[ilvl-86-affixes.md](ilvl-86-affixes.md) rather than duplicating the table here.
 
 Use a caster staff, not a warstaff. Item level 83 unlocks every target tier in
 the table; item level 86 is acceptable but is not required by this exact set of

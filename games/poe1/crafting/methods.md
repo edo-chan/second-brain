@@ -6,6 +6,15 @@ Read currency wording in game before an irreversible click. This reference
 describes the normal effect; item rarity, influence, corruption, fractures,
 metamods, and league-specific variants can change eligibility.
 
+## Contents
+
+- [Core currency](#core-currency)
+- [Targeted reforging](#targeted-reforging)
+- [Eldritch explicit currency](#eldritch-explicit-currency)
+- [Veiled, influence, and fracture](#veiled-influence-and-fracture-methods)
+- [Beastcrafting, recombinators, and corruption](#beastcrafting-recombinators-and-corruption)
+- [Allflame crafting](#allflame-crafting-in-329)
+
 ## Core Currency
 
 | Method | Normal effect | What remains | Primary risk |
