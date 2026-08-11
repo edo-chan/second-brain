@@ -1,6 +1,6 @@
 ---
 name: ed-general-coding
-description: General implementation, code-review, and simplicity-audit standards for Ed's repositories across languages and frontend work. Use when building, modifying, refactoring, debugging, testing, reviewing production code, or auditing over-engineering in code, APIs, schemas, service boundaries, React, Next.js, or TypeScript. Use the Rust, Solidity, Solana, documentation, or CI/infrastructure skill instead when that domain is primary.
+description: General implementation, code-review, and simplicity-audit standards for Ed's repositories across languages. Use when building, modifying, refactoring, debugging, testing, reviewing production code, or auditing over-engineering in code, APIs, schemas, and service boundaries. Use the TypeScript, Rust, Solidity, Solana, documentation, or CI/infrastructure skill instead when that domain is primary.
 ---
 
 # Ed General Coding
@@ -37,8 +37,6 @@ non-trivial behavior.
 
 Read only the references needed for the task:
 
-- [frontend.md](references/frontend.md) for React, Next.js App Router,
-  TypeScript, browser interactions, and frontend tests.
 - [service-boundaries.md](references/service-boundaries.md) for vendor clients,
   APIs, proto/gRPC, webhooks, auth boundaries, response parsing, and sensitive
   logging.
