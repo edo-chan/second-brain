@@ -1,5 +1,23 @@
 # Session Method
 
+## Three-phase envelope
+
+Wrap every teacher interaction in the same sequence:
+
+1. teach or advance the learning contract;
+2. evaluate and, when justified, improve the teacher;
+3. evaluate and, when justified, improve the curriculum.
+
+Keep the teaching phase proportional to the learner's message. A brief
+clarification may require only a brief teaching response, but it still receives
+both evolution reviews. Make the three outcomes visible:
+
+```text
+Teach: <answer, lesson step, correction, or learning-contract clarification>
+Teacher evolution: <change made, observation recorded, or no change justified>
+Curriculum evolution: <change made, observation recorded, or no change justified>
+```
+
 ## Session contract
 
 Begin each session with:
