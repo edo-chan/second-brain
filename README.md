@@ -21,6 +21,7 @@ Personal agent guidance and reusable Codex skills.
 
 ## Learning
 
+- [`learning/ed-teacher`](learning/ed-teacher/SKILL.md) - adaptive teacher agent that uses learning projects as its homebase.
 - [`learning/zk-and-quantum-foundations`](learning/zk-and-quantum-foundations/README.md) - independent zero-knowledge proof-system and quantum-cryptography tracks that meet at the Shor-to-Groth16 bridge.
 
 ## Repository Guidance

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Teacher"
+  short_description: "Teach, adapt, and improve learning curricula"
+  default_prompt: "Use $ed-teacher to continue my active learning project with one focused concept."
