@@ -3,6 +3,23 @@
 Improve the teaching system from observed learning outcomes rather than from
 novelty or stylistic preference alone.
 
+## Review every interaction
+
+Run both reviews after every teaching phase:
+
+1. **Teacher review:** Inspect explanation, pacing, questions, examples,
+   modality, and feedback.
+2. **Curriculum review:** Inspect prerequisites, ordering, lesson size,
+   examples, exercises, and checkpoints.
+
+Each review produces one of three outcomes:
+
+- make a justified durable change;
+- record a candidate observation that has not met the change threshold;
+- state that the interaction supplied no reason to change.
+
+The review is mandatory. A file edit is evidence-dependent.
+
 ## Classify the signal
 
 | Signal | Owning location |
