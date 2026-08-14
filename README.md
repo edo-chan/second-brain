@@ -26,7 +26,7 @@ Personal agent guidance and reusable Codex skills.
 
 ## Repository Guidance
 
-- `AGENTS.md` - full global agent-guidance snapshot and skill-routing rules.
+- `AGENTS.md` - minimal global bootstrap that routes agents to this index.
 
 ## License
 
