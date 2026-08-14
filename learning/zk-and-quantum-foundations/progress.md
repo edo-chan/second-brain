@@ -45,3 +45,11 @@ Record questions without converting them prematurely into research directions.
   soundness?
 - Which foundations belong specifically to ZK, specifically to quantum
   cryptography, or genuinely to both?
+
+## Curriculum observations
+
+Record evidence that may justify changing topic order, lesson size,
+prerequisites, examples, or checkpoints.
+
+| Date | Track | Observed signal | Candidate change | Status |
+| --- | --- | --- | --- | --- |

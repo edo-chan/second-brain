@@ -28,6 +28,7 @@ proofs reveal their witnesses.
 - [Progress and question log](progress.md)
 - [ZK track](zk/curriculum.md)
 - [Quantum-cryptography track](quantum-cryptography/curriculum.md)
+- [Teacher agent](../ed-teacher/SKILL.md)
 
 ## Learning rules
 
@@ -37,6 +38,8 @@ proofs reveal their witnesses.
 - Record derivations and questions rather than relying on slogans.
 - Use small explanatory experiments when they clarify the mathematics.
 - Unlock a bridge only after both of its prerequisites are understood.
+- Improve lesson size, sequencing, examples, and checkpoints when recorded
+  learner evidence exposes a curriculum problem.
 - Choose a paper, implementation, or other research direction after the
   foundation phase reveals a worthwhile question.
 
