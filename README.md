@@ -19,6 +19,10 @@ Personal agent guidance and reusable Codex skills.
   - `crafting` - general safety, method behavior, probability, and equipment-specific crafting targets.
   - `maintenance.md` - patch refresh and periodic restructuring rules.
 
+## Learning
+
+- [`learning/zk-and-quantum-foundations`](learning/zk-and-quantum-foundations/README.md) - independent zero-knowledge proof-system and quantum-cryptography tracks that meet at the Shor-to-Groth16 bridge.
+
 ## Repository Guidance
 
 - `AGENTS.md` - full global agent-guidance snapshot and skill-routing rules.
