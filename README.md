@@ -2,6 +2,11 @@
 
 Personal agent guidance and reusable Codex skills.
 
+## Presentation
+
+When multiple formats would communicate the same material clearly, prefer:
+ASCII chart > sectioned bullet-point list > table.
+
 ## Coding
 
 - `coding/general` - general implementation, service-boundary, database, simplicity, and PR-review standards.
