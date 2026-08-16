@@ -7,6 +7,10 @@ Personal agent guidance and reusable Codex skills.
 When multiple formats would communicate the same material clearly, prefer:
 ASCII chart > sectioned bullet-point list > table.
 
+- [`presentation/ed-figure-design`](presentation/ed-figure-design/SKILL.md) -
+  fixed-canvas TanStack/D3 figures and diagrams built from a declared design
+  system, a 12-column grid, fixed typography tokens, and verified PNG output.
+
 ## Coding
 
 - `coding/general` - general implementation, service-boundary, database, simplicity, and PR-review standards.

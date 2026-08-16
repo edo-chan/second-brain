@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Figure Design"
+  short_description: "Create consistent, publication-ready figures"
+  default_prompt: "Use $ed-figure-design to draw this figure with a fixed design system and verified PNG output."
