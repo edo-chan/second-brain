@@ -34,6 +34,33 @@ If source, design documentation, accepted review feedback, and client behavior d
 - Mark only mutated accounts writable. Avoid unnecessary transaction write locks.
 - Authenticate before returning sensitive state-dependent validation errors, but complete all validation before reallocating, mutating state, or invoking another program.
 
+### Default To Shank Instruction Contexts
+
+- For Solana program instruction enums, default to
+  `#[derive(ShankInstruction, ShankContext)]` and ordered `#[account(...)]`
+  declarations. Keep an established non-Shank ABI generator only when mixing
+  generators would create a second source of truth or require an explicit
+  migration.
+- Model a conditionally used account with the Shank `optional` account marker
+  while preserving its fixed account index. The default builder representation
+  for `None` is a read-only program-ID account meta; a real `Some` account keeps
+  its required signer and writable flags. Never shorten the account list or
+  shift later indexes unless the active parser and every client deliberately
+  implement that wire contract.
+- Treat the generated `Option<&AccountInfo>` as untrusted input. When stored
+  state requires the account, require `Some` and validate its exact key, owner,
+  signer/writable flags, and non-aliasing rules. When stored state does not
+  require it, handle `None` with the explicit protocol fallback and reject an
+  unrelated `Some`. Accept a legacy explicit fallback account only when its key
+  matches that fallback exactly.
+- Verify the pinned Shank implementation before relying on optional-account
+  behavior. Swig's pinned Shank context uses the program ID as a fixed-position
+  sentinel. Do not enable `legacy_optional_accounts_strategy` or assume
+  variable-length omission without an explicit compatibility decision.
+- Regenerate the IDL and update interface/SDK builders and tests in the same
+  change. Assert the sentinel account meta and at least one later account index,
+  then exercise both `None` and `Some` paths against a rebuilt SBF artifact.
+
 ## Authorization And Intent Binding
 
 - Require authorization for the exact Swig, role, authority, instruction, destination, amount, and replacement state being changed.
