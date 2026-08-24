@@ -31,7 +31,7 @@ ASCII chart > sectioned bullet-point list > table.
 ## Learning
 
 - [`learning/ed-teacher`](learning/ed-teacher/SKILL.md) - adaptive teacher agent that uses learning projects as its homebase.
-- [`learning/zk-and-quantum-foundations`](learning/zk-and-quantum-foundations/README.md) - independent zero-knowledge proof-system and quantum-cryptography tracks that meet at the Shor-to-Groth16 bridge.
+- [`learning/zk-and-quantum-foundations`](learning/zk-and-quantum-foundations/README.md) - a traditional abstract-algebra spine that branches into Groth16, Poseidon-style hashes, and quantum cryptography before the Shor-to-Groth16 bridge.
 
 ## Repository Guidance
 
