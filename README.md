@@ -16,7 +16,7 @@ ASCII chart > sectioned bullet-point list > table.
 - `coding/general` - general implementation, service-boundary, database, simplicity, and PR-review standards.
 - `coding/typescript` - TypeScript, React, Next.js, browser interaction, and frontend-review standards.
 - `coding/rust` - Rust code organization, service implementation, async boundaries, and tests.
-- `coding/solidity` - Solidity implementation plus strict EVM Swig security and Solana-parity gates.
+- `coding/solidity` - Solidity and EVM Swig implementation with exact-intent, storage/upgrade, ABI/SDK, and Solana-parity security gates.
 - `coding/solana` - Solana implementation plus strict Swig safety and compatibility gates.
 - `coding/documentation` - documentation writing and evidence-backed design-document review.
 - `coding/infrastructure` - Git publication, CI, Terraform, secrets, deployment, and rollout guardrails.
