@@ -1,7 +1,24 @@
-# Two-Track Curriculum
+# Algebra Spine with ZK and Quantum Tracks
 
-ZK proof systems and quantum cryptography progress independently. Each has its
-own diagnostic, lesson sequence, checkpoints, and progress state.
+Abstract algebra is the active traditional spine. ZK proof systems and quantum
+cryptography retain independent diagnostics, lesson sequences, checkpoints,
+and progress states. The applications do not determine the pace of the
+algebra course.
+
+## Track A: Abstract algebra spine
+
+- [Curriculum](algebra/curriculum.md)
+- [Diagnostic](algebra/diagnostic.md)
+
+```text
+proof language -> groups -> rings -> fields
+                              |
+                              v
+linear structure + polynomials
+              |
+              v
+elliptic curves + pairings
+```
 
 ## Track Z: Zero-knowledge proof systems
 
@@ -9,19 +26,20 @@ own diagnostic, lesson sequence, checkpoints, and progress state.
 - [Diagnostic](zk/diagnostic.md)
 
 ```text
-fields + groups + polynomials
+algebra spine + polynomials
         |
-        v
-arithmetic circuits -> R1CS -> QAP
+        +-> arithmetic circuits -> R1CS -> QAP
+        |               |
+        |               v
+        |      pairings + structured reference strings
+        |               |
+        |               v
+        |      Groth16 prover, verifier, and security properties
         |
-        v
-pairings + structured reference strings
-        |
-        v
-Groth16 prover, verifier, and security properties
-        |
-        v
-broader ZK proof-system landscape
+        +-> sponge + power maps + linear layers
+                        |
+                        v
+              Poseidon-style algebraic hashes
 ```
 
 ## Track Q: Quantum cryptography
@@ -76,9 +94,13 @@ cryptanalytic and post-quantum consequences
 
 ## Operating rule
 
-- Complete both diagnostics first.
+- Complete the algebra placement first, one item and one probe at a time.
+- Let the algebra spine lead until a downstream lesson's prerequisites are
+  demonstrated.
+- Complete the ZK and quantum diagnostics before advancing those tracks.
 - Choose one starting lesson independently for each track.
-- Alternate tracks unless one develops a missing shared prerequisite.
+- Do not alternate mechanically. Use a side track when it is restorative or
+  when the required foundation has already been demonstrated.
 - Keep each lesson to one main concept.
 - Unlock a bridge after both prerequisite checkpoints are complete.
 - Keep research direction deferred until the foundation phase ends.

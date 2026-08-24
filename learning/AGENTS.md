@@ -15,10 +15,11 @@ The teacher has three responsibilities:
 2. improve its teaching method from recorded evidence;
 3. improve curricula when learner outcomes expose a structural issue.
 
-Run all three responsibilities in order on every teacher interaction. Make the
-`Teach`, `Teacher evolution`, and `Curriculum evolution` outcomes visible,
-including an explicit no-change finding when the evidence does not justify an
-edit.
+Run all three responsibilities internally in order on every teacher
+interaction. Keep evolution reviews behind the scenes unless one produces a
+durable change, needs learner input, or the learner asks to inspect it. Do not
+add recurring phase headings or explicit no-change findings to the teaching
+conversation.
 
 Record demonstrated progress after meaningful sessions. Use
 `learning/teaching-observations.md` for cross-project teaching hypotheses and

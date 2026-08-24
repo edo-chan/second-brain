@@ -3,17 +3,20 @@
 ## Project state
 
 - **Phase:** Foundations
-- **Current activity:** Two-track diagnostic
+- **Current activity:** Abstract-algebra diagnostic
 - **Research direction:** Intentionally deferred
 - **Started:** 2026-08-13
 
 ## Goal
 
-Build first-principles command of two independent subjects:
+Build first-principles command through a traditional algebra spine and two
+later subject tracks:
 
-1. derive Groth16 from finite fields, polynomials, arithmetization, and
-   pairings;
-2. derive Shor's discrete-logarithm algorithm from quantum computation,
+1. study abstract algebra through groups, rings, fields, polynomials,
+   elliptic curves, and pairings;
+2. derive Groth16 from arithmetic computation and reconstruct the design of
+   Poseidon-style algebraic hashes;
+3. derive Shor's discrete-logarithm algorithm from quantum computation,
    Fourier sampling, and the abelian hidden-subgroup problem.
 
 Connect the subjects only through explicit bridge modules. The main bridge is
@@ -23,9 +26,11 @@ proofs reveal their witnesses.
 
 ## Materials
 
-- [Two-track curriculum](curriculum.md)
-- [Two-track diagnostic](diagnostic.md)
+- [Curriculum map](curriculum.md)
+- [Project diagnostic](diagnostic.md)
 - [Progress and question log](progress.md)
+- [Abstract-algebra spine](algebra/curriculum.md) and
+  [diagnostic](algebra/diagnostic.md)
 - [ZK track](zk/curriculum.md)
 - [Quantum-cryptography track](quantum-cryptography/curriculum.md)
 - [Teacher agent](../ed-teacher/SKILL.md)
@@ -33,7 +38,10 @@ proofs reveal their witnesses.
 ## Learning rules
 
 - Advance one main concept at a time.
-- Keep separate diagnostics, lessons, and progress for the two tracks.
+- Use the traditional abstract-algebra sequence as the active spine; do not
+  compress it into only the facts immediately needed by cryptography.
+- Keep separate diagnostics, lessons, and progress for the algebra, ZK, and
+  quantum tracks.
 - End each lesson with an operational checkpoint.
 - Record derivations and questions rather than relying on slogans.
 - Use small explanatory experiments when they clarify the mathematics.
@@ -45,10 +53,13 @@ proofs reveal their witnesses.
 
 ## Foundation checkpoint
 
-The foundation phase is complete when both of these derivations can be
-reconstructed without references:
+The current foundation destination is reached when:
 
+- the algebra checkpoints required by the downstream branches can be proved
+  and computed independently;
 - the Groth16 verifier equation from an R1CS/QAP;
+- a Poseidon-style permutation can be reconstructed from its sponge, power
+  map, linear layer, round structure, and stated security goals;
 - Shor's discrete-logarithm algorithm from Fourier sampling of a hidden
   subgroup.
 
