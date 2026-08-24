@@ -28,6 +28,11 @@ If source, design documentation, accepted review feedback, and client behavior d
 
 - Check account-slice length before every index or unchecked load.
 - Validate signer, writable, owner, executable program, PDA seeds and bump, and key relationships at the boundary where each property becomes trusted.
+- For a changed instruction, record one account-contract row per named,
+  authority-context, variadic, CPI, and introspected account: index or role,
+  expected key or PDA, signer, writable, program owner, executable state, data
+  shape, alias rules, validation boundary, and negative test. Complete it before
+  reducing an `AccountInfo` to only its key or passing it into domain logic.
 - Reject unsafe aliasing, including a Swig config PDA, wallet-address PDA, subaccount, or other Swig-owned account supplied as an external destination or authority when the operation requires an independent account.
 - Keep instruction definitions, processor indexes, `program/idl.json`, interface account metas, and SDK builders identical.
 - Preserve existing account order. Append optional accounts when compatibility permits; do not reorder existing accounts without an explicit breaking-change decision and client migration.
@@ -61,6 +66,44 @@ If source, design documentation, accepted review feedback, and client behavior d
   change. Assert the sentinel account meta and at least one later account index,
   then exercise both `None` and `Some` paths against a rebuilt SBF artifact.
 
+## Atomic Batch And Migration Operations
+
+For an instruction that accepts a collection of accounts, assets, or state
+entries, define whether success means all entries were handled or whether
+best-effort processing is an explicit public contract. Default security-critical
+wallet migrations to all-or-error behavior.
+
+- Use a complete preflight pass before the first lamport, data, counter, or
+  external-program mutation. Validate every supplied entry's program ownership,
+  versioned layout, initialized state, asset identity, authority, destination,
+  and required account relationships.
+- Build a validation ledger for every condition that can reject or skip an
+  entry. Include each `continue`, `break`, fallible read, and CPI after the first
+  mutation, and map every malformed case to a hard error and negative test.
+- Separate preflight from execution when that makes the all-or-error contract
+  explicit. After execution begins, propagate every failure so Solana rollback
+  restores prior state; never catch or silently skip malformed input.
+- A zero-balance or otherwise empty entry may skip its CPI only after the entry
+  has passed the same structural and semantic validation as a non-empty entry.
+
+## Close Drain And Refund Flows
+
+For every close, drain, reclaim, or tombstone path, build a funds-flow ledger
+before implementing. Partition each source balance into operational SOL, rent
+reserve, retained tombstone rent, and any other protocol-owned amount; bind each
+partition to its authoritative destination and fallback.
+
+- Record each source's total balance, every partition and destination, the
+  validation that precedes mutation, and the balance test. Calculate rent for
+  each source from that account's own data length.
+- Trace the immutable rent-claimer contract through every close consumer and
+  use the strict tail decoder before mutation. Do not infer that all lamports in
+  one account have the same owner or destination.
+- Validate configured, unset, missing, wrong, and source-alias destinations
+  before changing counters, data, account size, or lamports.
+- When a stacked PR establishes a funds-routing policy, apply and test that same
+  policy in every dependent close path rather than rediscovering it per PR.
+
 ## Authorization And Intent Binding
 
 - Require authorization for the exact Swig, role, authority, instruction, destination, amount, and replacement state being changed.
@@ -76,6 +119,20 @@ For every changed auth path, record the authority type, auth source, signed or v
 
 - Treat discriminants, `LEN`, alignment, offsets, and padding rules as public contracts.
 - Accept only layouts explicitly defined by the active version. Reject truncated entries, extra padding, all-zero pseudo-entries, malformed tails, and trailing bytes unless the format deliberately permits them.
+- For each stored-state change, record the generation or source, discriminator
+  and length, overlaid fields and offsets, canonical decoder, creation guard,
+  runtime guard, migration behavior, and legacy fixture.
+- Use one canonical decoder or classification rule wherever validation and
+  runtime dispatch interpret the same stored discriminant or numeric field.
+  Test noncanonical high bits and other representations that could make the two
+  paths disagree.
+- When tightening construction validation, audit already-stored accounts that
+  predate the invariant. Add a runtime guard or explicit migration; creation
+  rejection alone does not make legacy state safe.
+- Establish the account generation before reading any version-specific field.
+  When generations overlay the same bytes, record an offset map for each
+  generation and test legacy values whose low or high bytes look valid under
+  the new layout.
 - Apply the same strict validator before preserving or moving existing bytes. Never carry malformed state through a mutation path.
 - Prove every unsafe cast, unchecked slice, and zero-copy view has satisfied length and alignment requirements first. Test buffers holding `#[repr(C, align(8))]` values with real 8-byte alignment.
 - Reallocate for both growth and shrinkage. Preserve validated tails and neighboring roles, calculate rent changes safely, and test grow-to-shrink and shrink-to-grow sequences.
@@ -85,6 +142,12 @@ For every changed auth path, record the authority type, auth source, signed or v
 ## Permission Semantics
 
 - Preserve each concrete permission's discriminant, layout, match key, destination key, repeatability, reset behavior, and consumption rules.
+- For a delta-based limit, record each transition's before and after values,
+  observed delta, charged budget, cumulative state, and expected result. Cover
+  increase, decrease, unchanged, repeated operations, reset windows, exact
+  boundary, and limit plus one. When multiple observed fields can move together,
+  decide and test `sum`, `max`, or separate budgets so one operation is neither
+  skipped nor double-counted.
 - Do not collapse fixed and recurring limits, or other related variants, into one uniqueness key unless mutual exclusion is an explicit product decision.
 - Keep `All`, `AllButManageAuthority`, `ManageAuthority`, `CloseSwigAuthority`, recovery, subaccount, staking, program, and scoped asset permissions distinct.
 - Deny unmatched asset movement. Restricted roles must not gain authority through a parser fallback, missing destination classification, unsupported instruction variant, or broad default.
@@ -105,9 +168,18 @@ Require SignV2 to follow this order:
 
 Cover every supported transfer encoding, including checked token transfers, and every account classification that changes enforcement. Benchmark restricted and unrestricted paths when parser structure, loops, authority dispatch, or snapshot limits change.
 
+Bind macro arguments once before testing, logging, or unwrapping them when they
+can be expensive or fallible. Benchmark every affected SignV2 permission path,
+including ProgramScope, rather than inferring full-matrix cost from one variant.
+
 ## Compatibility And Surface Completion
 
 - Treat discriminants, account positions, optional-account rules, instruction data, error codes, and serialized state as compatibility-sensitive.
+- Public-instruction integration tests must use the production builder's entire
+  instruction for the authority variant under test. Construct a negative case
+  by changing one dimension of that output; hand-written full account vectors
+  require an explicit reason and proof that authentication reached the intended
+  boundary.
 - Update the program instruction definition, IDL, interface builder, compact encoder/parser, Rust SDK builder, high-level `SwigWallet` method, and tests together when the feature spans them.
 - Do not stop at a low-level instruction builder when the established public SDK exposes equivalent wallet methods.
 - Run the downstream TypeScript LiteSVM suite after parser, account-meta, signer/writable, hashing, or wire-format changes.
@@ -127,6 +199,11 @@ Add focused regression tests for every touched invariant. Include the relevant c
 - account growth, shrinkage, rent top-up, and preserved neighboring/tail bytes
 - permission variant coexistence, destination mismatch, overspend, and unmatched spend
 - every supported native/token transfer variant and protected-account mutation attempt
+- Token and Token-2022 program ownership, 165-byte base layout, initialized
+  state, mint equality, and source/destination authority, including malformed
+  zero-balance accounts
+- first, middle, and last malformed entries in batch or migration inputs, with
+  the exact error and unchanged native, token, counter, and account-data state
 - client and IDL compatibility after account or wire changes
 - compute-unit regression when a hot path changes
 
@@ -145,18 +222,35 @@ git diff --check
 
 Run the `program_scope_test`, `rust_sdk_test`, and stake feature variants when the touched behavior reaches them. Run the downstream TypeScript LiteSVM tests for parser or client-contract changes.
 
-Do not open or re-request review until the changed invariant has a negative test and every skipped gate is named with its exact blocker.
+Record a final-head receipt with the exact head and base SHAs, formatter, SBF
+build, focused tests, applicable feature matrices, downstream compatibility
+suites, CU benchmarks, required parent-check conclusions, and every skipped
+gate with its exact blocker. A rebase, base merge, generated-code refresh, or
+material head change invalidates the receipt. Do not open, approve, or
+re-request review until the changed invariant has a negative test and every
+applicable required check is green on that head. A green sub-check does not
+override a red required parent job.
 
-Include this self-review table in the PR body for security-relevant changes:
+Give one test fixture or CI workflow clear ownership of every validator
+process, port, setup phase, and cleanup path. Startup failure must fail the test,
+not degrade into a warning.
+
+Include this self-review table in the PR body for security-relevant changes.
+Treat it as a proof artifact: every applicable `yes` cites the code boundary,
+focused test, and exact result; every `N/A` gives a concrete reason.
 
 | Area | Checked | Evidence |
 | --- | --- | --- |
 | Stored and wire layout | yes/no | test or note |
-| Account validation and ordering | yes/no | test or note |
+| Stored-state lifecycle and version overlays | yes/no/N/A | decoder matrix and legacy fixtures |
+| Account contract and ordering | yes/no | per-account property ledger and tests |
+| Atomic batch or migration preflight | yes/no/N/A | validation ledger and rollback tests |
+| Close/drain funds and rent routing | yes/no/N/A | funds-flow ledger and destination matrix |
 | Auth and replay binding | yes/no | test or note |
-| Permission semantics | yes/no | test or note |
+| Permission and delta accounting | yes/no | transition matrix and tests |
 | Grow and shrink reallocations | yes/no | test or note |
 | CPI and SignV2 enforcement | yes/no | test or note |
 | IDL and SDK compatibility | yes/no | test or note |
 | Compute units | yes/no | benchmark or N/A |
 | Design conflicts resolved | yes/no | decision or ticket |
+| Final-head required gates | yes/no | head SHA and check results |
