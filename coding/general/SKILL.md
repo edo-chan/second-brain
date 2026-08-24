@@ -58,6 +58,10 @@ Read only the references needed for the task:
 - For bug fixes, identify the root cause and search every caller or consumer of
   the touched behavior. Prefer one correction at the shared ownership boundary
   over symptom patches in individual call paths.
+- Before implementing or reviewing a fix, search live PRs and branches that
+  touch the same handler, contract, or finding. Reconcile overlap,
+  supersession, duplicated behavior, and duplicated validation before opening
+  or approving another change.
 - Keep each change self-contained and reviewable. Include the production
   behavior, tests, documentation, and configuration needed for its contract.
 - Keep every PR buildable and semantically honest at its own head. A later
@@ -149,6 +153,13 @@ Read only the references needed for the task:
 - Test observable outcomes and side effects. Avoid source-string assertions,
   over-mocked internals, and fixtures that only prove they return configured
   values.
+- A rejection test proves the intended boundary only when it asserts the exact
+  expected error or otherwise demonstrates that execution reached that check.
+  Do not count a test that can fail earlier during parsing, authentication,
+  fixture setup, or unrelated account validation.
+- When an operation may have performed an earlier side effect, capture the
+  relevant pre-state and assert that every earlier state remains unchanged on
+  failure. An error result alone is not atomicity proof.
 - Ask whether each test would fail if the intended behavior were broken. Cover
   relevant success, invalid input, dependency failure, permission, retry,
   cancellation, and duplicate-submission cases.
@@ -157,6 +168,12 @@ Read only the references needed for the task:
 - Run focused checks while iterating and the repository's required formatter,
   linter, type, test, and diff checks before publication. Report any check that
   could not run and why.
+- Bind validation evidence to the exact revision and dependency baseline that
+  produced it. A rebase, base merge, generated-code refresh, or other material
+  head change invalidates earlier results; rerun the applicable gates before
+  review or publication.
+- Judge required checks as a set. A green child, summary, or test-results check
+  does not override a red required parent job.
 
 ## Review Severity
 
@@ -164,6 +181,9 @@ Read only the references needed for the task:
   contract, and trust-boundary failures introduced by the change.
 - Block missing proof for changed critical behavior and required checks that do
   not pass.
+- Treat an unresolved security-relevant product or contract question as a
+  blocker. Resolve it from authoritative documentation and code or record an
+  explicit decision before approval.
 - Keep tool-owned formatting, personal naming preferences, optional hardening,
   speculative improvements, and unrelated cleanup non-blocking.
 - Calibrate review depth to exposure and impact. Public interfaces,

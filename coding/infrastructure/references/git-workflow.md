@@ -34,6 +34,30 @@ Use a feature branch for repository changes. Do not commit or push directly to `
   guidance from review as a required second-brain update before merge.
 - Re-request review only after the requested fixes are implemented and the relevant checks pass.
 
+### Independent Review Gate
+
+Every PR follows this gate before it is marked ready:
+
+1. Open the PR as a draft.
+2. Have a fresh agent, context, or human who did not implement the change review
+   the exact base and local head. Same-context author self-review does not count.
+3. Give the reviewer the full diff, relevant source and tests, and the task or
+   authoritative design. Require the second-brain index and applicable skills,
+   but do not prime the initial pass with suspected bugs, proposed fixes, author
+   conclusions, or existing GitHub review conclusions.
+4. Keep the pass read-only and require prioritized findings with exact
+   file/line evidence, failure mechanism, missing proof or negative test, and a
+   verdict. Review each PR against its declared base and reconcile the stack tip.
+5. Address confirmed findings locally and rerun applicable checks. Repeat the
+   independent pass after material fixes until no blocker remains.
+6. Push the reviewed head, verify every required check on that exact revision,
+   and only then mark the PR ready. A green child or summary check does not
+   override a failed required parent job.
+
+If an independent pass is unavailable, leave the PR in draft. A rebase, base
+merge, generated refresh, or other material head change invalidates the review
+and validation receipt.
+
 ## Merge And Release
 
 - Do not merge any PR unless the user explicitly authorizes merges in the
