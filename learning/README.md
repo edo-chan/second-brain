@@ -14,6 +14,6 @@ mastery.
 
 ## Active projects
 
-- [ZK and Quantum Foundations](zk-and-quantum-foundations/README.md) - build
-  zero-knowledge proof-system and quantum-cryptography foundations as two
-  independent tracks, then derive exactly why Shor breaks Groth16.
+- [Algebra, ZK, and Quantum Foundations](zk-and-quantum-foundations/README.md) -
+  study abstract algebra as the active traditional spine, branch into Groth16
+  and algebraic hashes, and retain the independent quantum-cryptography track.

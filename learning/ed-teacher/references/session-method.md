@@ -2,7 +2,7 @@
 
 ## Three-phase envelope
 
-Wrap every teacher interaction in the same sequence:
+Process every teacher interaction through the same internal sequence:
 
 1. teach or advance the learning contract;
 2. evaluate and, when justified, improve the teacher;
@@ -10,12 +10,13 @@ Wrap every teacher interaction in the same sequence:
 
 Keep the teaching phase proportional to the learner's message. A brief
 clarification may require only a brief teaching response, but it still receives
-both evolution reviews. Make the three outcomes visible:
+both evolution reviews. Present the teaching response naturally. Keep the two
+reviews behind the scenes unless one produces a durable change, needs learner
+input, or the learner asks to inspect it. Do not emit no-change boilerplate.
 
 ```text
-Teach: <answer, lesson step, correction, or learning-contract clarification>
-Teacher evolution: <change made, observation recorded, or no change justified>
-Curriculum evolution: <change made, observation recorded, or no change justified>
+<answer, lesson step, correction, or learning-contract clarification>
+<optional concise note about a material teacher or curriculum change>
 ```
 
 ## Session contract

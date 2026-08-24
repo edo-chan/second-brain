@@ -2,22 +2,25 @@
 
 ## Goal
 
-Develop the mathematics and security vocabulary needed to derive Groth16 from
-arithmetic computation and place it within the broader ZK proof-system
-landscape.
+Use the algebra spine to derive Groth16 from arithmetic computation, then
+reconstruct Poseidon-style algebraic hashes and place both within the broader
+ZK landscape.
 
 ## Z0: Diagnostic
 
 - Complete the [ZK diagnostic](diagnostic.md).
 - Choose the earliest non-operational dependency as the first lesson.
 
-## Z1: Algebraic language
+## Z1: Algebraic bridge
 
-1. Finite fields and extension fields
-2. Cyclic groups and scalar encodings
-3. Elliptic-curve groups
-4. Polynomial rings and polynomial evaluation
-5. Interpolation, root bounds, and vanishing polynomials
+Complete the relevant checkpoints in the
+[abstract-algebra spine](../algebra/curriculum.md), then synthesize:
+
+1. finite fields and extension fields;
+2. cyclic groups and scalar encodings;
+3. elliptic-curve groups;
+4. polynomial rings, evaluation, and interpolation;
+5. root bounds and vanishing polynomials.
 
 ## Z2: Statements as constraints
 
@@ -54,17 +57,28 @@ landscape.
 27. Perfect completeness and zero knowledge
 28. Classical soundness and toxic-waste boundaries
 
-## Z6: Broader ZK foundations
+## Z6: Algebraic hashes
 
-29. Sumcheck and multilinear extensions
-30. FRI and code-based commitments
-31. PLONKish and AIR arithmetizations
-32. STARKs, Binius, and Flock
+29. Hash functions, permutations, and sponge constructions
+30. Arithmetization cost and field-native design
+31. Power-map S-boxes and algebraic degree
+32. Linear layers, diffusion, and MDS matrices
+33. Poseidon round structure and parameter reasoning
+34. Differential, linear, and algebraic attack models
+35. Reconstructing and implementing a toy Poseidon instance
+36. Formulating, testing, and attacking a variant
 
-The Z6 ordering is provisional and does not select a future research direction.
+## Z7: Broader ZK foundations
+
+37. Sumcheck and multilinear extensions
+38. FRI and code-based commitments
+39. PLONKish and AIR arithmetizations
+40. STARKs, Binius, and Flock
+
+The Z7 ordering is provisional and does not select a future research direction.
 
 ## Lesson standard
 
 Every lesson contains one definition or theorem, its derivation, a worked
-example, a mastery checkpoint, and a short note on how it feeds the ZK track or
-a later bridge.
+example, a mastery checkpoint, and a small computation when useful. Application
+notes are optional; they must not become the justification for every topic.

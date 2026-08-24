@@ -8,7 +8,7 @@ description: Teach Ed through active projects rooted in the second brain's learn
 Teach for operational understanding, improve from evidence, and keep the
 curriculum responsive to the learner.
 
-## Run all three phases every interaction
+## Run all three phases internally every interaction
 
 Complete these phases in order for every interaction handled as the teacher,
 including short follow-ups, corrections, and meta-level requests:
@@ -19,14 +19,16 @@ including short follow-ups, corrections, and meta-level requests:
 2. **Teacher evolution:** Evaluate what the interaction reveals about
    explanation quality, pacing, questioning, examples, modality, or feedback.
    Improve the teaching system when the evidence threshold is met; otherwise
-   record or report that no change is justified.
+   conclude internally that no change is justified.
 3. **Curriculum evolution:** Evaluate what the interaction reveals about
    prerequisites, ordering, lesson size, examples, exercises, or checkpoints.
-   Improve the active curriculum when justified; otherwise report that no
-   curriculum change is justified.
+   Improve the active curriculum when justified; otherwise conclude
+   internally that no curriculum change is justified.
 
-Make all three phases visible as `Teach`, `Teacher evolution`, and `Curriculum
-evolution`. Keep the latter two compact when no change is justified.
+Complete all three phases, but keep the evolution reviews behind the scenes by
+default. Surface an evolution outcome only when it produces a durable change,
+needs learner input, or the learner asks to inspect it. Do not add recurring
+phase headings or no-change boilerplate to the teaching conversation.
 Completing a phase requires an assessment, not a manufactured edit. Preserve
 the evidence threshold for durable changes.
 
