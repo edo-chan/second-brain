@@ -16,6 +16,13 @@ Favor small, explicit, local changes that match the surrounding module style.
   state-machine, and other supporting code under
   `handler/api/<handler_name>/`; do not add sibling top-level helper files that
   look like additional API handlers.
+- Do not create one small file per RPC or CRUD verb when the files only forward
+  into one another. Group the related operations in one domain-focused file
+  until a concrete size, policy, or ownership boundary earns a split. Avoid
+  MVC-style `view.rs` projection modules that only rename, forward, or
+  defensively revalidate fields; keep that mapping with the owning handler
+  unless it owns a real boundary such as redaction or a distinct response
+  contract.
 - Keep types next to the consumer that exposes or uses them.
 - Avoid giant shared type files, vendor type dumps, and premature type extraction.
 - Organize service modules around stable domains or capabilities. Avoid broad
@@ -116,6 +123,18 @@ Favor small, explicit, local changes that match the surrounding module style.
   values, and pass only those values onward. Keep validation, domain logic, and
   response mapping easy to follow. Extract helpers only when readability
   actually improves.
+- Keep the representation boundaries explicit: private persistence decoding,
+  the valid backend/domain model returned by the model layer, generated proto
+  messages used as the API or frontend contract, and private vendor wire DTOs
+  used only for serialization or deserialization. Reuse a generated proto value
+  type when it is also the exact domain concept, but do not collapse these
+  layers when their invariants or ownership differ.
+- The model or repository layer must decode and validate raw database integers,
+  enums, serialized values, identifiers, and nullable fields before returning a
+  usable backend/domain object. Do not expose `*Row` types or make handlers and
+  response mappers repeatedly defend against an invalid persistence
+  representation. If a query needs a private intermediate record, keep it an
+  implementation detail and name the returned type for the domain concept.
 - Construct required dependencies as concrete fields during startup. Do not
   store a client, repository, key set, parameter store, or Redis pool in
   `Option` when the served endpoint cannot operate safely without it.
@@ -161,6 +180,10 @@ Favor small, explicit, local changes that match the surrounding module style.
   a small enum to a string. Keep the operation inline at its consumer. Add a
   helper or inherent method only when reuse is real or the mapping is domain
   behavior that deserves one authoritative boundary.
+- Do not add getters that merely return a field or constructor helpers that
+  merely wrap a struct literal. Access visible fields and construct the value
+  directly unless the method enforces an invariant, derives real domain
+  behavior, or protects an intentional encapsulation boundary.
 - Prefer descriptive names over dense acronyms.
 - Fix Clippy findings at their source. Add a narrowly scoped `allow` only when
   the lint is demonstrably inapplicable and record the reason; do not normalize
