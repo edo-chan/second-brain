@@ -37,6 +37,9 @@ Look for:
   borrow, or convert;
 - duplicated behavior that belongs at one shared ownership boundary;
 - several files or abstractions representing one concrete operation;
+- one-file-per-RPC or CRUD-verb fragmentation where small files only forward
+  into each other; group them around the owning domain until a real boundary
+  requires a split;
 - internal structs that mirror an existing generated proto value type and add
   only field-for-field `to_proto` / `from_proto` conversions;
 - one-purpose discriminator strings, booleans, or optional fields whose only
@@ -48,6 +51,9 @@ Look for:
 - data-driven registries built for hypothetical additions when the current
   product supports a small closed set that a direct enum and match express more
   clearly;
+- getters and conversion helpers added downstream because an upstream vendor,
+  persistence, or deserialization boundary returns a weak or invalid shape;
+  repair that boundary and return a valid typed value instead;
 - duplicate implementations of one protocol flow where provider-specific code
   or one current product path can replace the generic-plus-patches design;
 - knowingly simplified implementations whose ceiling or upgrade trigger is not

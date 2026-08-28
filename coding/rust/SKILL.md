@@ -16,6 +16,10 @@ Favor small, explicit, local changes that match the surrounding module style.
   state-machine, and other supporting code under
   `handler/api/<handler_name>/`; do not add sibling top-level helper files that
   look like additional API handlers.
+- Do not create one small file per RPC or CRUD verb when the files only forward
+  into one another. Group the related operations in one domain-focused file
+  until a concrete size, policy, or ownership boundary earns a split. Avoid
+  MVC-style `view.rs` projection modules in backend services.
 - Keep types next to the consumer that exposes or uses them.
 - Avoid giant shared type files, vendor type dumps, and premature type extraction.
 - Organize service modules around stable domains or capabilities. Avoid broad
@@ -116,6 +120,11 @@ Favor small, explicit, local changes that match the surrounding module style.
   values, and pass only those values onward. Keep validation, domain logic, and
   response mapping easy to follow. Extract helpers only when readability
   actually improves.
+- Keep SQL row types private to persistence. Decode and validate raw database
+  integers, enums, serialized values, identifiers, and nullable fields in the
+  repository's `Row -> domain` mapping, then return a domain value whose
+  invariants already hold. Do not make handlers or response mappers repeatedly
+  defend against an invalid row representation.
 - Construct required dependencies as concrete fields during startup. Do not
   store a client, repository, key set, parameter store, or Redis pool in
   `Option` when the served endpoint cannot operate safely without it.
@@ -161,6 +170,10 @@ Favor small, explicit, local changes that match the surrounding module style.
   a small enum to a string. Keep the operation inline at its consumer. Add a
   helper or inherent method only when reuse is real or the mapping is domain
   behavior that deserves one authoritative boundary.
+- Do not add getters that merely return a field or constructor helpers that
+  merely wrap a struct literal. Access visible fields and construct the value
+  directly unless the method enforces an invariant, derives real domain
+  behavior, or protects an intentional encapsulation boundary.
 - Prefer descriptive names over dense acronyms.
 - Fix Clippy findings at their source. Add a narrowly scoped `allow` only when
   the lint is demonstrably inapplicable and record the reason; do not normalize
