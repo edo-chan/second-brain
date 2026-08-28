@@ -123,11 +123,18 @@ Favor small, explicit, local changes that match the surrounding module style.
   values, and pass only those values onward. Keep validation, domain logic, and
   response mapping easy to follow. Extract helpers only when readability
   actually improves.
-- Keep SQL row types private to persistence. Decode and validate raw database
-  integers, enums, serialized values, identifiers, and nullable fields in the
-  repository's `Row -> domain` mapping, then return a domain value whose
-  invariants already hold. Do not make handlers or response mappers repeatedly
-  defend against an invalid row representation.
+- Keep the representation boundaries explicit: private persistence decoding,
+  the valid backend/domain model returned by the model layer, generated proto
+  messages used as the API or frontend contract, and private vendor wire DTOs
+  used only for serialization or deserialization. Reuse a generated proto value
+  type when it is also the exact domain concept, but do not collapse these
+  layers when their invariants or ownership differ.
+- The model or repository layer must decode and validate raw database integers,
+  enums, serialized values, identifiers, and nullable fields before returning a
+  usable backend/domain object. Do not expose `*Row` types or make handlers and
+  response mappers repeatedly defend against an invalid persistence
+  representation. If a query needs a private intermediate record, keep it an
+  implementation detail and name the returned type for the domain concept.
 - Construct required dependencies as concrete fields during startup. Do not
   store a client, repository, key set, parameter store, or Redis pool in
   `Option` when the served endpoint cannot operate safely without it.
