@@ -19,7 +19,10 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Do not create one small file per RPC or CRUD verb when the files only forward
   into one another. Group the related operations in one domain-focused file
   until a concrete size, policy, or ownership boundary earns a split. Avoid
-  MVC-style `view.rs` projection modules in backend services.
+  MVC-style `view.rs` projection modules that only rename, forward, or
+  defensively revalidate fields; keep that mapping with the owning handler
+  unless it owns a real boundary such as redaction or a distinct response
+  contract.
 - Keep types next to the consumer that exposes or uses them.
 - Avoid giant shared type files, vendor type dumps, and premature type extraction.
 - Organize service modules around stable domains or capabilities. Avoid broad
