@@ -98,6 +98,10 @@ Read only the references needed for the task:
   context, factory, store, or helper whose only value is concealing those
   steps. Extract shared code only when it owns a real policy, invariant, or
   independently reusable operation.
+- In reviews, assess code shape and organization alongside correctness. Prefer
+  direct, readable, top-to-bottom code even when it repeats a small amount of
+  local logic; do not introduce or preserve one-use helpers, forwarding layers,
+  or abstractions whose only benefit is deduplication.
 - Write comments to explain rationale, invariants, non-obvious constraints, and
   tradeoffs. Simplify code that needs a comment merely to explain what it does.
 - When deliberately accepting a simpler implementation with a known ceiling,
