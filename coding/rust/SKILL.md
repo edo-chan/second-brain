@@ -133,9 +133,12 @@ Favor small, explicit, local changes that match the surrounding module style.
   transport context.
 - When different variants require different fields, reuse the owning proto
   oneof or use a Rust enum with variant-specific payloads. Do not encode the
-  distinction with a boolean, sentinel value, or `Option` field. For a small
-  fixed product allowlist, prefer named variants and direct matching over a
-  generic registry whose main benefit is making hypothetical additions shorter.
+  distinction with a boolean, sentinel value, or a collection of `Option`
+  fields. Keep optional fields when absence is genuinely part of one wire,
+  deserialization, or storage shape; otherwise normalize at that boundary into
+  lean case-specific types. For a small fixed product allowlist, prefer named
+  variants and direct matching over a generic registry whose main benefit is
+  making hypothetical additions shorter.
 - Parse standard identifiers into their native Rust types at the boundary and
   keep them typed internally. Use compile-time constructors or macros for fixed
   identifiers such as Solana public keys instead of retaining unchecked string

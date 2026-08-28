@@ -41,6 +41,10 @@ Look for:
   only field-for-field `to_proto` / `from_proto` conversions;
 - one-purpose discriminator strings, booleans, or optional fields whose only
   valid value or branch can be removed;
+- structs with several optional fields that actually represent separate use
+  cases and should be lean case-specific types instead; preserve optionality
+  when absence is genuinely part of one external wire, deserialization, or
+  storage shape;
 - data-driven registries built for hypothetical additions when the current
   product supports a small closed set that a direct enum and match express more
   clearly;
