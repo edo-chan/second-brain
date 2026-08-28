@@ -99,6 +99,11 @@ Favor small, explicit, local changes that match the surrounding module style.
   condition towers.
 - Keep every function concise, focused, and single-purpose. When a function becomes difficult to scan or mixes phases, split it into concrete focused functions before adding more logic.
 - Prefer typed errors and structured responses where the service already has them.
+- Keep error types proportional to the decisions callers make. Do not add
+  separate transport, HTTP, configuration, parsing, or string-wrapper variants
+  when every caller logs and maps them identically. Log the actionable
+  low-level cause at its owning boundary and return the smallest stable error
+  surface the caller needs.
 - Avoid stringly typed error plumbing unless existing code does it.
 - Do not write generic Rust code unless Ed explicitly approves it. This includes
   generic functions, structs, enums, type aliases, traits, and explicit lifetime
@@ -120,9 +125,21 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Use Rust or proto enums for closed sets such as flow, status, credential
   kind, provider kind, network, and subscription tier. Keep strings only for
   intentionally extensible identifiers.
-- When a proto enum already owns a shared protocol concept, use that generated
-  enum directly across participating Rust crates instead of defining parallel
-  enums and conversion helpers.
+- When a generated proto enum, oneof, or small value message already owns the
+  exact shared concept, reuse that generated type instead of defining a
+  parallel data-bag struct plus field-for-field conversion helpers. Validate
+  the value once at the boundary and pass the validated value type onward; this
+  does not apply to whole request or response messages carrying unrelated
+  transport context.
+- When different variants require different fields, reuse the owning proto
+  oneof or use a Rust enum with variant-specific payloads. Do not encode the
+  distinction with a boolean, sentinel value, or `Option` field. For a small
+  fixed product allowlist, prefer named variants and direct matching over a
+  generic registry whose main benefit is making hypothetical additions shorter.
+- Parse standard identifiers into their native Rust types at the boundary and
+  keep them typed internally. Use compile-time constructors or macros for fixed
+  identifiers such as Solana public keys instead of retaining unchecked string
+  constants.
 - Define repeated protocol paths, claim names, environment keys, namespaces,
   algorithms, and fixed TTLs as constants at their owning boundary. Do not turn
   typed struct fields into string constants; eliminate string-key access by
@@ -169,6 +186,11 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Keep top-level phases visible: validation, idempotency, preparation,
   irreversible external call, accepted state, confirmation, accounting,
   persistence, and response mapping.
+- Keep a small lifecycle's precedence in one authoritative transition match or
+  table. Do not route one decision through a progress wrapper, terminal mapper,
+  direction helpers, and special-case helper when one ordered match is easier
+  to audit. Test every meaningful current-state and input-state pair, including
+  transitions that must be refused.
 - Make the irreversible boundary explicit. A later nested error must not reset
   state in a way that permits the same external effect to run again.
 - Represent security workflows with concrete state variants. Keep immutable

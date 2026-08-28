@@ -201,6 +201,11 @@ Read only the references needed for the task:
 
 - Add a dependency only when it provides a clear capability that is preferable
   to a small, understandable local implementation.
+- Before hand-maintaining validation or reference data from an external
+  standard, check for a maintained library or reproducible authoritative
+  source. Keep standards validity separate from product or vendor support: a
+  currency library can own ISO codes and exponents while the provider's typed
+  endpoint remains authoritative for the currencies it currently supports.
 - Minimize dependency and feature surface. Do not combine unrelated upgrades
   with feature work without a concrete need.
 - Keep generated artifacts reproducible and tool-owned. Do not maintain them
