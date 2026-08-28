@@ -41,6 +41,12 @@ Treat service boundaries as the place where trust, authentication, and logging p
   Each typed endpoint must visibly construct and send its concrete request,
   check status, read the body, and deserialize its concrete response.
 - Keep HTTP, authentication, response-body handling, and deserialization inside the vendor library.
+- Log every vendor-boundary failure exactly once while its actionable cause is
+  still available, before mapping or collapsing it to a stable public error.
+  Cover configuration or request construction, send, body-read, non-success
+  response, deserialization, contract validation, and webhook verification or
+  parsing failures. Record only safe structured context; never log raw response
+  bodies, credentials, signatures, tokens, or credential-bearing URLs.
 - Do not retry at a generic HTTP transport layer. Retry only in the owning
   endpoint or workflow after proving idempotency, replay behavior, and the
   exact retryable failure classes. Never make a POST retryable merely because
