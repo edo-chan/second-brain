@@ -28,6 +28,8 @@ Look for:
 - endpoints, schema fields, state variants, compatibility paths, and tests
   belonging only to a superseded product flow;
 - standard-library behavior implemented locally;
+- hand-maintained standards tables or validators that a focused maintained
+  library or reproducible authoritative source already owns;
 - dependencies or custom UI that duplicate native platform capabilities;
 - interfaces with one implementation, factories with one product, and layers
   with one caller;
@@ -35,8 +37,17 @@ Look for:
   borrow, or convert;
 - duplicated behavior that belongs at one shared ownership boundary;
 - several files or abstractions representing one concrete operation;
+- internal structs that mirror an existing generated proto value type and add
+  only field-for-field `to_proto` / `from_proto` conversions;
 - one-purpose discriminator strings, booleans, or optional fields whose only
   valid value or branch can be removed;
+- structs with several optional fields that actually represent separate use
+  cases and should be lean case-specific types instead; preserve optionality
+  when absence is genuinely part of one external wire, deserialization, or
+  storage shape;
+- data-driven registries built for hypothetical additions when the current
+  product supports a small closed set that a direct enum and match express more
+  clearly;
 - duplicate implementations of one protocol flow where provider-specific code
   or one current product path can replace the generic-plus-patches design;
 - knowingly simplified implementations whose ceiling or upgrade trigger is not

@@ -199,8 +199,16 @@ Read only the references needed for the task:
 
 ## Dependencies And Change Hygiene
 
-- Add a dependency only when it provides a clear capability that is preferable
-  to a small, understandable local implementation.
+- Reuse the repository's existing type, mechanism, or ownership boundary when
+  it already represents the concept correctly.
+- For common mechanisms and external standards such as caching, retries,
+  currency metadata, and identifier parsing, prefer a focused, mature library
+  or reproducible authoritative source over a local implementation. Building
+  one locally requires a concrete reason the existing mechanism or maintained
+  library does not fit, and that reason belongs in the change.
+- Keep standards validity separate from product or vendor support: a currency
+  library can own ISO codes and exponents while the provider's typed endpoint
+  remains authoritative for the currencies it currently supports.
 - Minimize dependency and feature surface. Do not combine unrelated upgrades
   with feature work without a concrete need.
 - Keep generated artifacts reproducible and tool-owned. Do not maintain them
