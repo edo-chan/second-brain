@@ -87,6 +87,10 @@ Use migrations as the source of truth and preserve production data by default.
 
 ## SQLx Queries
 
+- Use `sqlx::PgPool` directly. Do not add custom database connection or pool-management logic,
+  including wrapper or swappable pools, application-managed credential refresh, connection
+  providers, or repository-level connection retry layers. If plain `PgPool` behavior is
+  insufficient, stop and align with Ed before introducing connection machinery.
 - Use SQLx's compile-time checked `query!`, `query_as!`, and `query_scalar!` macros for static SQL in Rust application code and tests.
 - Use runtime `query`, `query_as`, or `query_scalar` only when the SQL is genuinely dynamic and cannot be expressed as a static checked query.
 - Run checked-query builds with the repository's real migrated schema or its committed SQLx offline metadata; do not weaken a checked query merely to bypass local database setup.
