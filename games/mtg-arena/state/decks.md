@@ -82,15 +82,43 @@ Deck
 Notable acquisition: Lumra was the 20% mythic result from Exploring. The pair
 supports enter-the-battlefield replay, ramp, and a large land-based finisher.
 
-## Elemental Plus Second Packet
+## Elemental Cosmic
 
-- Date started: 2026-09-01
+- Date acquired: 2026-09-01
 - Format: Jump In
-- Status: Pending; do not count the cards as acquired yet
+- Status: Completed packet pair and confirmed collection acquisition
 
-- Packet 1 selected: Elemental (blue-red).
-- Packet 2 options shown: Cosmic, Lizards, Drawing.
-- Current recommendation: Cosmic, for blue mana consistency, two-spell synergy,
-  and the 20% Quantum Riddler rare outcome.
-- Confirm the resulting 40-card deck before adding either packet to
-  `collection.csv`.
+```text
+Deck
+1 Cryoshatter
+1 Illvoi Galeblade
+1 Illvoi Operative
+1 Mental Modulation
+1 Summit Sentinel
+1 Flamebraider
+1 Giantfall
+1 Codecracker Hound
+1 Illvoi Infiltrator
+1 Kulrath Mystic
+1 Uthros Psionicist
+1 Eclipsed Flamekin
+1 Flaring Cinder
+1 Lost in Space
+1 Tanufel Rimespeaker
+1 Temporal Cleansing
+1 Tractor Beam
+1 Feed the Flames
+1 Twinflame Travelers
+1 Gigastorm Titan
+1 Starbreach Whale
+1 Stratosoarer
+1 Ashling's Command
+1 Starwinder
+1 Steam Vents
+15 Island and Mountain basics
+```
+
+The screenshot establishes all 24 nonlands. Steam Vents is the guaranteed rare
+land in the selected Elemental packet; ordinary basics are not tracked by
+printing. Elemental's rare result was Ashling's Command, and Cosmic's was
+Starwinder. Ed explicitly described Cosmic as very fun.

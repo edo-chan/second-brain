@@ -21,6 +21,9 @@ Last updated: 2026-09-01
 - Interested in thematic decks such as Cats, but theme should not excuse weak
   construction.
 - Likes "cool" decks with a clear identity.
+- Explicitly found the Cosmic Jump In packet and the Elemental + Cosmic deck
+  very fun. Do not yet infer whether the main attraction was warp, card flow,
+  interaction, triggered abilities, or the blue-red theme.
 - Prefers purchases and Jump In packets that either contain durable staples or
   bridge toward an intended deck.
 - Wants enough targeted interaction to answer opposing threats.
