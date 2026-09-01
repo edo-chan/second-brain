@@ -21,12 +21,13 @@ that were merely shown or recommended.
   mythic outcome.
 - Other reusable cards include Hunter's Talent and Pawpatch Formation.
 
-## 2026-09-01 - Jump In: Elemental Plus Pending
+## 2026-09-01 - Jump In: Elemental Plus Cosmic
 
-- Status: incomplete at the latest evidence point.
-- Elemental was visibly selected as Packet 1.
-- Packet 2 options were Cosmic, Lizards, and Drawing.
-- Cosmic was recommended because it shares blue, supports a two-spell turn,
-  and can yield Quantum Riddler.
-- No Elemental or Cosmic cards have been added to `collection.csv`; confirm the
-  final deck first.
+- Status: completed and shown as a 40-card deck.
+- Recorded all 24 visible nonlands plus Elemental's guaranteed Steam Vents.
+- Elemental variable results: Ashling's Command, Giantfall, Kulrath Mystic, and
+  Stratosoarer.
+- Cosmic variable results: Starwinder, Codecracker Hound, Gigastorm Titan, and
+  Lost in Space.
+- Ed explicitly described Cosmic as very fun; this is recorded as a packet and
+  deck preference without yet guessing which mechanic caused the enjoyment.
