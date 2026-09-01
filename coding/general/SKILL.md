@@ -55,9 +55,9 @@ Read only the references needed for the task:
   system has earned it.
 - Solve the concrete problem that exists now. Avoid speculative abstractions,
   unused extension points, and genericity introduced for hypothetical needs.
-- Before adding a new helper or check, search for existing functions,
-  validators, permission checks, and invariant checks. Reuse one when its
-  contract and ownership match the required behavior.
+- Before adding new logic, including a function, helper, or check, search for
+  existing functions, validators, permission checks, and invariant checks.
+  Reuse one when its contract and ownership match the required behavior.
 - For bug fixes, identify the root cause and search every caller or consumer of
   the touched behavior. Prefer one correction at the shared ownership boundary
   over symptom patches in individual call paths.
