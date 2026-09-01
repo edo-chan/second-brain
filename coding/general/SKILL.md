@@ -55,6 +55,9 @@ Read only the references needed for the task:
   system has earned it.
 - Solve the concrete problem that exists now. Avoid speculative abstractions,
   unused extension points, and genericity introduced for hypothetical needs.
+- Before adding a new helper or check, search for existing functions,
+  validators, permission checks, and invariant checks. Reuse one when its
+  contract and ownership match the required behavior.
 - For bug fixes, identify the root cause and search every caller or consumer of
   the touched behavior. Prefer one correction at the shared ownership boundary
   over symptom patches in individual call paths.
@@ -71,8 +74,9 @@ Read only the references needed for the task:
   shape can be reviewed against a real need.
 - Separate broad formatting, dependency upgrades, generated output, and
   mechanical refactors from behavioral changes unless they are inseparable.
-- Preserve surrounding conventions when they remain healthy. Do not require
-  unrelated perfection or expand a focused change into opportunistic cleanup.
+- Do not refactor unrelated functions or expand a focused change into
+  opportunistic cleanup. Preserve healthy surrounding code; propose useful but
+  unnecessary cleanup as a separate change.
 
 ## Readability And Ownership
 
