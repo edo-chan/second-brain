@@ -1,0 +1,4 @@
+interface:
+  display_name: "MTG Arena Advisor"
+  short_description: "Track cards and personalize Arena deck advice"
+  default_prompt: "Use $ed-mtg-arena to advise me from my tracked collection, decks, and playstyle."

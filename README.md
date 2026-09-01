@@ -24,6 +24,8 @@ ASCII chart > sectioned bullet-point list > table.
 
 ## Games
 
+- [`games/mtg-arena`](games/mtg-arena/SKILL.md) - stateful MTG Arena
+  collection, deck, preference, Jump In, and current-metagame guidance.
 - `games/poe1` - Path of Exile 1 guidance that requires fresh PoB content for personalized advice.
   - `build` - intake, defense, damage, attributes and resistances, gems and reservation, passive trees and clusters, upgrade prioritization, flasks, and CI Chaos DoT guidance.
   - `crafting` - general safety, method behavior, probability, and equipment-specific crafting targets.
