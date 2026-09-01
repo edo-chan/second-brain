@@ -20,6 +20,9 @@ Use a feature branch for repository changes. Do not commit or push directly to `
 ## Pull Request
 
 - Open a PR for completed repository changes unless the user explicitly says not to.
+- In the canonical second-brain repository, open completed validated changes as
+  ready rather than draft. Second-brain changes do not require an independent
+  review pass before merge unless the user explicitly asks for one.
 - For multi-part work, default to a linear stack of small, focused PRs. A
   single cohesive change may remain one PR; do not manufacture artificial
   splits.
@@ -36,7 +39,8 @@ Use a feature branch for repository changes. Do not commit or push directly to `
 
 ### Independent Review Gate
 
-Every PR follows this gate before it is marked ready:
+Except for the canonical second-brain repository, every PR follows this gate
+before it is marked ready:
 
 1. Open the PR as a draft.
 2. Have a fresh agent, context, or human who did not implement the change review
