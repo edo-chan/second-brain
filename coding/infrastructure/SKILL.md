@@ -1,6 +1,6 @@
 ---
 name: ed-ci-infrastructure
-description: CI, Git publication, infrastructure, deployment, and rollout standards for Ed's repositories. Use when working with branches, commits, pull requests, merges, releases, GitHub Actions, CI failures, branch protection, Terraform, cloud resources, secrets, credentials, AWS parameter/config, KMS/enclave flows, deployed configuration, or production rollouts.
+description: CI, Git publication, infrastructure, deployment, rollout, and environment-faithful local E2E standards for Ed's repositories. Use when working with branches, commits, pull requests, merges, releases, GitHub Actions, CI failures, branch protection, Terraform, cloud resources, secrets, credentials, AWS parameter/config, KMS/enclave flows, Tilt or local service topology, environment-scoped provider integrations such as SES, deployed configuration, or production rollouts.
 ---
 
 # Ed CI And Infrastructure
@@ -63,17 +63,18 @@ Inspect drift and scope before applying infrastructure changes.
 - Prefer deleting deprecated resources after traffic and dependencies are confirmed gone.
 - Be especially willing to delete old EKS, ClickHouse, indexer, and unused Helm resources once confirmed unused.
 
-## swig-dev-portal Local End-To-End Tests
+## swig-dev-portal Local Account-Creation End-To-End Tests
 
 Treat the repository's Tilt topology as part of the behavior under test. For a
-full local account-creation or identity end-to-end test:
+full local account-creation end-to-end test:
 
 - Use the existing Tilt resources only. Do not launch replacement service
   containers, temporary Postgres or Redis instances, or an ad hoc parallel
   stack.
 - Use the Postgres and Redis instances owned by Tilt for ordinary local service
-  state. The dev JWT signer remains a real Nitro Enclave and stores only its
-  signer-owned state in the dedicated dev signer RDS.
+  state. In the current account-creation topology, Tilt reaches the real dev JWT
+  signer through its signer-tunnel resource, and the signer stores only its own
+  state in the dedicated dev signer RDS.
 - Read local runtime configuration from the canonical `/swig/dev/backend/*`
   SSM namespace. In particular, the database URL must resolve to Tilt Postgres,
   the Redis URL to Tilt Redis, and the signer URL to the Tilt-managed tunnel to
@@ -94,9 +95,10 @@ full local account-creation or identity end-to-end test:
 
 Before reporting success, verify the Tilt resources are healthy, the running
 identity service has no AWS endpoint override, the canonical dev SSM values
-resolve to the expected Tilt and signer resources, SES accepted the real send,
-and the browser-visible account flow completed through its terminal on-chain
-result.
+resolve to the expected Tilt and signer resources, and SES accepted the real
+send. A full browser account-creation claim additionally requires completing
+the browser flow through its terminal on-chain result. Report a narrower API or
+identity test according to the boundary it actually exercised.
 
 ## Jobs And Service Shape
 

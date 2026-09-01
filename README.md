@@ -19,7 +19,8 @@ ASCII chart > sectioned bullet-point list > table.
 - `coding/solidity` - Solidity and EVM Swig implementation with exact-intent, storage/upgrade, ABI/SDK, and Solana-parity security gates.
 - `coding/solana` - Solana implementation plus strict Swig safety and compatibility gates.
 - `coding/documentation` - documentation writing and evidence-backed design-document review.
-- `coding/infrastructure` - Git publication, CI, Terraform, secrets, deployment, and rollout guardrails.
+- `coding/infrastructure` - Git publication, CI, Terraform, secrets, deployment,
+  rollout, Tilt/local E2E, and environment-scoped AWS service guardrails.
 
 ## Games
 
