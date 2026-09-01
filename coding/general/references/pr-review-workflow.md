@@ -157,6 +157,11 @@ blocks or PRs provide the missing evidence.
 
 At the end of each PR:
 
+- Refresh the exact head and run a final code-shape pass, including after
+  author fixes. Inventory every new production helper, wrapper, adapter, and
+  compatibility branch; count its production callers and identify the policy,
+  invariant, or ownership boundary it preserves. Remove one-use indirection
+  and speculative branches that do not earn their maintenance surface.
 - recap confirmed findings in priority order with exact file and line evidence;
 - separate blockers from non-blocking follow-ups and questions;
 - state the current review verdict;

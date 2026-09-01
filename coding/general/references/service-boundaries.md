@@ -19,6 +19,11 @@ Treat service boundaries as the place where trust, authentication, and logging p
 - Use `Option` only for fields the vendor contract truly marks optional. Model required fields as required concrete fields; do not pass uncertainty through with `Option` or `serde(default)` merely to make malformed responses deserialize.
 - For a required-but-nullable field, accept explicit `null` and reject omission.
   A plain `Option<T>` does not preserve that presence distinction.
+- Require authoritative documentation or a captured provider response for
+  every tolerated alternate envelope, explicit `null`, omitted-field default,
+  or fallback shape. A synthetic test proves only what the parser accepts, not
+  what the vendor can send; a reviewer request is not contract evidence by
+  itself.
 - Distinguish missing data from unknown values. Keep extensible vendor identifiers as required strings when new codes are valid, and reject a missing identifier instead of collapsing it to `UNKNOWN` or `UNSPECIFIED`.
 - Do not expose generic request/response wrappers or generic JSON methods such as `get_json<T>`.
 - Do not let `serde_json::Value` or raw upstream response bodies cross the vendor-library boundary.

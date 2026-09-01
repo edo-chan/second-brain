@@ -184,6 +184,9 @@ Favor small, explicit, local changes that match the surrounding module style.
   merely wrap a struct literal. Access visible fields and construct the value
   directly unless the method enforces an invariant, derives real domain
   behavior, or protects an intentional encapsulation boundary.
+- Name local boundary transformations for the operation and input being
+  transformed, such as `normalize_session_wire`, rather than an adjective or
+  generic stage name such as `normalized` or `converted`.
 - Prefer descriptive names over dense acronyms.
 - Fix Clippy findings at their source. Add a narrowly scoped `allow` only when
   the lint is demonstrably inapplicable and record the reason; do not normalize
