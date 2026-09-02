@@ -6,6 +6,8 @@ Last updated: 2026-09-01
 
 - Completed Spark rank and moved into normal ranked play.
 - Current focus is Standard Best-of-One unless Ed says otherwise.
+- Current saved ranked bridge is the 60-card blue-red Elemental Cosmic deck,
+  confirmed on 2026-09-01.
 - Wants a genuine, coherent deck rather than indefinitely upgrading the
   starter deck.
 - Values current online evidence, professional lists, and tournament results.

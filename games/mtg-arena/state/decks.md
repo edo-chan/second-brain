@@ -122,3 +122,50 @@ The screenshot establishes all 24 nonlands. Steam Vents is the guaranteed rare
 land in the selected Elemental packet; ordinary basics are not tracked by
 printing. Elemental's rare result was Ashling's Command, and Cosmic's was
 Starwinder. Ed explicitly described Cosmic as very fun.
+
+## Elemental Cosmic - 60-Card Bridge
+
+- Date observed: 2026-09-01
+- Format: Standard Best-of-One
+- Status: Saved 60/60 owned deck, confirmed by two Arena screenshots
+- Evidence class: adapted bridge brew, not a professional or tournament list
+
+```text
+Deck
+1 Cryoshatter
+1 Illvoi Galeblade
+4 Opt
+4 Sleight of Hand
+4 Burst Lightning
+1 Illvoi Operative
+1 Mental Modulation
+1 Summit Sentinel
+1 Flamebraider
+1 Giantfall
+1 Prismari Charm
+1 Codecracker Hound
+1 Illvoi Infiltrator
+1 Kulrath Mystic
+1 Uthros Psionicist
+1 Eclipsed Flamekin
+1 Flaring Cinder
+1 Lost in Space
+1 Tanufel Rimespeaker
+1 Temporal Cleansing
+1 Tractor Beam
+1 Feed the Flames
+1 Twinflame Travelers
+1 Gigastorm Titan
+1 Starbreach Whale
+1 Stratosoarer
+1 Ashling's Command
+1 Starwinder
+13 Island
+9 Mountain
+1 Steam Vents
+```
+
+Observed construction: 37 nonlands, 23 lands, 60 cards. The bridge keeps the
+complete Elemental plus Cosmic Jump In shell and adds cheap card selection,
+early targeted removal, and one flexible modal spell. Ed spent 12 common and
+one uncommon wildcard on the 13 added nonlands.
