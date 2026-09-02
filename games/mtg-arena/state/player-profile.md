@@ -24,8 +24,9 @@ Last updated: 2026-09-01
   construction.
 - Likes "cool" decks with a clear identity.
 - Explicitly found the Cosmic Jump In packet and the Elemental + Cosmic deck
-  very fun. Do not yet infer whether the main attraction was warp, card flow,
-  interaction, triggered abilities, or the blue-red theme.
+  very fun because they produced substantial card draw and card flow. The
+  attraction is having continuing options and plays, not merely being blue-red
+  or casting many cheap spells.
 - Prefers purchases and Jump In packets that either contain durable staples or
   bridge toward an intended deck.
 - Wants enough targeted interaction to answer opposing threats.
@@ -37,6 +38,9 @@ Last updated: 2026-09-01
 - Wary Thespian was described as merely "okay" and should be treated as filler,
   not a reason to stay in an archetype.
 - Did not like the proposed Cat-lifegain "Pridegain" bridge brew.
+- Does not like the Izzet Spellementals "spellcore" plan. Do not treat cheap
+  cantrips, graveyard setup, or spells-matter payoffs as the desired deck
+  identity merely because some of those cards are already owned.
 - Does not want an original brew represented as a professional or proven deck.
 - Was uncomfortable adding six more one-drops while the deck lacked enough
   single-target removal.
