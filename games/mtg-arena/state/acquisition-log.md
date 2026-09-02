@@ -31,3 +31,12 @@ that were merely shown or recommended.
   Lost in Space.
 - Ed explicitly described Cosmic as very fun; this is recorded as a packet and
   deck preference without yet guessing which mechanic caused the enjoyment.
+
+## 2026-09-01 - Elemental Cosmic Bridge Crafts
+
+- Status: completed and confirmed by Ed.
+- Spent 12 common wildcards on four copies each of Opt, Sleight of Hand, and
+  Burst Lightning.
+- Spent one uncommon wildcard on one copy of Prismari Charm.
+- The completed crafts and two Arena screenshots confirm the resulting
+  60-card Standard Best-of-One Elemental Cosmic bridge.
