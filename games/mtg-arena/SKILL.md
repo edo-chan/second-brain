@@ -1,6 +1,6 @@
 ---
 name: ed-mtg-arena
-description: Track Ed's MTG Arena collection, decks, preferences, and acquisitions, and give personalized advice about deck building, crafting, Jump In choices, ranked play, and current competitive lists. Use for MTG Arena questions where owned cards, wildcard value, preferred play patterns, or prior deck decisions affect the answer.
+description: Track Ed's MTG Arena collection, decks, preferences, and acquisitions, and give personalized advice about deck building, crafting, Draft and Limited play, Jump In choices, ranked play, and current competitive lists. Use for MTG Arena questions where owned cards, wildcard value, preferred play patterns, or prior deck decisions affect the answer.
 ---
 
 # Ed MTG Arena
@@ -22,6 +22,8 @@ Also read:
   deck;
 - [acquisition-log.md](state/acquisition-log.md) for Jump In, packs, rewards,
   or reconciling when a card entered the collection.
+- [drafting.md](references/drafting.md) for draft picks, Limited deck
+  construction, live play, or postmortems.
 
 Treat these files as a dated lower-bound record unless a full Arena collection
 export establishes exact quantities.
@@ -97,6 +99,6 @@ for collection value even when it does not advance the current deck, but say so
 plainly. Do not imply that packets from separate Jump In runs combine during
 the event.
 
-Lead with the actionable answer: the packet to pick, the card to cut, or
-whether to save the wildcard. Keep the explanation compact unless Ed asks for
-a full deck or detailed matchup plan.
+Lead with the actionable answer: the packet or draft card to pick, the card to
+cut, the live-game action, or whether to save the wildcard. Keep the
+explanation compact unless Ed asks for a full deck or detailed matchup plan.
