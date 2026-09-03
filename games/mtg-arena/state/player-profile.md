@@ -1,6 +1,6 @@
 # MTG Arena Player Profile
 
-Last updated: 2026-09-01
+Last updated: 2026-09-03
 
 ## Current Context
 
@@ -8,6 +8,9 @@ Last updated: 2026-09-01
 - Current focus is Standard Best-of-One unless Ed says otherwise.
 - Current saved ranked bridge is the 60-card blue-red Elemental Cosmic deck,
   confirmed on 2026-09-01.
+- Currently learning Limited through a Secrets of Strixhaven Prismari draft.
+  Wants outcomes distilled into better drafting and deck-building guidance,
+  without maintaining a match-by-match battle record.
 - Wants a genuine, coherent deck rather than indefinitely upgrading the
   starter deck.
 - Values current online evidence, professional lists, and tournament results.
@@ -54,6 +57,8 @@ Last updated: 2026-09-01
 - Show collection overlap and wildcard cost before recommending a build.
 - Keep exploratory deckbuilding conversational; align on the deck's identity
   before proposing a large craft list.
+- For a live-game screenshot, lead with the exact action and targets before
+  explaining the broader strategy.
 
 ## Still Unknown
 
