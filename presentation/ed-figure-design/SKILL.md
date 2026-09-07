@@ -16,6 +16,9 @@ well. Apply this skill when the user requests a rendered visual or when spatial
 relationships, quantitative shape, hierarchy, or flow materially benefit from
 one.
 
+Read [data-and-delivery.md](references/data-and-delivery.md) when establishing
+the figure's claim and checking its data, encodings, or delivery artifacts.
+
 ## Establish The Design System First
 
 Write down the figure's design tokens before drawing or implementing it. For an

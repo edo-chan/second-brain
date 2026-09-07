@@ -14,6 +14,8 @@ the appropriate teaching or maintenance mode.
   evidence.
 - [Teaching observations](teaching-observations.md) - cross-project evidence
   used to evaluate proposed teaching improvements.
+- [Session continuity](references/session-continuity.md) - resume interrupted
+  work and preserve the evidence behind learning records.
 
 ## Active projects
 

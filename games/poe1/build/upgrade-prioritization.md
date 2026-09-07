@@ -20,7 +20,8 @@ explicitly accepts the risk.
 
 ## Compare Candidate Changes
 
-For each candidate, keep the configuration constant and record:
+Use [comparison-evidence.md](comparison-evidence.md) to establish a controlled
+comparison. For each candidate, record:
 
 | Field | Required evidence |
 | --- | --- |

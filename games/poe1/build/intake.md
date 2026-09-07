@@ -48,6 +48,10 @@ Use the snapshot for orientation and the XML for exact skills, items, passive
 specs, item sets, and configuration. Keep the decoded XML temporary; do not add
 the user's build to the repository.
 
+The scripts decode stored data; they do not run PoB's calculation engine. Read
+[comparison-evidence.md](comparison-evidence.md) before using stored statistics
+to report a candidate's numerical effect.
+
 ## Validate The PoB Before Comparing
 
 Confirm:

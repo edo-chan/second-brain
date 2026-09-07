@@ -10,6 +10,9 @@ Use [ed-teacher](ed-teacher/SKILL.md) for teaching, diagnosis, review, mastery,
 progress, and learning-system changes. Preserve its pacing, question style,
 internal evolution loop, and evidence thresholds.
 
+Read [session-continuity.md](references/session-continuity.md) when resuming an
+interrupted lesson, reconciling progress, or maintaining learning records.
+
 ## Select The Work
 
 - **Continue or review:** locate the active project in the
