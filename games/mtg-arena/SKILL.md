@@ -24,27 +24,24 @@ Also read:
   or reconciling when a card entered the collection.
 - [drafting.md](references/drafting.md) for draft picks, Limited deck
   construction, live play, or postmortems.
+- [collection-reconciliation.md](references/collection-reconciliation.md)
+  when updating ownership, reconciling rewards or snapshots, or calculating a
+  deck's missing copies and wildcard cost.
 
 Treat these files as a dated lower-bound record unless a full Arena collection
 export establishes exact quantities.
 
 ## Track Ownership Conservatively
 
-- A deck screenshot or deck export proves that Ed owned at least the copies
-  shown on that date. It does not prove the full collection quantity.
-- A completed Jump In packet, store purchase, reward, or opened pack adds the
-  observed copies to the previous lower bound when it happened later.
+- A decklist or export establishes deck contents, not ownership. A screenshot
+  establishes owned copies only when its collection or completion context
+  confirms them; an imported deck may include unowned cards.
+- Count only confirmed acquisitions, using the reconciliation reference to
+  avoid adding the same reward twice or adding it to a snapshot that includes it.
 - A packet-selection screen is pending evidence. Do not add its cards until the
   selection is completed or the resulting deck is shown.
 - A recommendation, preview, hover card, opponent's card, or candidate packet
   does not prove ownership.
-- Record the set code only when the source establishes it. Use `unknown` rather
-  than guessing a printing.
-- Omit ordinary basic lands from collection tracking unless a particular style
-  or printing matters.
-- When newer evidence conflicts with an older lower bound, preserve the
-  evidence in the acquisition log and explain the uncertainty instead of
-  silently overwriting it.
 
 When Ed supplies new collection evidence as part of an MTG Arena request,
 update the relevant state files. Preserve chronological entries in the

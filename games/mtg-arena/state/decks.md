@@ -2,8 +2,10 @@
 
 Last updated: 2026-09-01
 
-Deck screenshots prove a dated deck configuration and a lower bound on owned
-copies. They are not a full collection export.
+Deck screenshots and exports record a dated deck configuration. Ownership
+requires collection or acquisition evidence; follow the
+[collection reconciliation guide](../references/collection-reconciliation.md).
+The historical entries below retain their recorded evidence and status.
 
 ## Cat Attack
 

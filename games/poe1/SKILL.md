@@ -47,6 +47,9 @@ Read only the references relevant to the user's question:
   requirements, post-swap deficits, resistance overcaps, and affix allocation;
 - [upgrade-prioritization.md](build/upgrade-prioritization.md) for an ordered
   whole-character roadmap and buy-versus-craft priority;
+- [comparison-evidence.md](build/comparison-evidence.md) before reporting a
+  numerical upgrade delta, comparing candidates, or interpreting changed PoB
+  exports;
 - [flasks.md](build/flasks.md) for flask jobs, useful modifier families,
   automation, immunities, and boss-versus-map uptime;
 - [gems-sockets-and-reservation.md](build/gems-sockets-and-reservation.md) for
@@ -56,10 +59,9 @@ Read only the references relevant to the user's question:
 - [ci-chaos-dot.md](build/ci-chaos-dot.md) for CI Essence Drain/Contagion and
   related spell-based Chaos DoT assumptions, gear roles, and socket pressure.
 
-Always establish a stable baseline and change one thing at a time. Keep enemy,
-configuration, charges, flasks, skill part, and item set identical across PoB
-comparisons. Report tradeoffs in damage, defenses, recovery, attributes,
-resistances, reservation, sockets, movement, and cost.
+Establish the intake baseline before changing anything. The comparison guide
+owns controlled changes and calculation evidence; a decoded snapshot alone does
+not recalculate a candidate's result.
 
 ## Route Crafting Questions
 
