@@ -9,9 +9,14 @@ Use migrations as the source of truth and preserve production data by default.
 - Use Tilt as the local source of truth for services such as Postgres.
 - Apply schema changes through the repo's migration script.
 - If a migration file was already applied locally and is modified, undo it first, then rerun the migration script.
-- Do not add indexes unless explicitly requested.
-- Do not add schema or migration comments.
-- Default schema DDL to primary keys and required uniqueness constraints. Do not add `CHECK`, `FOREIGN KEY`, `EXCLUDE`, or similar constraints unless explicitly requested; preserve required-field `NOT NULL` semantics separately.
+- Default schema DDL to primary keys and required uniqueness constraints;
+  preserve required-field `NOT NULL` semantics separately. Indexes created by
+  those required constraints are part of enforcing the constraint.
+- Add other indexes only when explicitly requested.
+- Add `CHECK`, `FOREIGN KEY`, `EXCLUDE`, or similar constraints only when
+  explicitly requested.
+- Keep schemas and migrations free of comments. Put explanatory prose in
+  the PR or relevant documentation.
 - This explicit constraint rule supersedes the Notion guide's broader foreign-key
   recommendation: add a foreign key only when the task or repository contract
   specifically requires that invariant.

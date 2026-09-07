@@ -10,6 +10,20 @@ and blocking conventions. Preserve those choices when applying or maintaining
 the skills. Correct technical errors, conflicting instructions, and ambiguous
 scope without replacing Ed's policy with generic engineering preferences.
 
+## Read The Rules Precisely
+
+- Treat `must`, `require`, and `do not` as requirements. Treat `prefer` and
+  `default` as choices within the stated constraints. A rule does not become
+  optional because another approach is common or idiomatic.
+- Apply a stated exception only to the boundary it describes. For example,
+  typed dependency-trait wiring is permitted; that does not permit a generic
+  factory or an unrelated forwarding layer.
+- Honor approval already given for the current task. A rule requiring Ed's
+  approval does not require asking again for the same authorized choice.
+- In a review, cite the applicable Ed rule and the concrete violation. Explain
+  a convention as a convention; reserve claims of security or correctness
+  failure for evidence of that failure.
+
 ## Establish The Route
 
 1. Read the repository's applicable `AGENTS.md` instructions and identify the
