@@ -32,13 +32,6 @@ that were merely shown or recommended.
 - Ed explicitly described Cosmic as very fun; this is recorded as a packet and
   deck preference without yet guessing which mechanic caused the enjoyment.
 
-## 2026-09-03 - Secrets of Strixhaven Draft Evidence
-
-- Status: active draft; the complete pool was not captured.
-- Recorded only the SOS cards and minimum quantities visibly established by
-  deck and live-game screenshots.
-- This is a partial acquisition record, not a full draft-pool export.
-
 ## 2026-09-01 - Elemental Cosmic Bridge Crafts
 
 - Status: completed and confirmed by Ed.
@@ -47,3 +40,10 @@ that were merely shown or recommended.
 - Spent one uncommon wildcard on one copy of Prismari Charm.
 - The completed crafts and two Arena screenshots confirm the resulting
   60-card Standard Best-of-One Elemental Cosmic bridge.
+
+## 2026-09-03 - Secrets of Strixhaven Draft Evidence
+
+- Status: active draft; the complete pool was not captured.
+- Recorded only the SOS cards and minimum quantities visibly established by
+  deck and live-game screenshots.
+- This is a partial acquisition record, not a full draft-pool export.
