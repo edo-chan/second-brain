@@ -5,6 +5,9 @@ description: Solana implementation and review standards for Ed's repositories, i
 
 # Ed Solana Coding
 
+When entering this skill directly, read the [coding router](../SKILL.md) once
+to load the shared baseline and other applicable skills and references.
+
 Treat Solana Swig as security-critical wallet code. Preserve its stored state, wire contracts, public builders, and client compatibility while making the smallest explicit change that satisfies the requested behavior.
 
 Read [references/source-map.md](references/source-map.md) when orienting an unfamiliar or cross-crate change. Read [references/tracy-review-patterns.md](references/tracy-review-patterns.md) before implementing or reviewing authority, permission, parser, account-layout, recovery, close, or SignV2 changes.
@@ -226,8 +229,11 @@ Record a final-head receipt with the exact head and base SHAs, formatter, SBF
 build, focused tests, applicable feature matrices, downstream compatibility
 suites, CU benchmarks, required parent-check conclusions, and every skipped
 gate with its exact blocker. A rebase, base merge, generated-code refresh, or
-material head change invalidates the receipt. Do not open, approve, or
-re-request review until the changed invariant has a negative test and every
+material head change invalidates the receipt. After local validation, open a
+draft PR so PR-triggered CI can run, following the
+[Git workflow's independent review gate](../infrastructure/references/git-workflow.md#independent-review-gate).
+Do not mark ready, approve, or re-request review until the changed
+invariant has a negative test, the independent review gate passes, and every
 applicable required check is green on that head. A green sub-check does not
 override a red required parent job.
 

@@ -13,6 +13,9 @@ ASCII chart > sectioned bullet-point list > table.
 
 ## Coding
 
+Start with [`ed-coding-router`](coding/SKILL.md) for coding work. It selects the
+shared baseline, applicable domain skills, and their conditional references.
+
 - `coding/general` - general implementation, service-boundary, database, simplicity, and PR-review standards.
 - `coding/typescript` - TypeScript, React, Next.js, browser interaction, and frontend-review standards.
 - `coding/rust` - Rust code organization, service implementation, async boundaries, and tests.

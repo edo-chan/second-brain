@@ -5,6 +5,9 @@ description: Solidity and EVM contract implementation and review standards for E
 
 # Ed Solidity Coding
 
+When entering this skill directly, read the [coding router](../SKILL.md) once
+to load the shared baseline and other applicable skills and references.
+
 Treat `evm/` contract work as security-critical wallet code. Preserve its storage, authorization payloads, ABI, deployment topology, public SDK, and client compatibility while making the smallest explicit change that satisfies the requested behavior. Do not treat it as scaffold code unless the user explicitly requests a shape-only draft, and even then unsafe asset movement must be disabled or denied by default.
 
 Read [references/solana-swig-parity.md](references/solana-swig-parity.md) before implementing or reviewing EVM Swig contract changes. Use [references/solana-to-evm-security-map.md](references/solana-to-evm-security-map.md) to translate a Solana invariant into EVM mechanics without assuming that similarly named primitives have identical security properties.
@@ -89,7 +92,8 @@ A PR is not ready unless touched invariants are encoded in tests:
 - Nonce/counter state must be consumed before the first post-auth execution call, and every external validation or execution boundary must be reentrancy-safe.
 - Session authorities must bind their parent role and authority, have an enforceable maximum duration, and be unable to refresh or extend themselves past that bound.
 - r1 verifier/precompile address must be supplied by factory or chain config.
-- Verifier calls must reject missing code, invalid address, revert, false/zero return, malformed return length, wrong pubkey length, wrong signature length, and wrong signer.
+- Verifier calls must follow the verifier-kind checks and rejection cases in
+  the Verifier Failure Matrix below.
 - Vault execution must route through Swig policy.
 - Subaccount executors must not call arbitrary vault execution directly unless vault-local policy limits are implemented and tested.
 - ETH semantics must choose exactly one model: vault-held spend with `msg.value == 0`, or caller-funded forwarding with `msg.value == value`.
@@ -142,9 +146,19 @@ If `authorization.length == 0` is accepted anywhere, add a test proving it canno
 
 ## Verifier Failure Matrix
 
-Verifier-backed auth must test:
+Distinguish a deployed verifier contract from a native precompile in the
+validated chain or factory configuration:
 
-- missing verifier code
+- Require deployed bytecode for a contract verifier and test rejection when
+  that code is missing.
+- Native precompiles have no deployed bytecode. Validate their chain-specific
+  address and availability through the configured native verification path,
+  including a known-valid signature on the target runtime; a successful
+  low-level call alone does not establish availability. Test an unavailable
+  precompile and require the exact success return defined by its protocol.
+
+For both kinds, test:
+
 - invalid verifier address
 - verifier revert
 - verifier false or zero return
@@ -155,6 +169,9 @@ Verifier-backed auth must test:
 - bad digest or message
 
 r1 must test chain-configured verifier behavior. Hardcoded precompile paths are local-test only.
+
+See the [Solidity external-call documentation](https://docs.soliditylang.org/en/latest/control-structures.html#external-function-calls)
+for the distinction between code existence and native precompile execution.
 
 ## External Call And Reentrancy Gate
 

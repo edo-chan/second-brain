@@ -5,6 +5,9 @@ description: Rust implementation and review standards for Ed's repositories. Use
 
 # Ed Rust Coding
 
+When entering this skill directly, read the [coding router](../SKILL.md) once
+to load the shared baseline and other applicable skills and references.
+
 Favor small, explicit, local changes that match the surrounding module style.
 
 ## Code Organization
