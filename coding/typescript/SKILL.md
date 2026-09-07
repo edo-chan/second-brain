@@ -10,6 +10,9 @@ interactions complete across success and failure states.
 
 ## Apply The Shared Baseline
 
+When entering this skill directly, read the [coding router](../SKILL.md) once
+to select the applicable skills and conditional references.
+
 Use `ed-general-coding` alongside this skill for language-independent scope,
 simplicity, trust-boundary, validation, and review-severity rules. Repository
 conventions remain authoritative when they are more specific.

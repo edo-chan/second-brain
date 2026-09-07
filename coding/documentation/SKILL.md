@@ -5,6 +5,9 @@ description: Write and review documentation for Ed's repositories. Use for produ
 
 # Ed Documentation
 
+When entering this skill directly, read the [coding router](../SKILL.md) once
+to select any applicable implementation or domain rules.
+
 Write documentation around what the reader can do, which surface they should
 use, and what action comes next.
 

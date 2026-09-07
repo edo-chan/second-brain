@@ -1,9 +1,12 @@
 ---
 name: ed-general-coding
-description: General implementation, code-review, and simplicity-audit standards for Ed's repositories across languages. Use when building, modifying, refactoring, debugging, testing, reviewing production code, or auditing over-engineering in code, APIs, schemas, and service boundaries. Use the TypeScript, Rust, Solidity, Solana, documentation, or CI/infrastructure skill instead when that domain is primary.
+description: Shared implementation, code-review, and simplicity-audit standards for Ed's repositories across languages. Use when building, modifying, refactoring, debugging, testing, reviewing production code, or auditing over-engineering in code, APIs, schemas, and service boundaries. Apply alongside the relevant language and domain skills selected by ed-coding-router.
 ---
 
 # Ed General Coding
+
+When entering this skill directly, read the [coding router](../SKILL.md) once
+to select the other applicable skills and conditional references.
 
 Favor the simplest complete change that improves code health without speculative
 machinery. Apply repository conventions and more specific language or domain

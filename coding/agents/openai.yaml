@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Coding Router"
+  short_description: "Select and compose Ed's coding rules"
+  default_prompt: "Use $ed-coding-router to select the applicable second-brain skills and references for this task while preserving Ed's engineering rules."

@@ -84,7 +84,11 @@ The EVM version should preserve the same security shape even though the mechanic
 
 Solana k1/r1 authorities use a monotonic signature odometer and reject reused counters before accepting auth. EVM must provide equivalent replay protection for signature paths.
 
-For EVM, consume nonce/counter state before any external call or use `nonReentrant`. Direct-caller auth must be a distinct direct EOA path, not a signature-auth fallback that can be reused inside ERC-4337 validation.
+For EVM nonce-consumption timing and protection around verifier callbacks, follow
+[Authorization And Intent Binding](../SKILL.md#authorization-and-intent-binding).
+Replay protection and reentrancy protection remain separate requirements.
+Direct-caller auth must be a distinct direct EOA path, not a signature-auth
+fallback that can be reused inside ERC-4337 validation.
 
 ## Layout Parity Clarifier
 

@@ -5,6 +5,9 @@ description: CI, Git publication, infrastructure, deployment, rollout, and envir
 
 # Ed CI And Infrastructure
 
+When entering this skill directly, read the [coding router](../SKILL.md) once
+to select any applicable implementation or domain rules.
+
 For branch, commit, pull-request, merge, and release actions, read
 [git-workflow.md](references/git-workflow.md).
 
