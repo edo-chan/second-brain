@@ -2,6 +2,9 @@
 
 Personal agent guidance and reusable Codex skills.
 
+Start with [`ed-second-brain`](SKILL.md). It routes the task, explains how Ed's
+rules compose, and keeps reusable guidance separate from personal state.
+
 ## Presentation
 
 When multiple formats would communicate the same material clearly, prefer:
@@ -27,6 +30,8 @@ shared baseline, applicable domain skills, and their conditional references.
 
 ## Games
 
+Use the [games router](games/SKILL.md) to select the game and decision mode.
+
 - [`games/mtg-arena`](games/mtg-arena/SKILL.md) - stateful MTG Arena
   collection, deck, preference, Jump In, and current-metagame guidance.
 - `games/poe1` - Path of Exile 1 guidance that requires fresh PoB content for personalized advice.
@@ -35,6 +40,9 @@ shared baseline, applicable domain skills, and their conditional references.
   - `maintenance.md` - patch refresh and periodic restructuring rules.
 
 ## Learning
+
+Use the [learning router](learning/SKILL.md) to resume a project, choose a
+teaching mode, or maintain the learning system from evidence.
 
 - [`learning/ed-teacher`](learning/ed-teacher/SKILL.md) - adaptive teacher agent that uses learning projects as its homebase.
 - [`learning/zk-and-quantum-foundations`](learning/zk-and-quantum-foundations/README.md) - a traditional abstract-algebra spine that branches into Groth16, Poseidon-style hashes, and quantum cryptography before the Shor-to-Groth16 bridge.

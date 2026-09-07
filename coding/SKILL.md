@@ -5,24 +5,10 @@ description: Select and compose Ed's second-brain coding skills for implementati
 
 # Ed Coding Router
 
-These skills express Ed's engineering rules, including deliberate restrictions
-and blocking conventions. Preserve those choices when applying or maintaining
-the skills. Correct technical errors, conflicting instructions, and ambiguous
-scope without replacing Ed's policy with generic engineering preferences.
-
-## Read The Rules Precisely
-
-- Treat `must`, `require`, and `do not` as requirements. Treat `prefer` and
-  `default` as choices within the stated constraints. A rule does not become
-  optional because another approach is common or idiomatic.
-- Apply a stated exception only to the boundary it describes. For example,
-  typed dependency-trait wiring is permitted; that does not permit a generic
-  factory or an unrelated forwarding layer.
-- Honor approval already given for the current task. A rule requiring Ed's
-  approval does not require asking again for the same authorized choice.
-- In a review, cite the applicable Ed rule and the concrete violation. Explain
-  a convention as a convention; reserve claims of security or correctness
-  failure for evidence of that failure.
+Apply the [root guidance](../SKILL.md) for Ed's rule semantics, precedence,
+and knowledge ownership. These coding skills retain their deliberate
+restrictions and blocking conventions. A typed dependency-trait allowance, for
+example, does not permit a generic factory or unrelated forwarding layer.
 
 ## Establish The Route
 
@@ -82,6 +68,6 @@ comments remains separately scoped.
   persistence surface, deployment, or publication step. Load the newly relevant
   skill or reference before performing that work.
 
-The repository README routes between top-level areas; this skill composes the
+The root guide routes between top-level areas; this skill composes the
 coding skills; each domain skill routes to its own detailed references. Add
 another router only when a layer has a real selection decision to own.

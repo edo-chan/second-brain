@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Games Router"
+  short_description: "Route game advice to the right evidence"
+  default_prompt: "Use $ed-games-router to select the game guidance and current evidence needed for my decision."
