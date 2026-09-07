@@ -15,9 +15,10 @@ internal evolution loop, and evidence thresholds.
 - **Continue or review:** locate the active project in the
   [learning index](README.md). Load the teacher's required project records and
   resume from demonstrated progress.
-- **Start a new topic:** use the teacher to establish the goal and needed
-  prerequisites. A short explanation does not automatically require creating
-  a new curriculum or project directory.
+- **Start a new topic:** establish the goal, needed prerequisites, and active
+  learning project under the teacher's homebase rules. Do not silently attach
+  an unrelated topic to the existing curriculum; resolve its home with Ed when
+  the conversation does not establish one.
 - **Repair a misunderstanding:** locate the first unsupported step and use the
   teacher's repair mode. Preserve the learning destination.
 - **Change the teacher or curriculum:** apply
