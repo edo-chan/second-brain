@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Learning Router"
+  short_description: "Route lessons and learning-system changes"
+  default_prompt: "Use $ed-learning-router to continue the right learning project or improve its guidance from evidence."

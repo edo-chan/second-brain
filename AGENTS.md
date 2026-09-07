@@ -5,7 +5,8 @@ source of Ed's reusable agent guidance.
 
 Before non-trivial work for Ed:
 
-1. Read the second-brain `README.md` as the current index.
+1. Read the second-brain `README.md` as the current index and `SKILL.md` as
+   the root routing and knowledge-ownership guide.
 2. Select only the skills relevant to the task and read each selected
    `SKILL.md` completely, including any references it requires, before acting.
 3. Follow those skills. More-specific repository-level `AGENTS.md` guidance

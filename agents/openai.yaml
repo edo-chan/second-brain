@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Second Brain"
+  short_description: "Route work through Ed's personal guidance"
+  default_prompt: "Use $ed-second-brain to select the right guidance and evidence for this task while preserving Ed's rules."

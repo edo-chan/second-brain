@@ -4,6 +4,9 @@ Long-running curricula, diagnostics, progress records, derivations, and
 questions live here. Each project keeps its own learning goal and evidence of
 mastery.
 
+Start with the [learning router](SKILL.md) to select the active project and
+the appropriate teaching or maintenance mode.
+
 ## Teacher
 
 - [`ed-teacher`](ed-teacher/SKILL.md) - teaches one concept at a time, records
