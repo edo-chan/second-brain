@@ -99,16 +99,16 @@ Read only the references needed for the task:
 - Distill transport requests at the handler boundary. Domain code should accept
   the concrete validated values it needs, not an entire API, proto, framework,
   or service implementation object.
-- Avoid pass-through wrappers and helpers that only rename, forward, clone,
-  trim, borrow, convert, or hide a single call.
+- Keep trivial transformations and calls inline. Avoid pass-through wrappers
+  that only rename, forward, clone, trim, borrow, convert, or hide a single call.
 - Prefer a few repeated, explicit request steps over a resolver, runtime
   context, factory, store, or helper whose only value is concealing those
   steps. Extract shared code only when it owns a real policy, invariant, or
   independently reusable operation.
 - In reviews, assess code shape and organization alongside correctness. Prefer
   direct, readable, top-to-bottom code even when it repeats a small amount of
-  local logic; do not introduce or preserve one-use helpers, forwarding layers,
-  or abstractions whose only benefit is deduplication.
+  local logic. Reject helpers and forwarding layers whose only benefit is
+  deduplication; retain boundaries that own a real policy or invariant.
 - Write comments to explain rationale, invariants, non-obvious constraints, and
   tradeoffs. Simplify code that needs a comment merely to explain what it does.
 - When deliberately accepting a simpler implementation with a known ceiling,
@@ -118,6 +118,19 @@ Read only the references needed for the task:
 - Document purpose, usage, and failure behavior. Update documentation when a
   change affects how users or developers build, test, deploy, release, or use a
   system.
+
+### Function Boundaries In Practice
+
+Keeping functions focused and rejecting trivial helpers serve the same rule:
+each extracted function must own meaningful work.
+
+- A helper that only calls `connector.get_quote(request)` adds a forwarding
+  layer. Keep the typed call visible at its consumer.
+- A validator that owns a shared credential-lifecycle invariant has a real
+  responsibility. Call it at the boundary where that invariant becomes trusted.
+- A focused dependency-trait implementation may delegate to a concrete
+  connector for substitution in service tests. Apply the service-boundary
+  reference's explicit allowance for that wiring.
 
 ## Boundaries And Failure Behavior
 
@@ -195,8 +208,10 @@ Read only the references needed for the task:
 - Treat an unresolved security-relevant product or contract question as a
   blocker. Resolve it from authoritative documentation and code or record an
   explicit decision before approval.
-- Keep tool-owned formatting, personal naming preferences, optional hardening,
-  speculative improvements, and unrelated cleanup non-blocking.
+- Keep tool-owned formatting and a reviewer's personal naming preferences,
+  optional hardening, speculative improvements, and unrelated cleanup
+  non-blocking. Apply Ed's explicit blocking conventions from the relevant
+  domain or boundary skill; those are established requirements.
 - Calibrate review depth to exposure and impact. Public interfaces,
   authentication, tokens, assets, persistence, concurrency, and external input
   deserve stronger proof than trusted local or internal tooling.

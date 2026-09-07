@@ -41,18 +41,21 @@ Favor small, explicit, local changes that match the surrounding module style.
   a child function, or introduce a child service merely to reach a few
   dependencies. Pass the concrete repository, client, signer, configuration,
   or value the operation needs.
-- Do not extend generic vendor request/response wrappers or generic JSON deserialization APIs just because existing code uses them.
-- Prefer explicit endpoint-specific methods that return concrete response structs.
+
+## Vendor Connectors
+
+- Do not extend generic vendor request/response wrappers or generic JSON
+  deserialization APIs just because existing code uses them.
+- Prefer explicit endpoint-specific methods that return concrete response
+  structs.
 - Name the concrete third-party adapter after the vendor with a `Connector`
   suffix, such as `MeldConnector`. Do not call a third-party integration a
   generic `Client`, `Service`, or `Manager`.
-- When an API layer needs unit-test substitution, define a focused
-  consumer-owned trait around the vendor connector's typed endpoint methods
-  and inject that trait into the API service. The concrete connector
-  implementation may delegate those typed calls; do not add a connector
-  factory or expose transport-generic methods through the trait.
-- Do not let `serde_json::Value` or raw vendor response bodies cross the vendor-library boundary.
-- Do not add pass-through helpers that only rename or forward another call.
+- For API-layer substitution, follow [Dependency Boundaries](#dependency-boundaries)
+  below. Keep the injected trait limited to typed endpoint methods; do not add
+  a connector factory or expose transport-generic methods through it.
+- Keep `serde_json::Value` and raw vendor response bodies inside the
+  vendor-library boundary.
 - Construct a concrete client directly when the only variable is its validated
   configuration. Do not add a factory trait whose implementation only calls
   that client's constructor.
@@ -96,6 +99,8 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 ## Rust Style
 
+### Errors And Control Flow
+
 - Do not add `unwrap()`, `expect()`, `panic!`, `unreachable!`, unchecked
   indexing, unchecked conversions, or other potentially panicking operations
   to request, transaction, proof, persistence, network, or external-state
@@ -107,7 +112,10 @@ Favor small, explicit, local changes that match the surrounding module style.
   branch would only wrap and return an error.
 - Keep control flow flat. Prefer early returns or one clear `match` over nested
   condition towers.
-- Keep every function concise, focused, and single-purpose. When a function becomes difficult to scan or mixes phases, split it into concrete focused functions before adding more logic.
+- Keep every function concise, focused, and single-purpose. When a function
+  becomes difficult to scan or mixes phases, split it into concrete focused
+  functions before adding more logic. Apply [Functions And Helpers](#functions-and-helpers)
+  when choosing the split.
 - Prefer typed errors and structured responses where the service already has them.
 - Keep error types proportional to the decisions callers make. Do not add
   separate transport, HTTP, configuration, parsing, or string-wrapper variants
@@ -115,12 +123,21 @@ Favor small, explicit, local changes that match the surrounding module style.
   low-level cause at its owning boundary and return the smallest stable error
   surface the caller needs.
 - Avoid stringly typed error plumbing unless existing code does it.
+
+### Concrete Types And Representation Boundaries
+
 - Do not write generic Rust code unless Ed explicitly approves it. This includes
   generic functions, structs, enums, type aliases, traits, and explicit lifetime
   parameters. Prefer concrete types and elided lifetimes.
+- Using an existing generic type with concrete arguments, such as
+  `Result<Receipt, ApiError>` or `Vec<Pubkey>`, does not introduce generic code.
+  Defining `fn load<T>`, `struct Handler<C>`, a generic trait, or an explicit
+  lifetime parameter does. A concrete consumer-owned dependency trait follows
+  the separate [Dependency Boundaries](#dependency-boundaries) rule.
 - Prefer owned data and simple concrete types when borrowing would add lifetime
   plumbing without a demonstrated need.
-- Keep async boundaries visible. Do not hide network, database, or signing work inside helpers that look pure.
+- Keep async boundaries visible. Do not hide network, database, or signing
+  work inside helpers that look pure.
 - For API handlers, extract claims and other boundary context once, destructure
   proto requests immediately, convert primitive proto values into typed domain
   values, and pass only those values onward. Keep validation, domain logic, and
@@ -169,9 +186,24 @@ Favor small, explicit, local changes that match the surrounding module style.
   algorithms, and fixed TTLs as constants at their owning boundary. Do not turn
   typed struct fields into string constants; eliminate string-key access by
   deserializing into the struct instead.
+
+### Functions And Helpers
+
 - Keep adjacent one-line validation calls in the main control flow. Do not add a
   helper used once merely to hide a comparison or forward its result.
-- Install missing dependencies or toolchains when they clearly help the work instead of reinventing existing tooling.
+- Do not extract helpers that only rename, clone, trim, borrow, convert, or map
+  a small enum to a string. Keep the operation inline at its consumer. Add a
+  helper or inherent method only when reuse is real or the mapping is domain
+  behavior that deserves one authoritative boundary. Real reuse does not waive
+  the prohibition on trivial wrappers.
+- Do not add getters that merely return a field or constructor helpers that
+  merely wrap a struct literal. Access visible fields and construct the value
+  directly unless the method enforces an invariant, derives real domain
+  behavior, or protects an intentional encapsulation boundary.
+- Prefer descriptive names over dense acronyms.
+
+### Logging And Lints
+
 - Keep dynamic log values in structured fields and log messages
   low-cardinality. Use `info` for normal lifecycle events, `warn` for degraded
   but recoverable behavior, and `error` for failed operations.
@@ -179,15 +211,6 @@ Favor small, explicit, local changes that match the surrounding module style.
   `map_err` when the closure only records context and returns the same error.
   Do not create generic `log_*_failure(status)` helpers that merely rename one
   logging call.
-- Do not extract helpers that only rename, clone, trim, borrow, convert, or map
-  a small enum to a string. Keep the operation inline at its consumer. Add a
-  helper or inherent method only when reuse is real or the mapping is domain
-  behavior that deserves one authoritative boundary.
-- Do not add getters that merely return a field or constructor helpers that
-  merely wrap a struct literal. Access visible fields and construct the value
-  directly unless the method enforces an invariant, derives real domain
-  behavior, or protects an intentional encapsulation boundary.
-- Prefer descriptive names over dense acronyms.
 - Fix Clippy findings at their source. Add a narrowly scoped `allow` only when
   the lint is demonstrably inapplicable and record the reason; do not normalize
   crate-wide or handler-wide suppression of `result_large_err`,
@@ -209,6 +232,26 @@ Favor small, explicit, local changes that match the surrounding module style.
   clients, or complete multi-service flows to a workspace-level integration or
   end-to-end test area outside `services/`. Do not label those tests unit tests
   or make a service crate's normal test command depend on them.
+
+### Dependency Boundaries
+
+- Do not add a production trait merely because a test framework exists. A trait
+  is justified when production code owns a replaceable dependency boundary,
+  such as `Arc<dyn VendorClient>`, even when a Mockall mock is currently the
+  only alternate implementation. Define the focused trait at the consumer
+  boundary and inject it into the API service.
+- Mockall concrete-struct mocks have a different type from the real struct.
+  Replacing a concrete dependency therefore requires `mockall_double`,
+  test-only import rewriting, or generic code. Do not require concrete-struct
+  mocking when trait injection is the simpler production shape. The restriction
+  on unapproved generics still applies.
+- Keep dependency traits focused on the methods their consumers need. Treat the
+  thin trait implementation that delegates to the concrete client as boundary
+  wiring, not as a prohibited pass-through helper.
+- When a consuming crate mocks a trait from another crate, a local `mock!`
+  declaration may need to repeat the trait methods. Accept that when it is the
+  simplest local test boundary; add an exported or feature-gated shared mock
+  only when multiple consumers justify the extra test-support surface.
 
 ## Lifecycle And Accounting
 
@@ -233,21 +276,6 @@ Favor small, explicit, local changes that match the surrounding module style.
 - Enforce authorization and consent deadlines in the transition itself using
   server-owned time. Do not rely on a frontend timer or extend an earlier
   authorization window by moving data into a later cache stage.
-- Do not add a production trait merely because a test framework exists. A trait
-  is justified when production code owns a replaceable dependency boundary,
-  such as `Arc<dyn VendorClient>`, even when a Mockall mock is currently the
-  only alternate implementation.
-- Mockall concrete-struct mocks have a different type from the real struct.
-  Replacing a concrete dependency therefore requires `mockall_double`,
-  test-only import rewriting, or generic code. Do not require concrete-struct
-  mocking when trait injection is the simpler production shape.
-- Keep dependency traits focused on the methods their consumers need. Treat the
-  thin trait implementation that delegates to the concrete client as boundary
-  wiring, not as a prohibited pass-through helper.
-- When a consuming crate mocks a trait from another crate, a local `mock!`
-  declaration may need to repeat the trait methods. Accept that when it is the
-  simplest local test boundary; add an exported or feature-gated shared mock
-  only when multiple consumers justify the extra test-support surface.
 - Derive billing and spend from authoritative confirmed pre/post state. Treat
   predicted fees and locally reconstructed arithmetic as estimates, not final
   accounting.
@@ -272,6 +300,8 @@ Favor small, explicit, local changes that match the surrounding module style.
 
 ## Validation
 
+- Install missing dependencies or toolchains when they clearly help the work
+  instead of reinventing existing tooling.
 - Use `cargo +nightly fmt` when the repo expects nightly rustfmt; otherwise use the repo's standard formatter.
 - Run focused tests for touched behavior.
 - Run `cargo clippy --all-targets` for service changes when practical.
