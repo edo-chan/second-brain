@@ -14,12 +14,15 @@ or the task reaches a new boundary.
 
 - **Build, debug, review, document, or publish software:** use the
   [coding router](coding/SKILL.md).
+- **Design or review a mobile interface:** use
+  [mobile interface design](design/ed-mobile-interface/SKILL.md), together with
+  the coding route when implementing the interface.
 - **Advise on a game, deck, build, collection, or craft:** use the
   [games router](games/SKILL.md).
 - **Teach, resume study, assess learning, or improve a curriculum:** use the
   [learning router](learning/SKILL.md).
 - **Draw or review a rendered figure:** use
-  [figure design](presentation/ed-figure-design/SKILL.md).
+  [figure design](research/ed-figure-design/SKILL.md).
 
 Choose by the requested outcome, not a keyword alone. A request to explain a
 Rust concept as a lesson belongs to learning; a request to fix its production

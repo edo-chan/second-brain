@@ -17,6 +17,11 @@ Use `ed-general-coding` alongside this skill for language-independent scope,
 simplicity, trust-boundary, validation, and review-severity rules. Repository
 conventions remain authoritative when they are more specific.
 
+When the task defines or changes a mobile interface's visual design or layout,
+also read [mobile interface design](../../design/ed-mobile-interface/SKILL.md).
+It owns the visual system and composition; this skill owns the implementation
+and browser boundaries.
+
 ## Load The Frontend Reference
 
 Read [frontend.md](references/frontend.md) completely before implementing or

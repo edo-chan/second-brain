@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ed Mobile Interface"
+  short_description: "Clean mobile interfaces with calculated layouts"
+  default_prompt: "Use $ed-mobile-interface to design a clean mobile interface with a cohesive design system and responsive rows and columns."
