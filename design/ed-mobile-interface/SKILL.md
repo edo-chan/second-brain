@@ -16,6 +16,12 @@ and the relevant platform skill. For a separately requested rendered figure,
 use [figure design](../../research/ed-figure-design/SKILL.md) for that
 artifact; the surrounding mobile interface remains responsive.
 
+Read [Laws of UX](references/laws-of-ux.md) when choosing interaction patterns,
+explaining design tradeoffs, or reviewing usability. It maintains Ed's supplied
+catalog with practical application notes. Select principles that explain the
+actual design decision; it is not a requirement to apply every entry to every
+screen. Keep this skill's clarity, single focus, and linear hierarchy primary.
+
 ## Keep The Interface Clean And Direct
 
 - Give each screen a clear purpose. Put its main information and next useful
@@ -32,15 +38,45 @@ artifact; the surrounding mobile interface remains responsive.
   a screen does not need decoration or extra content just to fill it.
 - Use direct labels, familiar controls, and a visible information hierarchy.
   Prefer meaningful content to decorative headings, explanatory filler, and
-  repeated labels.
+  repeated labels. Pair unfamiliar icons with text instead of making their
+  meaning a guessing task.
 - Group related information through alignment, spacing, and typography. Use
   borders, cards, shadows, and separators when they clarify a real grouping;
-  ordinary list rows do not each need their own decorative container.
+  ordinary list rows do not each need their own decorative container. Keep gaps
+  within a group smaller than gaps between groups.
 - Keep frequent actions close to their content. Reveal secondary detail through
   a deliberate drilldown or expansion without hiding necessary context.
 - Make loading, empty, error, selected, disabled, and success states clear and
   consistent. A clean appearance must preserve labels, recovery actions,
   accessible contrast, and visible focus.
+
+## Reduce The Work Of Using The Interface
+
+These practices distill the source articles linked from the
+[Laws of UX reference](references/laws-of-ux.md). Apply them to the actual task:
+
+- **Make each decision understandable.** Group the alternatives for the current
+  choice. Reveal later decisions progressively, but show a clear route to more
+  options so the visible subset cannot be mistaken for the complete set.
+  Simplicity should remove unnecessary decisions, not necessary distinctions.
+- **Keep context available.** Carry selections, filters, entered values, and
+  comparison context between steps. Show relevant values together instead of
+  requiring the user to remember one screen while reading another. Use editable
+  defaults and deterministic calculations to remove repeated work.
+- **Make touch targets easy to acquire.** Size the interactive area for accurate
+  touch, separate adjacent targets, and keep actions near their related content.
+  When a row owns one action, the row can be the target rather than a tiny icon;
+  keep any secondary actions distinct and independently operable.
+- **Show honest feedback promptly.** Acknowledge the interaction while slower
+  work continues. Show measured progress when available and an indeterminate
+  state otherwise. Preserve the distinction between pending and complete;
+  fabricated percentages and artificial delays do not establish trust.
+- **Make relevant changes noticeable.** Place feedback at the affected control
+  or content and preserve a stable layout while it updates. Avoid several
+  competing changes or distant banner-like notices for a local result.
+- **Verify clarity through use.** Check whether a user can identify the next
+  action, complete it, and explain the result. A pleasing screenshot or positive
+  aesthetic reaction is not sufficient usability evidence.
 
 ## Establish A Small Design System First
 

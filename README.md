@@ -10,6 +10,7 @@ rules compose, and keeps reusable guidance separate from personal state.
 - [`design/ed-mobile-interface`](design/ed-mobile-interface/SKILL.md) - clean,
   direct mobile interfaces with one focus, a linear visual hierarchy, a simple
   cohesive palette, an explicit design system, and calculated row/column layouts.
+  Includes the maintained [Laws of UX catalog](design/ed-mobile-interface/references/laws-of-ux.md).
 
 ## Presentation
 
