@@ -1,6 +1,6 @@
 ---
 name: ed-mobile-interface
-description: Design and review mobile app screens, PWAs, and mobile-first web interfaces using Ed's clean, direct visual principles, cohesive palettes, explicit design systems, and responsive row-and-column layouts. Use for interface design briefs, wireframes, visual implementation, and layout reviews.
+description: Design and review mobile app screens, PWAs, and mobile-first web interfaces using Ed's clarity-first principles, linear visual hierarchy, single focus, cohesive palettes, explicit design systems, and responsive row-and-column layouts. Use for interface design briefs, wireframes, visual implementation, and layout reviews.
 ---
 
 # Ed Mobile Interface
@@ -8,7 +8,7 @@ description: Design and review mobile app screens, PWAs, and mobile-first web in
 Design for clarity. Make the interface easy to understand and act on;
 entertainment and visual novelty are not goals in themselves. Establish its
 design system, then let content, rows, columns, and shared tokens determine
-the layout.
+the layout. Keep the visual hierarchy linear, with one dominant focus at a time.
 
 Apply the [root guidance](../../SKILL.md) for rule composition and scope. When
 implementing an interface, also use the [coding router](../../coding/SKILL.md)
@@ -20,6 +20,13 @@ artifact; the surrounding mobile interface remains responsive.
 
 - Give each screen a clear purpose. Put its main information and next useful
   action where the user can find them immediately.
+- Maintain one dominant focus per screen or active view. Establish a deliberate
+  top-to-bottom reading order: primary information, supporting context, then
+  secondary detail. Keep competing hero values, equal-weight panels, and
+  unrelated calls to action out of the same view.
+- Give the primary action the strongest action emphasis when one is needed.
+  Keep supporting controls visibly subordinate. Use drilldowns or sequential
+  steps to change focus deliberately when the task has several decisions.
 - Treat blank space as a useful part of the composition. Leave space where it
   separates groups, establishes hierarchy, or gives the content room to read;
   a screen does not need decoration or extra content just to fill it.
@@ -82,7 +89,9 @@ every metric or section compete through a different saturated background.
 
 Sketch the content hierarchy as nested rows and columns. On mobile, start with
 a single readable flow; introduce side-by-side regions when their minimum
-content widths fit. Align related labels, values, and actions to shared edges.
+content widths fit and they support the same focus. Columns may align related
+labels, values, and actions, but must preserve the dominant reading order
+rather than create several competing destinations for attention.
 
 Let the layout engine compute ordinary positioning. On the web, prefer normal
 document flow, CSS Grid, and Flexbox with shared padding and gap tokens. On
@@ -123,9 +132,9 @@ content-driven breakpoints before reducing legibility or clipping controls.
 
 ## Apply And Check The Principles
 
-For a design brief or wireframe, provide the screen's purpose, token choices,
-row/column structure, and behavior when space or content changes. Keep the
-deliverable at the level the user requested.
+For a design brief or wireframe, name the single focus and reading order, then
+provide the token choices, row/column structure, and behavior when space or
+content changes. Keep the deliverable at the level the user requested.
 
 When implementing or reviewing a rendered interface, inspect representative
 narrow and wide phone widths, long content, larger text, and relevant keyboard
@@ -133,7 +142,7 @@ and interaction states. Check the actual result for hierarchy, contrast,
 alignment, spacing, wrapping, clipping, and obscured controls. Revise layout
 rules and tokens at their owning source instead of patching isolated offsets.
 
-Before delivery, confirm that the primary information is direct, color has
-consistent meaning, repeated elements share the design system, and ordinary
-positions follow the row/column layout. State any visual checks that remain
-unverified.
+Before delivery, confirm that one focus dominates, the reading order is linear,
+the primary information is direct, color has consistent meaning, repeated
+elements share the design system, and ordinary positions follow the row/column
+layout. State any visual checks that remain unverified.

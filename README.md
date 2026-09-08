@@ -8,8 +8,8 @@ rules compose, and keeps reusable guidance separate from personal state.
 ## Interface Design
 
 - [`design/ed-mobile-interface`](design/ed-mobile-interface/SKILL.md) - clean,
-  direct mobile interfaces with a cohesive simple palette, an explicit design
-  system, and responsive rows and columns with calculated dimensions.
+  direct mobile interfaces with one focus, a linear visual hierarchy, a simple
+  cohesive palette, an explicit design system, and calculated row/column layouts.
 
 ## Presentation
 
