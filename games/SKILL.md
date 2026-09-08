@@ -32,5 +32,5 @@ continue through its own router without restarting discovery.
 
 For tutoring about game probability or decision theory, add the
 [learning router](../learning/SKILL.md). The game skill still owns the facts
-and personalization requirements. Add [figure design](../presentation/ed-figure-design/SKILL.md)
+and personalization requirements. Add [figure design](../research/ed-figure-design/SKILL.md)
 only when a rendered figure is part of the requested explanation.

@@ -34,7 +34,7 @@ which one, ask for the project before writing progress or changing its path.
 
 ## Compose With Other Domains
 
-- Add [figure design](../presentation/ed-figure-design/SKILL.md) for a rendered
+- Add [figure design](../research/ed-figure-design/SKILL.md) for a rendered
   teaching figure; the teacher still controls lesson size and pacing.
 - Add the [coding router](../coding/SKILL.md) when implementing or reviewing
   code is part of the learning task. Apply language rules to that work without

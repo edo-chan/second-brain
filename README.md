@@ -5,12 +5,21 @@ Personal agent guidance and reusable Codex skills.
 Start with [`ed-second-brain`](SKILL.md). It routes the task, explains how Ed's
 rules compose, and keeps reusable guidance separate from personal state.
 
+## Interface Design
+
+- [`design/ed-mobile-interface`](design/ed-mobile-interface/SKILL.md) - clean,
+  direct mobile interfaces with one focus, a linear visual hierarchy, a simple
+  cohesive palette, an explicit design system, and calculated row/column layouts.
+  Includes the maintained [Laws of UX catalog](design/ed-mobile-interface/references/laws-of-ux.md).
+
 ## Presentation
 
 When multiple formats would communicate the same material clearly, prefer:
 ASCII chart > sectioned bullet-point list > table.
 
-- [`presentation/ed-figure-design`](presentation/ed-figure-design/SKILL.md) -
+## Research
+
+- [`research/ed-figure-design`](research/ed-figure-design/SKILL.md) -
   fixed-canvas TanStack/D3 figures and diagrams built from a declared design
   system, a 12-column grid, fixed typography tokens, and verified PNG output.
 
