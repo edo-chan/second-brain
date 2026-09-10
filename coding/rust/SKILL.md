@@ -89,7 +89,10 @@ Favor small, explicit, local changes that match the surrounding module style.
   retry only after its idempotency and replay contract is proven. POST requests
   are not retryable by default.
 
-## Workflow Layout
+## Workflow Naming And Layout
+
+Follow the [job naming convention](../infrastructure/SKILL.md#jobs-and-service-shape)
+when adding or renaming workflows, then use the layout below.
 
 - Organize workflow code under `Workflow/<workflow name>/`.
 - Put the workflow definition in `Workflow/<workflow name>/definition.rs`.
