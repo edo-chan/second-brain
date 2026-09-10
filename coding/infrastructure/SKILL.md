@@ -107,14 +107,31 @@ identity test according to the boundary it actually exercised.
 
 - Run durable background jobs as Temporal workflows/workers instead of
   long-running web handlers.
+- Use two job kinds, named by execution shape:
+  - `Single<Purpose>Workflow` performs a bounded run and completes. Use a
+    matching `single_<purpose>` workflow directory.
+  - `Stream<Purpose>Workflow` continuously consumes updates or performs ongoing
+    work. Use a matching `stream_<purpose>` workflow directory.
+- Keep discovery, repair, backfill, reconciliation, and recording as descriptions
+  of the work, rather than additional job kinds. A `Single` job may perform
+  several activities or phases before completing.
+- Configure cadence separately through Temporal schedules. A bounded job run
+  every minute or every day is still `Single`; frequency does not make it a
+  `Stream`.
+- For example, use `SingleSwigStateMirrorWorkflow` for a bounded mirror repair,
+  `SingleSwigTokenIndexWorkflow` for one discovery and transaction-backfill run,
+  and `StreamSwigStateWorkflow` for continuous state updates.
+- Apply this convention to new jobs and scoped renames. Preserve compatibility
+  with running executions, workflow histories, and schedule callers when
+  changing existing Temporal type or activity identifiers.
 - Keep service code, proto, migrations, Terraform, and worker changes visible
   in the same repository and PR when they form one behavior.
 - Use boring defaults: Postgres for durable state, Redis for cache, and SSM for
   deployed configuration. Add deployed parameters through Terraform so config
   cannot drift from infrastructure.
-- Choose the smallest durable job shape: a one-off workflow for historical
-  backfills, a Temporal schedule for periodic reconciliation, or a heartbeat
-  loop for frequent polling.
+- Choose the smallest durable execution: a `Single` workflow for bounded work,
+  a Temporal schedule to repeat it, or a heartbeating `Stream` activity for
+  continuous work.
 - Do not start workflows and activities every few seconds when one
   long-running, heartbeating activity owns the loop more clearly and cheaply.
 
