@@ -9,19 +9,24 @@ decision callouts, purposeful visuals, affirmative scope, complete code
 contracts, and a finished design with resolved decisions. Use them within the
 review sequence below.
 
-## First Pass: Summarize Only
+## Review The Whole Document First
 
-Read the complete document and perform enough internal orientation to understand
-the proposed change. Return only a concise summary of:
+Treat a request to review a document as authorization to complete the analysis
+and return a consolidated assessment. Read the whole document, establish the
+baseline, trace the proposed flows, and apply the relevant review standards
+before reporting what needs attention.
 
-1. the outcome or decision the document proposes;
-2. the main implementation or system flow;
-3. the intended scope and any unresolved decision needed to understand it.
+The first review report should include:
 
-Do not lead with a verdict, enumerate findings, assign priorities, or draft a
-batch of comments during the first pass. Do not turn introductory or contextual
-sections into review targets unless they materially change the proposed
-contract. Stop after the summary and wait for the user to choose a block.
+1. a concise overall assessment;
+2. material findings in priority order, with evidence and recommended changes;
+3. grouped writing and presentation issues under Ed's documentation rules;
+4. unresolved decisions and verification limits that affect readiness.
+
+Complete this pass without waiting for the user to select individual sections
+or request a separate findings report. Include only enough summary to orient
+the reader. If a decision requires user input, identify it in the assessment
+and continue reviewing the rest of the document.
 
 ## Establish The Review Baseline
 
@@ -59,32 +64,29 @@ for the proposal:
 Do not duplicate domain rules inside the review. Apply them to the proposal and
 cite the exact section or implementation surface that conflicts.
 
-## Review One Block At A Time
+## Examine The Implementation And Presentation
 
-After the first-pass summary, work through one user-selected section or logical
-block at a time. If the user does not select the next block, suggest one
-implementation-bearing block without presenting a prioritized review queue.
-Skim introductions and background by default; focus on decisions, data flows,
-contracts, trust boundaries, persistence, failure behavior, rollout, and
-acceptance criteria.
+Work through the implementation-bearing sections autonomously. Focus on
+decisions, data flows, contracts, trust boundaries, persistence, failure
+behavior, rollout, and acceptance criteria. Read background for context and
+apply the documentation standards throughout the document.
 
-Treat a short instruction such as "next" as selection of the next logical
-block. Continue directly without re-summarizing resolved sections. Match the
-user's desired depth: accept intentionally loose background when it does not
-change the implementation contract, and spend detail on the blocks that do.
+For each material issue, verify the relevant code, schema, primary source, or
+other evidence. Explain the consequence and the narrowest change needed.
+Reconcile contradictions across sections and combine repeated symptoms before
+presenting the assessment.
 
-For each block:
+## Discuss Findings After The Review
 
-1. Load only the coding or domain skills relevant to that block.
-2. Inspect the current code, schema, primary documentation, or other evidence
-   needed to verify the block's claims.
-3. Briefly restate what the block proposes.
-4. Give a compact take: what works, what is unclear, and any material gap.
-5. Propose a narrowly anchored comment only when a comment is warranted.
-6. Discuss and revise the take or comment with the user before writing it.
+Use follow-up discussion to resolve findings or examine the areas the user
+chooses. Section-by-section co-review is an optional mode when explicitly
+requested. In that mode, treat "next" as selection of the next logical block
+and keep the response focused on it.
 
-Do not add a document comment until the user explicitly agrees to it. After the
-block is resolved, move to the next selected block.
+Review authorization covers analysis and findings. Editing the source document
+or posting comments requires the user's instruction; preserve any scope already
+authorized in the session. A request to post the findings authorizes the agreed
+set without requiring separate approval for every comment.
 
 ## Maintain The Agreed Model
 
@@ -184,12 +186,12 @@ into the final document. Keep a genuine unresolved decision visible to the user
 while the design is unfinished; a polished final document must not conceal it
 or leave implementers to choose the behavior.
 
-## Synthesize Findings Only When Asked
+## Return A Consolidated Assessment
 
-Only produce a full verdict or prioritized findings when the user explicitly
-asks for a final synthesis, approval recommendation, or findings report. At
-that point, lead with the verdict and list only the material unresolved
-findings in priority order.
+Return the assessment as part of the initial review. Lead with whether the
+document is ready, ready with follow-ups, or needs changes, then list material
+unresolved findings in priority order. If no material issues were found, say so
+and report the verification limits; avoid manufacturing findings.
 
 Use these severities:
 
@@ -215,15 +217,15 @@ safe deferrals outside the approved scope as scope decisions.
 
 ## Finish The Review
 
-- During block review, keep the response focused on the selected block rather
-  than repeating an overall verdict.
-- When explicitly asked for the final synthesis, state whether the document is
-  ready, ready with follow-ups, or needs changes.
+- Complete the whole-document assessment before asking the user which finding
+  to discuss. Follow any explicit request for a narrower review instead.
+- Keep follow-up discussion focused on the selected issue and update the
+  assessment when a decision changes its conclusion.
 - Call out the strongest parts briefly after the findings when useful.
 - Cite the exact document sections, repository files and lines, commits, and
   primary external sources used for material claims.
 - State what was not verified and why.
 - Keep the review read-only unless the user explicitly asks to edit the document
   or add comments.
-- When the user approves a comment, attach it to the narrowest relevant section,
-  keep it to one issue, and avoid duplicating it across multiple comments.
+- When authorized to post comments, attach each to the narrowest relevant
+  section, keep it to one issue, and avoid duplicating it across comments.

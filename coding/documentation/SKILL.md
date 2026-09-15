@@ -13,7 +13,7 @@ use, and what action comes next.
 
 For evidence-backed review of a PRD, RFC, architecture proposal, or design
 document, read [document-review.md](references/document-review.md) and follow
-its collaborative review workflow.
+its workflow for reviewing the whole document.
 
 Apply the following standards to both writing and review.
 
@@ -101,8 +101,8 @@ Apply the following standards to both writing and review.
 
 ## Review documentation
 
-Apply these standards within the selected review block. Treat violations of
-these explicit rules as review material, while preserving the collaborative
-workflow and its summary-only first pass. Keep presentation feedback distinct
-from correctness findings and prioritize the changes that help the reader
-understand the decision and its complete contract.
+Review the whole document before returning a consolidated assessment of what
+needs attention. Treat violations of these explicit rules as review material.
+Keep presentation feedback distinct from correctness findings and prioritize
+the changes that help the reader understand the decision and its complete
+contract. Use section-by-section co-review only when the user asks for it.
