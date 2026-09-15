@@ -65,15 +65,17 @@ Apply the following standards to both writing and review.
 ## Show complete and correct code contracts
 
 - Prefer a concrete code example when it communicates the design more clearly
-  than prose. Show the final affected contract in context, including every
-  proposed change to customer-facing APIs and schemas.
+  than prose. Show every proposed change to customer-facing APIs and schemas
+  with enough context to review the affected contract.
 - For protobuf, include syntax, package, required imports, the enclosing
   service, affected RPCs, applicable route annotations, request/response
   messages, and referenced types needed to understand the changed surface.
   An isolated RPC or field is insufficient.
-- For DDL, show the final affected table definitions, including relevant keys,
-  constraints, relationships, and indexes, plus the migration that produces
-  the change. A new column alone does not describe the resulting schema.
+- For DDL, make the complete migration the primary example, including every
+  proposed column, constraint, and index change. Add existing schema context
+  only where needed to understand the migration. A complete `ALTER TABLE`
+  change can stand on its own; full final model or table definitions are not
+  required.
 - Comments may stand in for unchanged, unrelated members or implementation
   details. Keep valid enclosing syntax and all dependencies and behavior needed
   to understand the affected contract; comments must not hide proposed changes.
@@ -98,6 +100,9 @@ Apply the following standards to both writing and review.
   make it read as complete.
 - Express deliberate deferrals as clear scope decisions. Preserve the
   assumptions, limits, and failure behavior that implementers need.
+- Acceptance criteria and rollout plans are optional. Their absence is not a
+  documentation finding; assess the correctness of the proposed behavior and
+  migration directly.
 
 ## Review documentation
 
@@ -106,3 +111,6 @@ needs attention. Treat violations of these explicit rules as review material.
 Keep presentation feedback distinct from correctness findings and prioritize
 the changes that help the reader understand the decision and its complete
 contract. Use section-by-section co-review only when the user asks for it.
+Include a simple, direct draft comment to the author with every finding,
+including writing and presentation findings. Follow the review workflow's
+comment format and posting boundary.

@@ -19,8 +19,9 @@ before reporting what needs attention.
 The first review report should include:
 
 1. a concise overall assessment;
-2. material findings in priority order, with evidence and recommended changes;
-3. grouped writing and presentation issues under Ed's documentation rules;
+2. material findings in priority order, with evidence, recommended changes, and
+   a simple draft comment to the author for each finding;
+3. grouped writing and presentation issues, each with its own author comment;
 4. unresolved decisions and verification limits that affect readiness.
 
 Complete this pass without waiting for the user to select individual sections
@@ -30,8 +31,8 @@ and continue reviewing the rest of the document.
 
 ## Establish The Review Baseline
 
-1. Read the complete target document, including comments, linked sections, open
-   questions, acceptance criteria, and declared non-goals.
+1. Read the complete target document, including comments, linked sections, and
+   declared scope and decisions.
 2. Identify the decision the document is asking reviewers to approve. Separate
    that decision from background material and future work.
 3. Read the directly related parent design, prior version, PRD, ticket, or source
@@ -68,8 +69,12 @@ cite the exact section or implementation surface that conflicts.
 
 Work through the implementation-bearing sections autonomously. Focus on
 decisions, data flows, contracts, trust boundaries, persistence, failure
-behavior, rollout, and acceptance criteria. Read background for context and
+behavior, and migration correctness. Read background for context and
 apply the documentation standards throughout the document.
+
+Acceptance criteria, rollout plans, and full final database model definitions
+are not required document sections. Do not report their absence as findings.
+Review the migration and any concrete correctness or safety issue on their merits.
 
 For each material issue, verify the relevant code, schema, primary source, or
 other evidence. Explain the consequence and the narrowest change needed.
@@ -116,10 +121,10 @@ clear representation. Prefer a compact list when it suffices. Use a contract
 matrix when the dimensions require side-by-side comparison; define its rows
 and columns explicitly and keep cells concise.
 
-Include broad-permission and recovery exceptions and map implementation tests
-to the stated cases. Make hierarchy boundaries explicit: a broad permission at
-one layer inherits a scoped permission at another only when the contract says
-so.
+Include broad-permission and recovery exceptions. Use existing implementation
+tests as evidence where relevant. Make hierarchy boundaries explicit: a broad
+permission at one layer inherits a scoped permission at another only when the
+contract says so.
 
 ## Run A Decision Fallout Pass
 
@@ -152,15 +157,15 @@ provider flow.
 
 Check the proposal for:
 
-- **Scope and decisions:** MVP boundaries, explicit product choices, deferred
-  work, and contradictions between acceptance criteria and open questions.
+- **Scope and decisions:** MVP boundaries, explicit product choices, deliberate
+  deferrals, and unresolved or contradictory behavior.
 - **Authority and trust:** authenticated principal, ownership checks, policy
   enforcement, trusted identifiers, signature or approval boundaries, and who
   is allowed to mutate state or move assets.
 - **Contracts:** endpoint-specific request and response shapes, required fields,
   compatibility, authoritative external identifiers, and handling of unknown
   values. Verify that code examples show the complete affected service and
-  message definitions or final schema and migration under the documentation
+  message definitions or the complete migration under the documentation
   standards.
 - **State and data ownership:** canonical source of truth, derived versus stored
   values, idempotency, expiry, replay behavior, atomic updates, and duplicated
@@ -171,10 +176,10 @@ Check the proposal for:
 - **Security and privacy:** secret handling, sensitive payloads, PII retention,
   logging, external URLs or tokens, and deny-by-default behavior for privileged
   or asset-moving actions.
-- **Rollout and operations:** migration safety, feature gates, provider or
-  environment limitations, metrics, support tooling, rollback, and drift.
-- **Verification:** acceptance criteria that are observable, negative tests for
-  changed invariants, and a clear way to prove the complete flow works.
+- **Migration correctness:** validity against the current schema, data
+  preservation, compatibility, and completeness of the proposed SQL changes.
+- **Evidence:** source, examples, tests, or measurements supporting the claims
+  under review, with verification limits stated in the review report.
 
 Treat an unresolved product decision as blocking when different answers produce
 materially different security, data, API, or user behavior. Do not silently
@@ -197,7 +202,7 @@ Use these severities:
 
 - **P0:** unsafe or irreversible behavior, broken authorization, asset or secret
   exposure, destructive data risk, or a design that cannot safely ship.
-- **P1:** blocking correctness, contract, ownership, reliability, or acceptance
+- **P1:** blocking correctness, contract, ownership, or reliability
   gap that should be resolved before implementation or approval.
 - **P2:** important follow-up that can be handled without changing the core
   decision or safety of the proposed design.
@@ -207,7 +212,26 @@ Each finding must include:
 1. the concrete problem;
 2. evidence from the document, repository, or primary source;
 3. the behavior or risk it creates;
-4. the specific decision or change needed.
+4. the specific decision or change needed;
+5. a draft comment addressed to the author, attached to that finding in the
+   review report.
+
+### Write Simple Author Comments
+
+- Include an author comment for every finding, including presentation issues.
+- Address one issue and request the specific change directly. Prefer one or
+  two short sentences; add the reason only when it helps the author act.
+- Anchor the finding to the relevant section or code example. Keep detailed
+  evidence and severity in the review rather than repeating them in the comment.
+- Use plain language and the same brevity rules as the document. Avoid praise
+  padding, review-process narration, and long lists of questions.
+- Label the text **Comment to author** so it can be copied into the document.
+  Drafting a comment is part of the review; posting it requires authorization.
+
+For example:
+
+> Please specify the result of disabling an already-disabled user, including
+> whether `disabledAt` changes.
 
 Prefer a small set of independent findings over a long checklist. Combine
 symptoms that share one root cause. Distinguish correctness findings from
