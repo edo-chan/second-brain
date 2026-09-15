@@ -15,6 +15,37 @@ For evidence-backed review of a PRD, RFC, architecture proposal, or design
 document, read [document-review.md](references/document-review.md) and follow
 its collaborative review workflow.
 
+Apply the following standards to both writing and review.
+
+## Keep prose simple and scannable
+
+- Use the shortest wording that preserves the contract. Prefer one clear
+  sentence when a paragraph adds no meaning; keep one idea per paragraph.
+- Use bullets for independent points and numbered lists for ordered steps.
+  Break dense prose into meaningful sections, without fragmenting simple ideas.
+- State purpose directly: what the system does, for whom, and to what end.
+  Keep rationale distinct and beside the decision it explains; retain only the
+  evidence or tradeoff needed to understand that decision.
+- Explain a rule once at its owning section and reference it where needed.
+
+## Reserve callouts for decisions
+
+- Use callouts only to record a selected approach or settled decision.
+- Write the decision in one sentence when possible. Add only the condition or
+  consequence needed to interpret it.
+- Put notifications, tips, definitions, and ordinary explanations in the text.
+  Give every other visual element a clear explanatory purpose and apply the
+  same brevity standard. Remove decoration that competes with the content.
+
+## Choose the simplest useful format
+
+- Prefer prose or lists for documentation. Use tables for side-by-side
+  comparisons or a compact matrix whose dimensions genuinely require them.
+- Use a diagram only when relationships or flow are clearer visually than in
+  a short sequence. Keep it small and focused on the decision under review.
+- Avoid large charts and tables used merely to divide a wall of text. Rewrite
+  the content first; each cell, node, and label should earn its place.
+
 ## Frame guidance affirmatively
 
 - Lead with capabilities, supported paths, and recommended actions.
@@ -31,12 +62,47 @@ its collaborative review workflow.
   it helps the reader.
 - Keep literal API errors, status names, and factual permission limits exact.
 
+## Show complete and correct code contracts
+
+- Prefer a concrete code example when it communicates the design more clearly
+  than prose. Show the final affected contract in context, including every
+  proposed change to customer-facing APIs and schemas.
+- For protobuf, include syntax, package, required imports, the enclosing
+  service, affected RPCs, applicable route annotations, request/response
+  messages, and referenced types needed to understand the changed surface.
+  An isolated RPC or field is insufficient.
+- For DDL, show the final affected table definitions, including relevant keys,
+  constraints, relationships, and indexes, plus the migration that produces
+  the change. A new column alone does not describe the resulting schema.
+- Comments may stand in for unchanged, unrelated members or implementation
+  details. Keep valid enclosing syntax and all dependencies and behavior needed
+  to understand the affected contract; comments must not hide proposed changes.
+  Scope completeness to the affected surface, without copying the whole system.
+- Verify syntax, names, types, field numbers, and behavior against the target
+  repository and toolchain. Compile or parse runnable examples where practical;
+  distinguish proposed code from existing implementation and label pseudocode.
+
+## Deliver a finished design
+
+- Consider the relevant alternatives, dependencies, edge cases, failure paths,
+  and tradeoffs deeply enough to make the decision. Present the smallest
+  cohesive explanation that makes the resulting design understandable and
+  implementable.
+- Resolve material questions and ambiguous behavior before finalizing the
+  document. A final design contains decisions and their necessary rationale;
+  remove open-question lists, brainstorming, preparation history, and chat-log
+  narration from the finished artifact.
+- During review, surface unresolved decisions directly and seek the evidence
+  or owner input needed to resolve them. Keep the document unfinished until
+  those decisions are settled; never hide uncertainty or invent agreement to
+  make it read as complete.
+- Express deliberate deferrals as clear scope decisions. Preserve the
+  assumptions, limits, and failure behavior that implementers need.
+
 ## Review documentation
 
-1. Search headings and prose for exclusion-first framing.
-2. Identify the capability, supported path, or required action behind each
-   negative statement.
-3. Rewrite around that positive direction without weakening technical
-   boundaries.
-4. Confirm that the page still routes readers to the correct SDK, API, or next
-   step.
+Apply these standards within the selected review block. Treat violations of
+these explicit rules as review material, while preserving the collaborative
+workflow and its summary-only first pass. Keep presentation feedback distinct
+from correctness findings and prioritize the changes that help the reader
+understand the decision and its complete contract.
