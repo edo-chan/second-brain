@@ -4,6 +4,11 @@ Review the proposal as a contract for a future implementation. Verify that the
 described behavior can be built safely on the actual system rather than judging
 the document only by internal coherence.
 
+Apply the [documentation standards](../SKILL.md) throughout: concise prose,
+decision callouts, purposeful visuals, affirmative scope, complete code
+contracts, and a finished design with resolved decisions. Use them within the
+review sequence below.
+
 ## First Pass: Summarize Only
 
 Read the complete document and perform enough internal orientation to understand
@@ -11,7 +16,7 @@ the proposed change. Return only a concise summary of:
 
 1. the outcome or decision the document proposes;
 2. the main implementation or system flow;
-3. the important scope boundaries, non-goals, or unresolved decisions.
+3. the intended scope and any unresolved decision needed to understand it.
 
 Do not lead with a verdict, enumerate findings, assign priorities, or draft a
 batch of comments during the first pass. Do not turn introductory or contextual
@@ -50,8 +55,6 @@ for the proposal:
   shape is part of the proposal.
 - `ed-solana-coding` or `ed-solidity-coding` for wallet or
   contract behavior in those domains.
-- the parent `ed-documentation` guidance when the user also wants wording, information
-  architecture, or reader-routing feedback.
 
 Do not duplicate domain rules inside the review. Apply them to the proposal and
 cite the exact section or implementation surface that conflicts.
@@ -103,17 +106,18 @@ comment immediately. Prefer editing it or replying in the same discussion over
 adding a disconnected correction elsewhere. Preserve the decision history only
 when it helps the author understand why the target changed.
 
-## Use Contract Tables For Cross-Cutting Behavior
+## Make Cross-Cutting Contracts Explicit
 
 When behavior depends on several dimensions such as permission, operation,
-scope, state, override, or authority type, ask for a normative table instead of
-leaving the contract distributed across prose. Define the relevant rows and
-columns explicitly, include broad-permission and recovery exceptions, and map
-the implementation tests one-to-one to the table.
+scope, state, override, or authority type, consolidate the rules in the smallest
+clear representation. Prefer a compact list when it suffices. Use a contract
+matrix when the dimensions require side-by-side comparison; define its rows
+and columns explicitly and keep cells concise.
 
-Use the table to expose hierarchy boundaries. Do not assume that a broad
-permission at one layer inherits a scoped permission at another layer unless
-the document states that relationship explicitly.
+Include broad-permission and recovery exceptions and map implementation tests
+to the stated cases. Make hierarchy boundaries explicit: a broad permission at
+one layer inherits a scoped permission at another only when the contract says
+so.
 
 ## Run A Decision Fallout Pass
 
@@ -153,7 +157,9 @@ Check the proposal for:
   is allowed to mutate state or move assets.
 - **Contracts:** endpoint-specific request and response shapes, required fields,
   compatibility, authoritative external identifiers, and handling of unknown
-  values.
+  values. Verify that code examples show the complete affected service and
+  message definitions or final schema and migration under the documentation
+  standards.
 - **State and data ownership:** canonical source of truth, derived versus stored
   values, idempotency, expiry, replay behavior, atomic updates, and duplicated
   persistence.
@@ -172,6 +178,11 @@ Treat an unresolved product decision as blocking when different answers produce
 materially different security, data, API, or user behavior. Do not silently
 choose one implementation and review the document as though that choice were
 approved.
+
+Resolve these questions through the review and carry the resulting decisions
+into the final document. Keep a genuine unresolved decision visible to the user
+while the design is unfinished; a polished final document must not conceal it
+or leave implementers to choose the behavior.
 
 ## Synthesize Findings Only When Asked
 
@@ -197,9 +208,10 @@ Each finding must include:
 4. the specific decision or change needed.
 
 Prefer a small set of independent findings over a long checklist. Combine
-symptoms that share one root cause, and avoid style comments unless wording
-changes the technical contract. Do not present unanswered questions as findings
-when the document explicitly and safely places them outside the approved scope.
+symptoms that share one root cause. Distinguish correctness findings from
+violations of Ed's explicit documentation standards and from optional style
+preferences; summarize presentation feedback separately. Treat deliberate,
+safe deferrals outside the approved scope as scope decisions.
 
 ## Finish The Review
 
