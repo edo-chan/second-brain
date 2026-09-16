@@ -36,6 +36,23 @@ Minimalism never removes trust-boundary validation, data-loss prevention,
 security, accessibility, required operational calibration, or proof for
 non-trivial behavior.
 
+### Review Simplicity And Justify Complexity
+
+In every code or design review, explicitly answer:
+
+- Is this the simplest complete solution and the smallest change that satisfies
+  the agreed requirements on the current system?
+- If a simpler viable alternative exists, is the extra complexity justified by
+  a concrete requirement, measured constraint, or necessary boundary?
+
+Compare against the actual baseline and the options above. Consider added
+state, dependencies, indirection, public surface, and operational burden;
+line count alone does not establish simplicity. Recommend the simpler option
+when it preserves the required behavior. When extra complexity is justified,
+name the reason and retain it; when evidence is missing, identify that gap.
+Include a concise simplicity assessment in the review's overall verdict,
+even when no simplification finding is warranted.
+
 ## Load Focused References
 
 Read only the references needed for the task:

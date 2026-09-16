@@ -72,6 +72,10 @@ decisions, data flows, contracts, trust boundaries, persistence, failure
 behavior, and migration correctness. Read background for context and
 apply the documentation standards throughout the document.
 
+For every proposal, read and apply the shared
+[simplicity review questions](../../general/SKILL.md#review-simplicity-and-justify-complexity)
+and include the assessment in the overall verdict.
+
 Acceptance criteria, rollout plans, and full final database model definitions
 are not required document sections. Do not report their absence as findings.
 Review the migration and any concrete correctness or safety issue on their merits.

@@ -72,6 +72,10 @@ selected stack:
 Apply the domain skills to the concrete code. Do not duplicate their rules in
 this coordinator skill.
 
+For every PR, apply the shared
+[simplicity review questions](../SKILL.md#review-simplicity-and-justify-complexity)
+and include the assessment in the final verdict.
+
 ## Calibrate WebIDP Findings To Trust Context
 
 Treat One Wallet, One Business, and local development as trusted, lower-risk
