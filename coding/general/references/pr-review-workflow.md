@@ -1,8 +1,11 @@
 # Ed PR Review Workflow
 
-Treat a stacked review as a collaborative session with explicit stages. Build the
-complete context before judging individual diffs, keep each PR scoped to its own
-base, and let Ed control when the review moves forward.
+Complete the selected PR or stack review without requiring Ed's input between
+stages, logical blocks, or PRs. Build the complete context before judging
+individual diffs and keep each PR scoped to its own base. Pause for discussion
+only when Ed explicitly requests a guided walkthrough, or when essential
+missing information prevents a supported conclusion; continue independent
+review work while that information is pending.
 
 ## Present The Review Queue
 
@@ -47,8 +50,8 @@ walkthrough:
    review conclusions.
 
 Summarize the stack map, end-to-end flow, main risks, applicable skills, review
-order, and any context blockers. State when the context pass is complete, then
-pause so Ed can begin the PR walkthrough with you.
+order, and any context blockers. Continue directly into the PR review after
+the context pass; this is a progress checkpoint, not a request for permission.
 
 ## Load The Relevant Review Skills
 
@@ -136,7 +139,7 @@ whether the evidence is PR-local or cross-stack, and any proof deferred to a
 later PR. Treat a missing test for a claimed behavior or failure mode as an
 explicit test-note gap.
 
-### Walk Through Logical Blocks Together
+### Review Logical Blocks
 
 Divide the PR into coherent implementation blocks such as a migration, proto
 contract, transport client, handler, workflow, UI interaction, test group, or
@@ -151,7 +154,8 @@ For one block at a time:
 4. Call out a potential finding only when supported by concrete code and the
    applicable review skill.
 5. Record cross-PR dependencies or questions that must be checked later.
-6. Pause for Ed's questions or direction before moving to the next block.
+6. Continue to the next block, incorporating any questions or direction Ed
+   sends while the review is in progress.
 
 Maintain a compact running ledger of confirmed findings, open questions,
 strengths, and deferred cross-stack checks. Resolve ledger items when later
@@ -164,7 +168,7 @@ At the end of each PR:
 - recap confirmed findings in priority order with exact file and line evidence;
 - separate blockers from non-blocking follow-ups and questions;
 - state the current review verdict;
-- wait for Ed before moving to the next PR or posting anything to GitHub.
+- continue to the next PR without waiting for Ed's input.
 
 After the final PR, reconcile the ledger across the whole stack and give a
 stack-level verdict. Do not post comments, submit a review, approve, request
