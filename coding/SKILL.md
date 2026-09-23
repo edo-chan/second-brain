@@ -47,7 +47,8 @@ same route; retain already-loaded instructions rather than restarting it.
 The general skill routes vendor/API/auth work to its service-boundary reference
 and persistence work to its database reference, regardless of implementation
 language. A language skill supplements those rules rather than replacing them.
-Use the existing review workflow for a guided PR walkthrough; an explicitly
+Use the existing review workflow to complete PR and stack reviews autonomously;
+use a guided walkthrough only when Ed explicitly asks for one. An explicitly
 requested independent findings pass loads the
 [Git workflow](infrastructure/references/git-workflow.md#independent-review-gate)
 and follows its independent-review contract. Writing or publishing review

@@ -63,8 +63,8 @@ Read only the references needed for the task:
 - [schema-database.md](references/schema-database.md) for schemas, migrations,
   persistence ownership, SQLx, and production data changes.
 - [pr-review-workflow.md](references/pr-review-workflow.md) for PR queues,
-  stacked changes, whole-stack context, and collaborative block-by-block
-  reviews.
+  stacked changes, whole-stack context, complete PR reviews, and optional
+  guided walkthroughs.
 - [simplicity-review.md](references/simplicity-review.md) when the user asks
   what can be deleted, simplified, replaced with native behavior, or audited
   for over-engineering.
